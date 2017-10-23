@@ -143,6 +143,7 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
         adminSesion.setUsuarioActual("");
+        adminSesion.getMenuInicio().resetearCampos();
         adminSesion.getMenuInicio().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCerrarSesionMouseClicked
