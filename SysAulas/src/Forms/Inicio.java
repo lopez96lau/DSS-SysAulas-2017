@@ -5,12 +5,21 @@
  */
 package Forms;
 
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Laureano
  */
 public class Inicio extends javax.swing.JFrame {
 
+    
+    
+    private String usuario = "lucho96";
+    private char[] contraseña = "0123456789".toCharArray();
+    
+    
     /**
      * Creates new form Login
      */
@@ -64,6 +73,11 @@ public class Inicio extends javax.swing.JFrame {
         btnIngresar.setText("Ingresar");
         btnIngresar.setToolTipText("Ingrese al sistema");
         btnIngresar.setIconTextGap(7);
+        btnIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnIngresarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,6 +125,33 @@ public class Inicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseClicked
+        String tmpUsuario;
+        char[] tmpContraseña;
+        if (txtUsuario.getText().length() >= 7 && txtUsuario.getText().length() <= 15) {
+            if (txtContraseña.getPassword().length >= 10 &&  txtContraseña.getPassword().length <= 20) {
+                tmpUsuario = txtUsuario.getText();
+                tmpContraseña = txtContraseña.getPassword();
+                //Buscamos en db...
+                if (tmpUsuario.equals(usuario) && Arrays.equals(tmpContraseña, contraseña)) {
+                    
+                    //Fijarse si existe y si es admin o usuario
+                    
+                    MenuAdmin form = new MenuAdmin();
+                    form.setVisible(true);
+                    this.setVisible(false);
+                    
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(this,"Longitud de contraseña invalida.","Error en inicio de sesión",JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,"Longitud de usuario invalido.","Error en inicio de sesión",JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnIngresarMouseClicked
 
     /**
      * @param args the command line arguments
