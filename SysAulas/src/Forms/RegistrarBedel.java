@@ -5,17 +5,27 @@
  */
 package Forms;
 
+import Gestores.AdministradorSesion;
+
 /**
  *
  * @author Laureano
  */
 public class RegistrarBedel extends javax.swing.JFrame {
 
+    private AdministradorSesion adminSesion;
+    
     /**
      * Creates new form RegistrarBedel
      */
     public RegistrarBedel() {
         initComponents();
+    }
+    
+    public RegistrarBedel(AdministradorSesion a) {
+        initComponents();
+        adminSesion = a;
+        lblNombreAdmin.setText(adminSesion.getUsuarioActual());
     }
 
     /**
@@ -29,7 +39,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
 
         lblRegistrar = new javax.swing.JLabel();
         lblSesion = new javax.swing.JLabel();
-        lblNombreBedel = new javax.swing.JLabel();
+        lblNombreAdmin = new javax.swing.JLabel();
         lblComplete = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblApellido = new javax.swing.JLabel();
@@ -59,8 +69,8 @@ public class RegistrarBedel extends javax.swing.JFrame {
 
         lblSesion.setText("<html><u>Sesión Actual:</u></html>");
 
-        lblNombreBedel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblNombreBedel.setText("Nombre_Administrador");
+        lblNombreAdmin.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblNombreAdmin.setText("Nombre_Administrador");
 
         lblComplete.setText("<html>Complete todos los campos para registrar un nuevo bedel.</html>");
 
@@ -149,7 +159,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblNombreBedel))
+                        .addComponent(lblNombreAdmin))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTurno)
@@ -178,7 +188,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombreBedel))
+                    .addComponent(lblNombreAdmin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblComplete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -265,7 +275,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
     private javax.swing.JLabel lblContraseña1;
     private javax.swing.JLabel lblContraseña2;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblNombreBedel;
+    private javax.swing.JLabel lblNombreAdmin;
     private javax.swing.JLabel lblNombreUsuario;
     private javax.swing.JLabel lblRegistrar;
     private javax.swing.JLabel lblSesion;

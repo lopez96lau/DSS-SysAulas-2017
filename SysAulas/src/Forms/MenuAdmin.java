@@ -5,17 +5,27 @@
  */
 package Forms;
 
+import Gestores.AdministradorSesion;
+
 /**
  *
  * @author Laureano
  */
 public class MenuAdmin extends javax.swing.JFrame {
 
+    private AdministradorSesion adminSesion;
+    
     /**
      * Creates new form Menu_Bedel
      */
     public MenuAdmin() {
         initComponents();
+    }
+    
+    public MenuAdmin(AdministradorSesion a) {
+        initComponents();
+        adminSesion = a;
+        lblNombreAdmin.setText(adminSesion.getUsuarioActual());
     }
 
     /**
@@ -71,6 +81,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         btnCerrarSesion.setText("Cerrar Sesión");
         btnCerrarSesion.setToolTipText("Cierre su sesión y vuelva al inicio");
         btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCerrarSesionMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,44 +136,18 @@ public class MenuAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarBedelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarBedelActionPerformed
-        // TODO add your handling code here:
+        RegistrarBedel regBedel = new RegistrarBedel(adminSesion);
+        regBedel.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnAgregarBedelActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
+        adminSesion.setUsuarioActual("");
+        adminSesion.getMenuInicio().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesionMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuAdmin().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarBedel;

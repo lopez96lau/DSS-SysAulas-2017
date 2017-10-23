@@ -5,6 +5,9 @@
  */
 package sysaulas;
 
+import Forms.Inicio;
+import Gestores.AdministradorSesion;
+
 /**
  *
  * @author Laureano
@@ -15,7 +18,12 @@ public class SysAulas {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        AdministradorSesion adminSesion = new AdministradorSesion();
+        
+        Inicio init = new Inicio();
+        adminSesion.setMenuInicio(init);
+        init.setVisible(true);
+        init.setAdminSesion(adminSesion);
     }
     
 }

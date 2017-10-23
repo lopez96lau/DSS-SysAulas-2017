@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import Gestores.AdministradorSesion;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 
@@ -15,10 +16,14 @@ import javax.swing.JOptionPane;
 public class Inicio extends javax.swing.JFrame {
 
     
-    
+    private AdministradorSesion adminSesion;
     private String usuario = "lucho96";
     private char[] contraseña = "0123456789".toCharArray();
     
+    
+    public void setAdminSesion(AdministradorSesion adminSesion) {
+        this.adminSesion = adminSesion;
+    }
     
     /**
      * Creates new form Login
@@ -137,9 +142,10 @@ public class Inicio extends javax.swing.JFrame {
                 if (tmpUsuario.equals(usuario) && Arrays.equals(tmpContraseña, contraseña)) {
                     
                     //Fijarse si existe y si es admin o usuario
+                    adminSesion.setUsuarioActual(usuario);
+                    MenuAdmin menuAdmin = new MenuAdmin(adminSesion);
                     
-                    MenuAdmin form = new MenuAdmin();
-                    form.setVisible(true);
+                    menuAdmin.setVisible(true);
                     this.setVisible(false);
                     
                 }
