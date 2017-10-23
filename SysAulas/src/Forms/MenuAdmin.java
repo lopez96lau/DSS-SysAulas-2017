@@ -53,9 +53,14 @@ public class MenuAdmin extends javax.swing.JFrame {
         lblSeleccione.setText("<html>Seleccione alguna de las opciones disponibles.</html>");
 
         btnAgregarBedel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user_add.png"))); // NOI18N
-        btnAgregarBedel.setText("Registrar Bedel");
+        btnAgregarBedel.setText("Registrar Bedol");
         btnAgregarBedel.setToolTipText("Agregue un bedel al sistema");
         btnAgregarBedel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnAgregarBedel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarBedelActionPerformed(evt);
+            }
+        });
 
         btnBuscarBedel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user_search.png"))); // NOI18N
         btnBuscarBedel.setText("Buscar Bedel");
@@ -114,6 +119,10 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgregarBedelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarBedelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarBedelActionPerformed
 
     /**
      * @param args the command line arguments
