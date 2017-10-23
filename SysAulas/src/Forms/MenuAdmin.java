@@ -53,7 +53,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         lblSeleccione.setText("<html>Seleccione alguna de las opciones disponibles.</html>");
 
         btnAgregarBedel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user_add.png"))); // NOI18N
-        btnAgregarBedel.setText("Registrar Bedol");
+        btnAgregarBedel.setText("Registrar Bedel");
         btnAgregarBedel.setToolTipText("Agregue un bedel al sistema");
         btnAgregarBedel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnAgregarBedel.addActionListener(new java.awt.event.ActionListener() {
