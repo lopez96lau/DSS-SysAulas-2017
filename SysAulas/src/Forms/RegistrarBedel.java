@@ -6,6 +6,7 @@
 package Forms;
 
 import Gestores.AdministradorSesion;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -53,8 +54,8 @@ public class RegistrarBedel extends javax.swing.JFrame {
         txtNombreUsuario = new javax.swing.JTextField();
         txtContraseña1 = new javax.swing.JPasswordField();
         txtContraseña2 = new javax.swing.JPasswordField();
-        btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -131,13 +132,18 @@ public class RegistrarBedel extends javax.swing.JFrame {
         txtContraseña2.setText("Contraseña");
         txtContraseña2.setToolTipText("Vuelva a ingresar la contraseña");
 
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
-        btnGuardar.setText("Cancelar");
-        btnGuardar.setToolTipText("Cancele el ingreso de datos");
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setToolTipText("Cancele el ingreso de datos");
 
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save.png"))); // NOI18N
-        btnCancelar.setText("Guardar");
-        btnCancelar.setToolTipText("Guarde los datos ingresados y registre al bedel");
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save.png"))); // NOI18N
+        btnGuardar.setText("Guardar");
+        btnGuardar.setToolTipText("Guarde los datos ingresados y registre al bedel");
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
 
         btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back_menu.png"))); // NOI18N
         btnCerrarSesion.setText("Volver al Menu");
@@ -157,9 +163,9 @@ public class RegistrarBedel extends javax.swing.JFrame {
                         .addComponent(btnCerrarSesion))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(137, 137, 137)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(4, 4, 4)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(lblComplete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,8 +228,8 @@ public class RegistrarBedel extends javax.swing.JFrame {
                     .addComponent(txtContraseña2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnGuardar))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar))
                 .addContainerGap())
         );
 
@@ -238,6 +244,20 @@ public class RegistrarBedel extends javax.swing.JFrame {
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        //turno = cmbTurno.get ni idea que poner aca...
+        String usuario = txtNombreUsuario.getText();
+        char[] contraseña = txtContraseña1.getPassword();
+        char[] contraseñaRepetir = txtContraseña2.getPassword();
+        if (contraseña == contraseñaRepetir) {
+            
+        } else {
+            JOptionPane.showMessageDialog(this,"La contraseña ingresada no coincide con la repetida.","Error de registro",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarMouseClicked
 
     /**
      * @param args the command line arguments
