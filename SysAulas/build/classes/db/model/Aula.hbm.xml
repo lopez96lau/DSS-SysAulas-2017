@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.model.Aula" table="aula" catalog="tpdds2017" optimistic-lock="version">
+        <id name="idAula" type="java.lang.Integer">
+            <column name="id_aula" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="reserva" class="db.model.Reserva" fetch="select">
+            <column name="id_reserva" not-null="true" />
+        </many-to-one>
+        <property name="ubicacion" type="java.lang.Integer">
+            <column name="ubicacion" />
+        </property>
+        <property name="capacidad" type="java.lang.Integer">
+            <column name="capacidad" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="13" />
+        </property>
+        <property name="tipoPizarron" type="string">
+            <column name="tipo_pizarron" length="8" />
+        </property>
+        <property name="aireAcondicionado" type="string">
+            <column name="aire_acondicionado" length="2" />
+        </property>
+        <one-to-one name="sinRecursos" class="db.model.SinRecursos"></one-to-one>
+        <set name="aulaAsociaFechas" table="aula_asocia_fecha" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_aula" />
+            </key>
+            <one-to-many class="db.model.AulaAsociaFecha" />
+        </set>
+        <one-to-one name="informatica" class="db.model.Informatica"></one-to-one>
+        <one-to-one name="multimedios" class="db.model.Multimedios"></one-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.model.Usuario" table="usuario" catalog="tpdds2017" optimistic-lock="version">
+        <id name="idUsuario" type="java.lang.Integer">
+            <column name="id_usuario" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreUsuario" type="string">
+            <column name="nombre_usuario" length="20" not-null="true" />
+        </property>
+        <property name="contrasenia" type="string">
+            <column name="contrasenia" length="20" not-null="true" />
+        </property>
+        <set name="bedels" table="bedel" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_usuario" not-null="true" />
+            </key>
+            <one-to-many class="db.model.Bedel" />
+        </set>
+        <set name="historialContraseniases" table="historial_contrasenias" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_usuario" not-null="true" />
+            </key>
+            <one-to-many class="db.model.HistorialContrasenias" />
+        </set>
+        <set name="administradors" table="administrador" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_usuario" not-null="true" />
+            </key>
+            <one-to-many class="db.model.Administrador" />
+        </set>
+    </class>
+</hibernate-mapping>

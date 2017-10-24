@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.model.Bedel" table="bedel" catalog="tpdds2017" optimistic-lock="version">
+        <id name="idBedel" type="java.lang.Integer">
+            <column name="id_bedel" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="turno" class="db.model.Turno" fetch="select">
+            <column name="id_turno" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuario" class="db.model.Usuario" fetch="select">
+            <column name="id_usuario" not-null="true" />
+        </many-to-one>
+        <property name="nombreBedel" type="string">
+            <column name="nombre_bedel" length="20" />
+        </property>
+        <property name="apellidoBedel" type="string">
+            <column name="apellido_bedel" length="20" />
+        </property>
+        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_bedel" not-null="true" />
+            </key>
+            <one-to-many class="db.model.Reserva" />
+        </set>
+    </class>
+</hibernate-mapping>

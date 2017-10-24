@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.model.Turno" table="turno" catalog="tpdds2017" optimistic-lock="version">
+        <id name="idTurno" type="java.lang.Integer">
+            <column name="id_turno" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreTurno" type="string">
+            <column name="nombre_turno" length="6" not-null="true" />
+        </property>
+        <set name="bedels" table="bedel" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_turno" not-null="true" />
+            </key>
+            <one-to-many class="db.model.Bedel" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.model.Periodica" table="periodica" catalog="tpdds2017" optimistic-lock="version">
+        <id name="idReserva" type="int">
+            <column name="id_reserva" />
+            <generator class="foreign">
+                <param name="property">reserva</param>
+            </generator>
+        </id>
+        <many-to-one name="periodo" class="db.model.Periodo" fetch="select">
+            <column name="id_periodo" not-null="true" />
+        </many-to-one>
+        <one-to-one name="reserva" class="db.model.Reserva" constrained="true"></one-to-one>
+    </class>
+</hibernate-mapping>

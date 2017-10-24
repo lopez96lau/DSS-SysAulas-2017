@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.model.Multimedios" table="multimedios" catalog="tpdds2017" optimistic-lock="version">
+        <id name="idAula" type="int">
+            <column name="id_aula" />
+            <generator class="foreign">
+                <param name="property">aula</param>
+            </generator>
+        </id>
+        <one-to-one name="aula" class="db.model.Aula" constrained="true"></one-to-one>
+        <property name="televisor" type="string">
+            <column name="televisor" length="2" />
+        </property>
+        <property name="canion" type="string">
+            <column name="canion" length="2" />
+        </property>
+        <property name="computadora" type="string">
+            <column name="computadora" length="2" />
+        </property>
+        <property name="dvd" type="string">
+            <column name="dvd" length="2" />
+        </property>
+    </class>
+</hibernate-mapping>

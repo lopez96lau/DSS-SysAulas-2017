@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.model.HistorialContrasenias" table="historial_contrasenias" catalog="tpdds2017" optimistic-lock="version">
+        <id name="idCambio" type="java.lang.Integer">
+            <column name="id_cambio" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="politicaContrasenias" class="db.model.PoliticaContrasenias" fetch="select">
+            <column name="id_politica" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuario" class="db.model.Usuario" fetch="select">
+            <column name="id_usuario" not-null="true" />
+        </many-to-one>
+        <property name="fechaCambio" type="date">
+            <column name="fecha_cambio" length="10" />
+        </property>
+        <property name="contraseniaNueva" type="string">
+            <column name="contrasenia_nueva" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

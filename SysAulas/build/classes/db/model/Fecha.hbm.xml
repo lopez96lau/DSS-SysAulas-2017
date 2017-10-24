@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.model.Fecha" table="fecha" catalog="tpdds2017" optimistic-lock="version">
+        <id name="idFecha" type="java.lang.Integer">
+            <column name="id_fecha" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="dia" class="db.model.Dia" fetch="select">
+            <column name="id_dia" not-null="true" />
+        </many-to-one>
+        <property name="duracion" type="java.lang.Integer">
+            <column name="duracion" />
+        </property>
+        <property name="horaInicio" type="time">
+            <column name="hora_inicio" length="8" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="fecha" length="10" />
+        </property>
+        <property name="idReserva" type="java.lang.Integer">
+            <column name="id_reserva" />
+        </property>
+        <one-to-one name="aulaAsociaFecha" class="db.model.AulaAsociaFecha"></one-to-one>
+    </class>
+</hibernate-mapping>

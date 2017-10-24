@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.model.Reserva" table="reserva" catalog="tpdds2017" optimistic-lock="version">
+        <id name="idReserva" type="java.lang.Integer">
+            <column name="id_reserva" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="bedel" class="db.model.Bedel" fetch="select">
+            <column name="id_bedel" not-null="true" />
+        </many-to-one>
+        <many-to-one name="catedra" class="db.model.Catedra" fetch="select">
+            <column name="id_catedra" not-null="true" />
+        </many-to-one>
+        <many-to-one name="docente" class="db.model.Docente" fetch="select">
+            <column name="id_docente" not-null="true" />
+        </many-to-one>
+        <property name="cantidadAlumnos" type="java.lang.Integer">
+            <column name="cantidad_alumnos" />
+        </property>
+        <one-to-one name="esporadica" class="db.model.Esporadica"></one-to-one>
+        <set name="aulas" table="aula" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_reserva" not-null="true" />
+            </key>
+            <one-to-many class="db.model.Aula" />
+        </set>
+        <one-to-one name="periodica" class="db.model.Periodica"></one-to-one>
+    </class>
+</hibernate-mapping>
