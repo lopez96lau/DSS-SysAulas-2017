@@ -60,9 +60,9 @@ public class RegistrarBedel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SysAulas - Registrar Bedel [ADMINISTRADOR]");
-        setPreferredSize(new java.awt.Dimension(350, 360));
+        setPreferredSize(new java.awt.Dimension(370, 370));
         setResizable(false);
-        setSize(new java.awt.Dimension(350, 360));
+        setSize(new java.awt.Dimension(370, 370));
         setType(java.awt.Window.Type.UTILITY);
 
         lblRegistrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
