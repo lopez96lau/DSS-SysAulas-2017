@@ -152,7 +152,7 @@ public class Inicio extends javax.swing.JFrame {
                 try {
                     Usuario encontrado = null;
                     tx = sesion.beginTransaction();
-                    List usuarios = sesion.createQuery("FROM usuario").list(); 
+                    List usuarios = sesion.createQuery("FROM Usuario").list(); 
                     for (Iterator iterator = usuarios.iterator(); iterator.hasNext();){
                        Usuario u = (Usuario) iterator.next(); 
                        if (tmpUsuario.equals(u.getNombreUsuario()) && Arrays.equals(tmpContraseña, u.getContrasenia().toCharArray())) {
@@ -161,14 +161,21 @@ public class Inicio extends javax.swing.JFrame {
                     }
                     tx.commit();
                     
+                    tx = null;
+                    
                     if (encontrado != null) {
-                        
-                            //Fijarse si existe y si es admin o usuario
-                            adminSesion.setUsuarioActual(encontrado);
-                            MenuAdmin menuAdmin = new MenuAdmin(adminSesion);
+                            tx = sesion.beginTransaction();
+                            List administradores = sesion.createQuery("FROM Administrador WHERE id_usuario="+encontrado.getIdUsuario()).list(); 
+                            if (administradores.size() > 0) {
+                                 adminSesion.setUsuarioActual(encontrado);
+                                MenuAdmin menuAdmin = new MenuAdmin(adminSesion);
 
-                            menuAdmin.setVisible(true);
-                            this.setVisible(false);
+                                menuAdmin.setVisible(true);
+                                this.setVisible(false);
+                            } else {
+                                JOptionPane.showMessageDialog(this,"Solo pueden ingresar administradores.","Error en inicio de sesión",JOptionPane.ERROR_MESSAGE);
+                            }
+                            tx.commit();
                     } else {
                         JOptionPane.showMessageDialog(this,"Nombre de usuario o contraseña no corresponden con ningun usuario.","Error en inicio de sesión",JOptionPane.ERROR_MESSAGE);
                     }
