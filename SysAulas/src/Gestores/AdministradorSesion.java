@@ -7,15 +7,27 @@ package Gestores;
 
 import Forms.Inicio;
 import Forms.MenuAdmin;
+import db.model.Usuario;
+import org.hibernate.Session;
 
 /**
  *
  * @author lucia
  */
 public class AdministradorSesion {
-    String usuarioActual; //Cambiar esto
+    Usuario usuarioActual;
     Inicio menuInicio;
     MenuAdmin menuAdmin;
+    Session sesion;
+
+    public Session getSesion() {
+        return sesion;
+    }
+
+    public void setSesion(Session sesion) {
+        this.sesion = sesion;
+    }
+    
 
     public MenuAdmin getMenuAdmin() {
         return menuAdmin;
@@ -37,11 +49,11 @@ public class AdministradorSesion {
     }
     
     
-    public String getUsuarioActual() {
+    public Usuario getUsuarioActual() {
         return usuarioActual;
     }
 
-    public void setUsuarioActual(String usuarioActual) {
+    public void setUsuarioActual(Usuario usuarioActual) {
         this.usuarioActual = usuarioActual;
     }
     

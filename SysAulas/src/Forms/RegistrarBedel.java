@@ -26,7 +26,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
     public RegistrarBedel(AdministradorSesion a) {
         initComponents();
         adminSesion = a;
-        lblNombreAdmin.setText(adminSesion.getUsuarioActual());
+        lblNombreAdmin.setText(adminSesion.getUsuarioActual().getNombreUsuario());
     }
 
     /**

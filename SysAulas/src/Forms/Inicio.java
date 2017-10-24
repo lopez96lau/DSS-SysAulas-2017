@@ -6,8 +6,15 @@
 package Forms;
 
 import Gestores.AdministradorSesion;
+import db.model.Usuario;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -16,10 +23,7 @@ import javax.swing.JOptionPane;
 public class Inicio extends javax.swing.JFrame {
 
     
-    private AdministradorSesion adminSesion;
-    private String usuario = "lucho96";
-    private char[] contraseña = "0123456789".toCharArray();
-    
+    private AdministradorSesion adminSesion;    
     
     public void setAdminSesion(AdministradorSesion adminSesion) {
         this.adminSesion = adminSesion;
@@ -142,17 +146,38 @@ public class Inicio extends javax.swing.JFrame {
             if (txtContraseña.getPassword().length >= 10 &&  txtContraseña.getPassword().length <= 20) {
                 tmpUsuario = txtUsuario.getText();
                 tmpContraseña = txtContraseña.getPassword();
-                //Buscamos en db...
-                if (tmpUsuario.equals(usuario) && Arrays.equals(tmpContraseña, contraseña)) {
+                
+                Transaction tx = null;
+                Session sesion = adminSesion.getSesion();
+                try {
+                    Usuario encontrado = null;
+                    tx = sesion.beginTransaction();
+                    List usuarios = sesion.createQuery("FROM usuario").list(); 
+                    for (Iterator iterator = usuarios.iterator(); iterator.hasNext();){
+                       Usuario u = (Usuario) iterator.next(); 
+                       if (tmpUsuario.equals(u.getNombreUsuario()) && Arrays.equals(tmpContraseña, u.getContrasenia().toCharArray())) {
+                           encontrado = u;
+                        }
+                    }
+                    tx.commit();
                     
-                    //Fijarse si existe y si es admin o usuario
-                    adminSesion.setUsuarioActual(usuario);
-                    MenuAdmin menuAdmin = new MenuAdmin(adminSesion);
-                    
-                    menuAdmin.setVisible(true);
-                    this.setVisible(false);
-                    
-                }
+                    if (encontrado != null) {
+                        
+                            //Fijarse si existe y si es admin o usuario
+                            adminSesion.setUsuarioActual(encontrado);
+                            MenuAdmin menuAdmin = new MenuAdmin(adminSesion);
+
+                            menuAdmin.setVisible(true);
+                            this.setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(this,"Nombre de usuario o contraseña no corresponden con ningun usuario.","Error en inicio de sesión",JOptionPane.ERROR_MESSAGE);
+                    }
+                 } catch (HibernateException e) {
+                    if (tx!=null) tx.rollback();
+                    e.printStackTrace(); 
+                 } /*finally {
+                    sesion.close(); 
+                 }*/
                 
             } else {
                 JOptionPane.showMessageDialog(this,"Longitud de contraseña invalida.","Error en inicio de sesión",JOptionPane.ERROR_MESSAGE);

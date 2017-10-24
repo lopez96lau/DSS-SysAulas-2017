@@ -25,7 +25,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     public MenuAdmin(AdministradorSesion a) {
         initComponents();
         adminSesion = a;
-        lblNombreAdmin.setText(adminSesion.getUsuarioActual());
+        lblNombreAdmin.setText(adminSesion.getUsuarioActual().getNombreUsuario());
     }
 
     /**
@@ -143,7 +143,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarBedelActionPerformed
 
     private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
-        adminSesion.setUsuarioActual("");
+        adminSesion.setUsuarioActual(null);
         adminSesion.getMenuInicio().resetearCampos();
         adminSesion.getMenuInicio().setVisible(true);
         this.dispose();
