@@ -101,6 +101,11 @@ public class RegistrarBedel extends javax.swing.JFrame {
                 txtNombreFocusGained(evt);
             }
         });
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
 
         txtApellido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtApellido.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
@@ -229,6 +234,10 @@ public class RegistrarBedel extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtNombre.setText("");
     }//GEN-LAST:event_txtNombreFocusGained
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     /**
      * @param args the command line arguments

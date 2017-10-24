@@ -147,9 +147,12 @@
         <Property name="toolTipText" type="java.lang.String" value="Cierre su sesi&#xf3;n y vuelva al inicio"/>
         <Property name="horizontalTextPosition" type="int" value="2"/>
       </Properties>
+<<<<<<< Updated upstream
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCerrarSesionMouseClicked"/>
       </Events>
+=======
+>>>>>>> Stashed changes
     </Component>
   </SubComponents>
 </Form>
