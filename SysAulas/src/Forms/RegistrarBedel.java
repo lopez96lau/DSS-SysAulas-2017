@@ -6,7 +6,14 @@
 package Forms;
 
 import Gestores.AdministradorSesion;
+import db.model.Bedel;
+import db.model.Turno;
+import db.model.Usuario;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -258,12 +265,41 @@ public class RegistrarBedel extends javax.swing.JFrame {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
-        //turno = cmbTurno.get ni idea que poner aca...
+        Integer turnoID = cmbTurno.getSelectedIndex(); 
         String usuario = txtNombreUsuario.getText();
-        char[] contraseña = txtContraseña1.getPassword();
-        char[] contraseñaRepetir = txtContraseña2.getPassword();
-        if (contraseña == contraseñaRepetir) {
+        String contraseña = new String(txtContraseña1.getPassword());
+        String contraseñaRepetir = new String(txtContraseña2.getPassword());
+        if (contraseña.equals(contraseñaRepetir)) {
             
+            
+            Session sesion = adminSesion.getSesion();
+            Transaction tx = null;
+            try {
+                tx = sesion.beginTransaction();
+                Turno turno = (Turno) sesion.load(Turno.class, turnoID);
+                Usuario nuevoUsuario = new Usuario(usuario, contraseña);
+                Bedel nuevoBedel = new Bedel(turno, nuevoUsuario, nombre, apellido, null /*Set reservas*/);
+                Integer usuarioID = (Integer) sesion.save(nuevoUsuario);
+                nuevoUsuario.setIdUsuario(usuarioID);
+                Integer bedelID = (Integer) sesion.save(nuevoBedel);
+                nuevoBedel.setIdBedel(bedelID);
+                
+                
+                tx.commit();
+            } catch (HibernateException e) {
+                if (tx!=null) tx.rollback();
+                e.printStackTrace(); 
+            } /*finally {
+            session.close(); 
+            }*/
+            
+            JOptionPane.showMessageDialog(this, "Usuario "+usuario+" creado con exito!");
+            txtNombre.setText("Nombre");
+            txtApellido.setText("Apellido");
+            cmbTurno.setSelectedIndex(0);
+            txtNombreUsuario.setText("Usuario");
+            txtContraseña1.setText("Contraseña1");
+            txtContraseña2.setText("Contraseña2");
         } else {
             JOptionPane.showMessageDialog(this,"La contraseña ingresada no coincide con la repetida.","Error de registro",JOptionPane.ERROR_MESSAGE);
         }
@@ -277,7 +313,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
         txtNombre.setText("Nombre");
         txtApellido.setText("Apellido");
-        //turno>  ni idea que poner aca...
+        cmbTurno.setSelectedIndex(0);
         txtNombreUsuario.setText("Usuario");
         txtContraseña1.setText("Contraseña1");
         txtContraseña2.setText("Contraseña2");

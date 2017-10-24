@@ -6,6 +6,7 @@
 package Forms;
 
 import Gestores.AdministradorSesion;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -76,6 +77,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         btnBuscarBedel.setText("Buscar Bedel");
         btnBuscarBedel.setToolTipText("Busque los bedeles del sistema");
         btnBuscarBedel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnBuscarBedel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarBedelMouseClicked(evt);
+            }
+        });
 
         btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/log_out.png"))); // NOI18N
         btnCerrarSesion.setText("Cerrar Sesión");
@@ -148,6 +154,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         adminSesion.getMenuInicio().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCerrarSesionMouseClicked
+
+    private void btnBuscarBedelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarBedelMouseClicked
+        JOptionPane.showMessageDialog(this,"Area en construccion.","Error",JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_btnBuscarBedelMouseClicked
 
     
 
