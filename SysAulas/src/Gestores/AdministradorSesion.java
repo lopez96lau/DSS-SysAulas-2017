@@ -6,6 +6,7 @@
 package Gestores;
 
 import Forms.Inicio;
+import Forms.MenuAdmin;
 
 /**
  *
@@ -14,6 +15,18 @@ import Forms.Inicio;
 public class AdministradorSesion {
     String usuarioActual; //Cambiar esto
     Inicio menuInicio;
+    MenuAdmin menuAdmin;
+
+    public MenuAdmin getMenuAdmin() {
+        return menuAdmin;
+    }
+
+    public void setMenuAdmin(MenuAdmin menuAdmin) {
+        this.menuAdmin = menuAdmin;
+    }
+    
+    
+    
 
     public Inicio getMenuInicio() {
         return menuInicio;

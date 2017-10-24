@@ -56,7 +56,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
         txtContraseña2 = new javax.swing.JPasswordField();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        btnCerrarSesion = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SysAulas - Registrar Bedel [ADMINISTRADOR]");
@@ -135,6 +135,11 @@ public class RegistrarBedel extends javax.swing.JFrame {
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setToolTipText("Cancele el ingreso de datos");
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseClicked(evt);
+            }
+        });
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
@@ -145,10 +150,15 @@ public class RegistrarBedel extends javax.swing.JFrame {
             }
         });
 
-        btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back_menu.png"))); // NOI18N
-        btnCerrarSesion.setText("Volver al Menu");
-        btnCerrarSesion.setToolTipText("Vuelva al menu administrador");
-        btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back_menu.png"))); // NOI18N
+        btnVolver.setText("Volver al Menu");
+        btnVolver.setToolTipText("Vuelva al menu administrador");
+        btnVolver.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnVolver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVolverMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -160,7 +170,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblRegistrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCerrarSesion))
+                        .addComponent(btnVolver))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(137, 137, 137)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -195,7 +205,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRegistrar)
-                    .addComponent(btnCerrarSesion))
+                    .addComponent(btnVolver))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,6 +269,20 @@ public class RegistrarBedel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
+    private void btnVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseClicked
+        adminSesion.getMenuAdmin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVolverMouseClicked
+
+    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+        txtNombre.setText("Nombre");
+        txtApellido.setText("Apellido");
+        //turno>  ni idea que poner aca...
+        txtNombreUsuario.setText("Usuario");
+        txtContraseña1.setText("Contraseña1");
+        txtContraseña2.setText("Contraseña2");
+    }//GEN-LAST:event_btnCancelarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -296,8 +320,8 @@ public class RegistrarBedel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cmbTurno;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblComplete;

@@ -136,6 +136,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarBedelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarBedelActionPerformed
+        adminSesion.setMenuAdmin(this);
         RegistrarBedel regBedel = new RegistrarBedel(adminSesion);
         regBedel.setVisible(true);
         this.setVisible(false);
