@@ -24,6 +24,10 @@ public class Inicio extends javax.swing.JFrame {
     public void setAdminSesion(AdministradorSesion adminSesion) {
         this.adminSesion = adminSesion;
     }
+    public void resetearCampos() {
+        txtUsuario.setText("Usuario");
+        txtContraseña.setText("Contraseña");
+    }
     
     /**
      * Creates new form Login
