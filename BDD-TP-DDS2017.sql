@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `administrador` (
   CONSTRAINT `FK_ADMINISTRADOR_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.administrador: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.administrador: ~0 rows (aproximadamente)
 DELETE FROM `administrador`;
 /*!40000 ALTER TABLE `administrador` DISABLE KEYS */;
 INSERT INTO `administrador` (`id_admin`, `id_usuario`) VALUES
@@ -79,11 +79,13 @@ CREATE TABLE IF NOT EXISTS `bedel` (
   KEY `id_turno` (`id_turno`),
   CONSTRAINT `FK_BEDEL_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
   CONSTRAINT `FK_PERTENECE_A_TURNO` FOREIGN KEY (`id_turno`) REFERENCES `turno` (`id_turno`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.bedel: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.bedel: ~1 rows (aproximadamente)
 DELETE FROM `bedel`;
 /*!40000 ALTER TABLE `bedel` DISABLE KEYS */;
+INSERT INTO `bedel` (`id_bedel`, `nombre_bedel`, `apellido_bedel`, `id_usuario`, `id_turno`) VALUES
+	(3, 'Mariano', 'Roces', 4, 1);
 /*!40000 ALTER TABLE `bedel` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.catedra
@@ -316,11 +318,15 @@ CREATE TABLE IF NOT EXISTS `turno` (
   `id_turno` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_turno` varchar(6) NOT NULL,
   PRIMARY KEY (`id_turno`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.turno: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.turno: ~3 rows (aproximadamente)
 DELETE FROM `turno`;
 /*!40000 ALTER TABLE `turno` DISABLE KEYS */;
+INSERT INTO `turno` (`id_turno`, `nombre_turno`) VALUES
+	(1, 'MAÑANA'),
+	(2, 'TARDE'),
+	(3, 'NOCHE');
 /*!40000 ALTER TABLE `turno` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.usuario
@@ -329,13 +335,14 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `nombre_usuario` varchar(20) NOT NULL,
   `contrasenia` varchar(20) NOT NULL,
   PRIMARY KEY (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.usuario: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.usuario: ~2 rows (aproximadamente)
 DELETE FROM `usuario`;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`id_usuario`, `nombre_usuario`, `contrasenia`) VALUES
-	(1, 'matute2208', 'elloco22');
+	(1, 'matute2208', 'elloco2208'),
+	(4, 'mariano03', '0123456789');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
