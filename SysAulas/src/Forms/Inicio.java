@@ -5,16 +5,9 @@
  */
 package Forms;
 
+import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorSesion;
-import db.model.Usuario;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import javax.swing.JOptionPane;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -22,12 +15,6 @@ import org.hibernate.Transaction;
  */
 public class Inicio extends javax.swing.JFrame {
 
-    
-    private AdministradorSesion adminSesion;    
-    
-    public void setAdminSesion(AdministradorSesion adminSesion) {
-        this.adminSesion = adminSesion;
-    }
     public void resetearCampos() {
         txtUsuario.setText("Usuario");
         txtContraseña.setText("Contraseña");
@@ -141,56 +128,27 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseClicked
         String tmpUsuario;
-        char[] tmpContraseña;
-        if (txtUsuario.getText().length() >= 7 && txtUsuario.getText().length() <= 15) {
-            if (txtContraseña.getPassword().length >= 10 &&  txtContraseña.getPassword().length <= 20) {
-                tmpUsuario = txtUsuario.getText();
-                tmpContraseña = txtContraseña.getPassword();
-                
-                Transaction tx = null;
-                Session sesion = adminSesion.getSesion();
-                try {
-                    Usuario encontrado = null;
-                    tx = sesion.beginTransaction();
-                    List usuarios = sesion.createQuery("FROM Usuario").list(); 
-                    for (Iterator iterator = usuarios.iterator(); iterator.hasNext();){
-                       Usuario u = (Usuario) iterator.next(); 
-                       if (tmpUsuario.equals(u.getNombreUsuario()) && Arrays.equals(tmpContraseña, u.getContrasenia().toCharArray())) {
-                           encontrado = u;
-                        }
-                    }
-                    tx.commit();
-                    
-                    tx = null;
-                    
-                    if (encontrado != null) {
-                            tx = sesion.beginTransaction();
-                            List administradores = sesion.createQuery("FROM Administrador WHERE id_usuario="+encontrado.getIdUsuario()).list(); 
-                            if (administradores.size() > 0) {
-                                 adminSesion.setUsuarioActual(encontrado);
-                                MenuAdmin menuAdmin = new MenuAdmin(adminSesion);
-
-                                menuAdmin.setVisible(true);
-                                this.setVisible(false);
-                            } else {
-                                JOptionPane.showMessageDialog(this,"Solo pueden ingresar administradores.","Error en inicio de sesión",JOptionPane.ERROR_MESSAGE);
-                            }
-                            tx.commit();
-                    } else {
-                        JOptionPane.showMessageDialog(this,"Nombre de usuario o contraseña no corresponden con ningun usuario.","Error en inicio de sesión",JOptionPane.ERROR_MESSAGE);
-                    }
-                 } catch (HibernateException e) {
-                    if (tx!=null) tx.rollback();
-                    e.printStackTrace(); 
-                 } /*finally {
-                    sesion.close(); 
-                 }*/
-                
-            } else {
-                JOptionPane.showMessageDialog(this,"Longitud de contraseña invalida.","Error en inicio de sesión",JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this,"Longitud de usuario invalido.","Error en inicio de sesión",JOptionPane.ERROR_MESSAGE);
+        String tmpContraseña;
+        tmpUsuario = txtUsuario.getText();
+        tmpContraseña = new String(txtContraseña.getPassword());
+        Integer resultado = AdministradorSesion.iniciarSesion(tmpUsuario, tmpContraseña);
+        switch (resultado) {
+            case 0:
+                AdministradorInterfaz.getMenuAdmin().setVisible(true);
+                this.setVisible(false);
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "Solo pueden ingresar administradores.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña no corresponden con ningun usuario.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(this, "Longitud de contraseña invalida.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 4:
+                JOptionPane.showMessageDialog(this, "Longitud de nombre de usuario invalida.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                break;
         }
         
     }//GEN-LAST:event_btnIngresarMouseClicked

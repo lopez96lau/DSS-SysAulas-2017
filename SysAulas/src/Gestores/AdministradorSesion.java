@@ -5,57 +5,43 @@
  */
 package Gestores;
 
-import Forms.Inicio;
-import Forms.MenuAdmin;
+import Dao.UsuarioDao;
 import db.model.Usuario;
-import org.hibernate.Session;
 
 /**
  *
  * @author lucia
  */
 public class AdministradorSesion {
-    Usuario usuarioActual;
-    Inicio menuInicio;
-    MenuAdmin menuAdmin;
-    Session sesion;
-
-    public Session getSesion() {
-        return sesion;
-    }
-
-    public void setSesion(Session sesion) {
-        this.sesion = sesion;
-    }
+    private static Usuario usuarioActual;
     
-
-    public MenuAdmin getMenuAdmin() {
-        return menuAdmin;
-    }
-
-    public void setMenuAdmin(MenuAdmin menuAdmin) {
-        this.menuAdmin = menuAdmin;
-    }
-    
-    
-    
-
-    public Inicio getMenuInicio() {
-        return menuInicio;
-    }
-
-    public void setMenuInicio(Inicio menuInicio) {
-        this.menuInicio = menuInicio;
-    }
-    
-    
-    public Usuario getUsuarioActual() {
+    public static Usuario getUsuarioActual() {
         return usuarioActual;
     }
 
-    public void setUsuarioActual(Usuario usuarioActual) {
-        this.usuarioActual = usuarioActual;
+    public static void setUsuarioActual(Usuario userActual) {
+        usuarioActual = userActual;
     }
-    
-    
+
+    public static Integer iniciarSesion(String tmpUsuario, String tmpContraseña) {
+        if (AdministradorPolitica.validarLongitudUsuario(tmpUsuario)) {
+            if (AdministradorPolitica.validarLongitudContraseña(tmpContraseña)) {
+                Usuario encontrado = UsuarioDao.find(tmpUsuario);
+                if (encontrado != null && encontrado.getContrasenia().equals(tmpContraseña)) {
+                    if (UsuarioDao.esAdministrador(encontrado.getIdUsuario())) {
+                        AdministradorSesion.setUsuarioActual(encontrado);
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                } else {
+                    return 2;
+                }
+            } else {
+                return 3;
+            }
+        } else {
+            return 4;
+        }
+    }
 }

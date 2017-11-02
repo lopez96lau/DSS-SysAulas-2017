@@ -5,15 +5,10 @@
  */
 package Forms;
 
+import Gestores.AdministradorBedeles;
+import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorSesion;
-import db.model.Bedel;
-import db.model.Turno;
-import db.model.Usuario;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -21,19 +16,17 @@ import org.hibernate.Transaction;
  */
 public class RegistrarBedel extends javax.swing.JFrame {
 
-    private AdministradorSesion adminSesion;
-    
     /**
      * Creates new form RegistrarBedel
      */
     public RegistrarBedel() {
         initComponents();
     }
-    
-    public RegistrarBedel(AdministradorSesion a) {
-        initComponents();
-        adminSesion = a;
-        lblNombreAdmin.setText(adminSesion.getUsuarioActual().getNombreUsuario());
+
+    @Override
+    public void setVisible(boolean b) {
+        lblNombreAdmin.setText(AdministradorSesion.getUsuarioActual().getNombreUsuario());
+        super.setVisible(b);
     }
 
     /**
@@ -67,7 +60,6 @@ public class RegistrarBedel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SysAulas - Registrar Bedel [ADMINISTRADOR]");
-        setPreferredSize(new java.awt.Dimension(370, 370));
         setResizable(false);
         setSize(new java.awt.Dimension(370, 370));
         setType(java.awt.Window.Type.UTILITY);
@@ -265,50 +257,40 @@ public class RegistrarBedel extends javax.swing.JFrame {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
-        Integer turnoID = cmbTurno.getSelectedIndex(); 
+        Integer turnoID = cmbTurno.getSelectedIndex();
         String usuario = txtNombreUsuario.getText();
         String contraseña = new String(txtContraseña1.getPassword());
         String contraseñaRepetir = new String(txtContraseña2.getPassword());
-        if (contraseña.equals(contraseñaRepetir)) {
-            if (turnoID != 0) {
-                Session sesion = adminSesion.getSesion();
-                Transaction tx = null;
-                try {
-                    tx = sesion.beginTransaction();
-                    Turno turno = (Turno) sesion.load(Turno.class, turnoID);
-                    Usuario nuevoUsuario = new Usuario(usuario, contraseña);
-                    Bedel nuevoBedel = new Bedel(turno, nuevoUsuario, nombre, apellido, null /*Set reservas*/);
-                    Integer usuarioID = (Integer) sesion.save(nuevoUsuario);
-                    nuevoUsuario.setIdUsuario(usuarioID);
-                    Integer bedelID = (Integer) sesion.save(nuevoBedel);
-                    nuevoBedel.setIdBedel(bedelID);
+        Integer resultado = AdministradorBedeles.registrarBedel(nombre, apellido, turnoID, usuario, contraseña, contraseñaRepetir);
 
-
-                    tx.commit();
-                } catch (HibernateException e) {
-                    if (tx!=null) tx.rollback();
-                    e.printStackTrace(); 
-                } /*finally {
-                session.close(); 
-                }*/
-
-                JOptionPane.showMessageDialog(this, "Usuario "+usuario+" creado con exito!");
+        switch (resultado) {
+            case 0:
+                JOptionPane.showMessageDialog(this, "Usuario " + usuario + " creado con exito!");
                 txtNombre.setText("Nombre");
                 txtApellido.setText("Apellido");
                 cmbTurno.setSelectedIndex(0);
                 txtNombreUsuario.setText("Usuario");
-                txtContraseña1.setText("Contraseña1");
-                txtContraseña2.setText("Contraseña2");
-            } else {
-                JOptionPane.showMessageDialog(this,"No ha seleccionado un turno para el bedel.","Error de registro",JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this,"La contraseña ingresada no coincide con la repetida.","Error de registro",JOptionPane.ERROR_MESSAGE);
+                txtContraseña1.setText("Contraseñ1");
+                txtContraseña2.setText("Contraseñ2");
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "No ha seleccionado un turno para el bedel.", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "La contraseña ingresada no coincide con la repetida.", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(this, "El nombre de usuario escrito esta siendo usado por otra persona.", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 4:
+                JOptionPane.showMessageDialog(this, "Longitud del nombre de usuario (y/o contraseña) incorrecta(s)", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                break;
+
         }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseClicked
-        adminSesion.getMenuAdmin().setVisible(true);
+        AdministradorInterfaz.getMenuAdmin().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverMouseClicked
 
