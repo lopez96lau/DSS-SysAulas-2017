@@ -3,11 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/lucia/Documents/SysAulas%20GitKraken/TP-DDS-2017/SysAulas/src/Forms/RegistrarBedel.java</file>
-            <file>file:/C:/Users/lucia/Documents/SysAulas%20GitKraken/TP-DDS-2017/SysAulas/src/Gestores/AdministradorSesion.java</file>
-            <file>file:/C:/Users/lucia/Documents/SysAulas%20GitKraken/TP-DDS-2017/SysAulas/src/Gestores/AdministradorBedeles.java</file>
-            <file>file:/C:/Users/lucia/Documents/SysAulas%20GitKraken/TP-DDS-2017/SysAulas/src/Dao/UsuarioDao.java</file>
-            <file>file:/C:/Users/lucia/Documents/SysAulas%20GitKraken/TP-DDS-2017/SysAulas/src/Dao/TurnoDao.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/db/model/Administrador.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/db/model/Bedel.hbm.xml</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/db/model/Bedel.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/db/model/Administrador.hbm.xml</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/Dao/UsuarioDao.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/hibernate.cfg.xml</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/Gestores/AdministradorSesion.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/hibernate.reveng.xml</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/db/model/Usuario.hbm.xml</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/db/model/Usuario.java</file>
         </group>
     </open-files>
 </project-private>
