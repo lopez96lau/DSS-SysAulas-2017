@@ -5,6 +5,7 @@
  */
 package Dao;
 
+import db.model.Administrador;
 import db.model.Bedel;
 import db.model.Usuario;
 import java.util.ArrayList;
@@ -50,15 +51,15 @@ public class UsuarioDao {
         }
     }
 
-    public static void crearBedel(Usuario nuevoUsuario, Bedel nuevoBedel) {
+    public static void crearBedel(Bedel nuevoBedel) {
         Transaction tx = null;
         try {
             tx = sesion.beginTransaction();
-            Integer usuarioID = (Integer) sesion.save(nuevoUsuario);
-            nuevoUsuario.setIdUsuario(usuarioID);
+            //Usuario nuevoUsuario = new Usuario(nuevoBedel.getNombreUsuario(), nuevoBedel.getContrasenia());
+            //Integer usuarioID = (Integer) sesion.save(nuevoUsuario);
+            //nuevoUsuario.setIdUsuario(usuarioID);
             Integer bedelID = (Integer) sesion.save(nuevoBedel);
             nuevoBedel.setIdBedel(bedelID);
-
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -76,7 +77,8 @@ public class UsuarioDao {
         List administradores = new ArrayList<>();
         try {
             tx = sesion.beginTransaction();
-            administradores = sesion.createQuery("FROM Administrador WHERE id_usuario=" + idUsuario).list();
+            System.out.print(idUsuario);
+            administradores = sesion.createQuery("FROM "+Administrador.class.getName()+" a WHERE a.idUsuario="+idUsuario).list();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

@@ -49,7 +49,7 @@ Contributor(s):
     <property name="hibernate.show_sql">true</property>
     <mapping resource="db/model/Catedra.hbm.xml"/>
     <mapping resource="db/model/Periodo.hbm.xml"/>
-    <mapping resource="db/model/Administrador.hbm.xml"/>
+    <!--<mapping resource="db/model/Administrador.hbm.xml"/>-->
     <mapping resource="db/model/Multimedios.hbm.xml"/>
     <mapping resource="db/model/Turno.hbm.xml"/>
     <mapping resource="db/model/DiaPerteneceAPeriodica.hbm.xml"/>
@@ -65,7 +65,7 @@ Contributor(s):
     <mapping resource="db/model/Dia.hbm.xml"/>
     <mapping resource="db/model/Docente.hbm.xml"/>
     <mapping resource="db/model/Periodica.hbm.xml"/>
-    <mapping resource="db/model/Bedel.hbm.xml"/>
+    <!--<mapping resource="db/model/Bedel.hbm.xml"/>-->
     <mapping resource="db/model/Esporadica.hbm.xml"/>
     <mapping resource="db/model/HistorialContrasenias.hbm.xml"/>
   </session-factory>

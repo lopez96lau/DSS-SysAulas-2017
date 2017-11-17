@@ -32,5 +32,27 @@
             </key>
             <one-to-many class="db.model.Administrador" />
         </set>
+    
+    <joined-subclass name="db.model.Administrador" table="administrador">
+        <key column="id_usuario"></key>
+    </joined-subclass>
+    <joined-subclass name="db.model.Bedel" table="bedel">
+        <key column="id_usuario"></key>  
+        <many-to-one name="turno" class="db.model.Turno" fetch="select">
+            <column name="id_turno" not-null="true" />
+        </many-to-one>
+        <property name="nombreBedel" type="string">
+            <column name="nombre_bedel" length="20" />
+        </property>
+        <property name="apellidoBedel" type="string">
+            <column name="apellido_bedel" length="20" />
+        </property>
+        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_bedel" not-null="true" />
+            </key>
+            <one-to-many class="db.model.Reserva" />
+        </set>
+    </joined-subclass>
     </class>
 </hibernate-mapping>

@@ -22,11 +22,9 @@ public class AdministradorBedeles {
             if (turnoID != 0) {
                 if (UsuarioDao.find(usuario) == null) {
                     if (AdministradorPolitica.validarLongitudUsuario(usuario) && AdministradorPolitica.validarLongitudContraseña(contraseña)) {
-
-                        Usuario nuevoUsuario = new Usuario(usuario, contraseña);
                         Turno turno = TurnoDao.find(turnoID);
-                        Bedel nuevoBedel = new Bedel(turno, nuevoUsuario, nombre, apellido, null /*Set reservas*/);
-                        UsuarioDao.crearBedel(nuevoUsuario, nuevoBedel);
+                        Bedel nuevoBedel = new Bedel(turno, usuario, contraseña, nombre, apellido, null /*Set reservas*/);
+                        UsuarioDao.crearBedel(nuevoBedel);
 
                         return 0;
                     } else {

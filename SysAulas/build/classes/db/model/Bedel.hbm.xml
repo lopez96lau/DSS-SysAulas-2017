@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="db.model.Bedel" table="bedel" catalog="tpdds2017" optimistic-lock="version">
+    <union-subclass name="db.model.Bedel" table="bedel" catalog="tpdds2017" optimistic-lock="version" extends="db.model.Usuario">
         <id name="idBedel" type="java.lang.Integer">
             <column name="id_bedel" />
             <generator class="identity" />
@@ -26,5 +26,5 @@
             </key>
             <one-to-many class="db.model.Reserva" />
         </set>
-    </class>
+    </union-subclass>
 </hibernate-mapping>
