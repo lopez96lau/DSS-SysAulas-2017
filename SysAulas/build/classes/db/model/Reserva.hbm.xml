@@ -28,5 +28,16 @@
             <one-to-many class="db.model.Aula" />
         </set>
         <one-to-one name="periodica" class="db.model.Periodica"></one-to-one>
+        <joined-subclass name="db.model.Periodica" table="periodica" catalog="tpdds2017" optimistic-lock="version">
+            <key column="id_reserva"></key>
+        <many-to-one name="periodo" class="db.model.Periodo" fetch="select">
+            <column name="id_periodo" not-null="true" />
+        </many-to-one>
+        <one-to-one name="reserva" class="db.model.Reserva" constrained="true"></one-to-one>
+        </joined-subclass>
+        <joined-subclass name="db.model.Esporadica" table="esporadica" catalog="tpdds2017" optimistic-lock="version">
+            <key column="id_reserva"></key>
+        <one-to-one name="reserva" class="db.model.Reserva" constrained="true"></one-to-one>
+        </joined-subclass>
     </class>
 </hibernate-mapping>

@@ -35,5 +35,38 @@
         </set>
         <one-to-one name="informatica" class="db.model.Informatica"></one-to-one>
         <one-to-one name="multimedios" class="db.model.Multimedios"></one-to-one>
+        <joined-subclass name="db.model.Multimedios" table="multimedios" catalog="tpdds2017" optimistic-lock="version">
+            <key column="id_aula"></key>
+        <one-to-one name="aula" class="db.model.Aula" constrained="true"></one-to-one>
+        <property name="televisor" type="string">
+            <column name="televisor" length="2" />
+        </property>
+        <property name="canion" type="string">
+            <column name="canion" length="2" />
+        </property>
+        <property name="computadora" type="string">
+            <column name="computadora" length="2" />
+        </property>
+        <property name="dvd" type="string">
+            <column name="dvd" length="2" />
+        </property>
+        </joined-subclass>
+        <joined-subclass name="db.model.Informatica" table="informatica" catalog="tpdds2017" optimistic-lock="version">
+            <key column="id_aula"></key>
+        <one-to-one name="aula" class="db.model.Aula" constrained="true"></one-to-one>
+        <property name="canion" type="string">
+            <column name="canion" length="2" />
+        </property>
+        <property name="cantidadPcs" type="java.lang.Integer">
+            <column name="cantidad_pcs" />
+        </property>
+        </joined-subclass>
+        <joined-subclass name="db.model.SinRecursos" table="sin_recursos" catalog="tpdds2017" optimistic-lock="version">
+            <key column="id_aula"></key>
+        <one-to-one name="aula" class="db.model.Aula" constrained="true"></one-to-one>
+        <property name="ventiladores" type="string">
+            <column name="ventiladores" length="2" />
+        </property>
+        </joined-subclass>
     </class>
 </hibernate-mapping>
