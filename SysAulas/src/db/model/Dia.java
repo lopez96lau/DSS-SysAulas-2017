@@ -13,16 +13,29 @@ public class Dia  implements java.io.Serializable {
 
      private Integer idDia;
      private String nombreDia;
+     private Periodica periodica;
      private Set fechas = new HashSet(0);
-     private DiaPerteneceAPeriodica diaPerteneceAPeriodica;
+
+    public void setPeriodica(Periodica periodica) {
+        this.periodica = periodica;
+    }
+
+    public Periodica getPeriodica() {
+        return periodica;
+    }
 
     public Dia() {
     }
 
-    public Dia(String nombreDia, Set fechas, DiaPerteneceAPeriodica diaPerteneceAPeriodica) {
+    public Dia(Integer idDia, String nombreDia, Periodica periodica) {
+        this.idDia = idDia;
+        this.nombreDia = nombreDia;
+        this.periodica = periodica;
+    }
+
+    public Dia(String nombreDia, Set fechas) {
        this.nombreDia = nombreDia;
        this.fechas = fechas;
-       this.diaPerteneceAPeriodica = diaPerteneceAPeriodica;
     }
    
     public Integer getIdDia() {
@@ -45,13 +58,6 @@ public class Dia  implements java.io.Serializable {
     
     public void setFechas(Set fechas) {
         this.fechas = fechas;
-    }
-    public DiaPerteneceAPeriodica getDiaPerteneceAPeriodica() {
-        return this.diaPerteneceAPeriodica;
-    }
-    
-    public void setDiaPerteneceAPeriodica(DiaPerteneceAPeriodica diaPerteneceAPeriodica) {
-        this.diaPerteneceAPeriodica = diaPerteneceAPeriodica;
     }
 
 

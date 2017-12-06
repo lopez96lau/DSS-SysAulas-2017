@@ -17,11 +17,5 @@
         <property name="fechaFin" type="date">
             <column name="fecha_fin" length="10" />
         </property>
-        <set name="periodicas" table="periodica" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_periodo" not-null="true" />
-            </key>
-            <one-to-many class="db.model.Periodica" />
-        </set>
     </class>
 </hibernate-mapping>

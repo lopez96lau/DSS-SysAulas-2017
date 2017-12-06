@@ -10,34 +10,17 @@ public class SinRecursos extends Aula  implements java.io.Serializable {
 
 
      private int idAula;
-     private Aula aula;
      private String ventiladores;
 
     public SinRecursos() {
     }
 
-	
-    public SinRecursos(Aula aula) {
-        this.aula = aula;
-    }
-    public SinRecursos(Aula aula, String ventiladores) {
-       this.aula = aula;
+    public SinRecursos(String ventiladores) {
        this.ventiladores = ventiladores;
-    }
-   
-    public int getIdAula() {
-        return this.idAula;
     }
     
     public void setIdAula(int idAula) {
         this.idAula = idAula;
-    }
-    public Aula getAula() {
-        return this.aula;
-    }
-    
-    public void setAula(Aula aula) {
-        this.aula = aula;
     }
     public String getVentiladores() {
         return this.ventiladores;

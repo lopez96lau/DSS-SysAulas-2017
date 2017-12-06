@@ -5,12 +5,16 @@
  */
 package sysaulas;
 
+import Dao.HistorialContraseniasDao;
 import Dao.PoliticaDao;
 import Dao.TurnoDao;
 import Dao.UsuarioDao;
+import Forms.BuscarBedel;
 import Forms.Inicio;
 import Forms.MenuAdmin;
+import Forms.MenuBedel;
 import Forms.RegistrarBedel;
+import Forms.ReservarAula;
 import Gestores.AdministradorInterfaz;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -47,17 +51,37 @@ public class SysAulas {
         UsuarioDao.setSesion(sesion);
         PoliticaDao.setSesion(sesion);
         TurnoDao.setSesion(sesion);
+        HistorialContraseniasDao.setSesion(sesion);
+        
+        
+        ReservarAula reservarAula = new ReservarAula();
+        reservarAula.setLocationRelativeTo(null);
+        //reservarAula.setAlwaysOnTop(true);
+        AdministradorInterfaz.setReservarAula(reservarAula);
+        
+        MenuBedel menuBedel = new MenuBedel();
+        menuBedel.setLocationRelativeTo(null);
+        //menuBedel.setAlwaysOnTop(true);
+        AdministradorInterfaz.setMenuBedel(menuBedel);
+        
+        BuscarBedel buscarBedel = new BuscarBedel();
+        buscarBedel.setLocationRelativeTo(null);
+        //buscarBedel.setAlwaysOnTop(true);
+        AdministradorInterfaz.setBuscarBedel(buscarBedel);
 
         RegistrarBedel regBedel = new RegistrarBedel();
         regBedel.setLocationRelativeTo(null);
+        //regBedel.setAlwaysOnTop(true);
         AdministradorInterfaz.setRegistarBedel(regBedel);
 
         MenuAdmin menuAdmin = new MenuAdmin();
         menuAdmin.setLocationRelativeTo(null);
+        //menuAdmin.setAlwaysOnTop(true);
         AdministradorInterfaz.setMenuAdmin(menuAdmin);
 
         Inicio init = new Inicio();
         init.setLocationRelativeTo(null);
+        //init.setAlwaysOnTop(true);
         AdministradorInterfaz.setMenuInicio(init);
 
         init.setVisible(true);

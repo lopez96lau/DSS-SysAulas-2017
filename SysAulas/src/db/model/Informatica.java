@@ -10,36 +10,19 @@ public class Informatica extends Aula  implements java.io.Serializable {
 
 
      private int idAula;
-     private Aula aula;
      private String canion;
      private Integer cantidadPcs;
 
     public Informatica() {
     }
-
-	
-    public Informatica(Aula aula) {
-        this.aula = aula;
-    }
-    public Informatica(Aula aula, String canion, Integer cantidadPcs) {
-       this.aula = aula;
+    
+    public Informatica(String canion, Integer cantidadPcs) {
        this.canion = canion;
        this.cantidadPcs = cantidadPcs;
-    }
-   
-    public int getIdAula() {
-        return this.idAula;
     }
     
     public void setIdAula(int idAula) {
         this.idAula = idAula;
-    }
-    public Aula getAula() {
-        return this.aula;
-    }
-    
-    public void setAula(Aula aula) {
-        this.aula = aula;
     }
     public String getCanion() {
         return this.canion;

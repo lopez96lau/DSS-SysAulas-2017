@@ -52,13 +52,12 @@ Contributor(s):
     <!--<mapping resource="db/model/Administrador.hbm.xml"/>
     <mapping resource="db/model/Multimedios.hbm.xml"/>-->
     <mapping resource="db/model/Turno.hbm.xml"/>
-    <mapping resource="db/model/DiaPerteneceAPeriodica.hbm.xml"/>
+    <!--<mapping resource="db/model/DiaPerteneceAPeriodica.hbm.xml"/>-->
     <mapping resource="db/model/Fecha.hbm.xml"/>
     <mapping resource="db/model/PoliticaContrasenias.hbm.xml"/>
     <mapping resource="db/model/Aula.hbm.xml"/>
     <mapping resource="db/model/Reserva.hbm.xml"/>
     <mapping resource="db/model/Usuario.hbm.xml"/>
-    <mapping resource="db/model/AulaAsociaFecha.hbm.xml"/>
     <!--<mapping resource="db/model/Informatica.hbm.xml"/>-->
     <mapping resource="db/model/DocentePerteneceCatedra.hbm.xml"/>
     <!--<mapping resource="db/model/SinRecursos.hbm.xml"/>-->

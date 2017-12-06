@@ -5,6 +5,8 @@
  */
 package Forms;
 
+import Gestores.AdministradorInterfaz;
+import Gestores.AdministradorSesion;
 import javax.swing.DefaultCellEditor;
 
 /**
@@ -18,6 +20,12 @@ public class ReservarAula extends javax.swing.JFrame {
      */
     public ReservarAula() {
         initComponents();
+    }
+    
+    @Override
+    public void setVisible(boolean b) {
+        lblNombreBedel.setText(AdministradorSesion.getUsuarioActual().getNombreUsuario());
+        super.setVisible(b);
     }
 
     /**
@@ -84,7 +92,6 @@ public class ReservarAula extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SysAulas - Reservar Aula [BEDEL]");
-        setPreferredSize(new java.awt.Dimension(375, 660));
         setResizable(false);
         setSize(new java.awt.Dimension(375, 660));
         setType(java.awt.Window.Type.UTILITY);
@@ -113,6 +120,11 @@ public class ReservarAula extends javax.swing.JFrame {
         btnCerrarSesion.setText("Volver al Menu");
         btnCerrarSesion.setToolTipText("Vuelva al menu de bedel");
         btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCerrarSesionMouseClicked(evt);
+            }
+        });
 
         pnlPeriodo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Fijos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
         pnlPeriodo.setEnabled(false);
@@ -513,6 +525,11 @@ public class ReservarAula extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
+        AdministradorInterfaz.getMenuBedel().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesionMouseClicked
 
     /**
      * @param args the command line arguments

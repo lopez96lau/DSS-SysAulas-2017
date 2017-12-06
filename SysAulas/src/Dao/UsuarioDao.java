@@ -16,7 +16,7 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class UsuarioDao {
 
@@ -50,6 +50,54 @@ public class UsuarioDao {
             return null;
         }
     }
+    
+    
+    public static ArrayList<Bedel> findConApellido(String apellido) {
+        Transaction tx = null;
+        List bedeles = new ArrayList<>();
+        try {
+            tx = sesion.beginTransaction();
+            bedeles = sesion.createQuery("FROM Bedel b WHERE b.apellidoBedel ='" + apellido+"'").list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        
+        ArrayList<Bedel> lista = new ArrayList<>();
+        
+        for(Integer i=0; i<bedeles.size(); i++) {
+            lista.add((Bedel) bedeles.get(i));
+        }
+        
+        return lista;
+    }
+    
+    
+    public static ArrayList<Bedel> findConTurno(Integer idTurno) {
+        Transaction tx = null;
+        List bedeles = new ArrayList<>();
+        try {
+            tx = sesion.beginTransaction();
+            bedeles = sesion.createQuery("FROM Bedel b WHERE b.turno.idTurno ='" + idTurno+"'").list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        
+        ArrayList<Bedel> lista = new ArrayList<>();
+        
+        for(Integer i=0; i<bedeles.size(); i++) {
+            lista.add((Bedel) bedeles.get(i));
+        }
+        
+        return lista;
+    }
 
     public static void crearBedel(Bedel nuevoBedel) {
         Transaction tx = null;
@@ -60,6 +108,24 @@ public class UsuarioDao {
             //nuevoUsuario.setIdUsuario(usuarioID);
             Integer bedelID = (Integer) sesion.save(nuevoBedel);
             nuevoBedel.setIdBedel(bedelID);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        /*finally {
+                session.close(); 
+                }*/
+    }
+    
+    
+    public static void guardarBedel(Bedel bedel) {
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            sesion.update(bedel);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

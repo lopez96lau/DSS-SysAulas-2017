@@ -6,11 +6,8 @@
     <class name="db.model.SinRecursos" table="sin_recursos" catalog="tpdds2017" optimistic-lock="version">
         <id name="idAula" type="int">
             <column name="id_aula" />
-            <generator class="foreign">
-                <param name="property">aula</param>
-            </generator>
+            <generator class="identity" />
         </id>
-        <one-to-one name="aula" class="db.model.Aula" constrained="true"></one-to-one>
         <property name="ventiladores" type="string">
             <column name="ventiladores" length="2" />
         </property>

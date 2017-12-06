@@ -1,6 +1,10 @@
 package db.model;
 // Generated 24/10/2017 16:38:54 by Hibernate Tools 4.3.1
 
+import java.util.HashSet;
+import java.util.Set;
+
+
 
 
 /**
@@ -8,25 +12,22 @@ package db.model;
  */
 public class Periodica extends Reserva implements java.io.Serializable {
 
-
-     private int idReserva;
      private Periodo periodo;
-     private Reserva reserva;
+     private Set dias = new HashSet(0);
 
     public Periodica() {
     }
 
-    public Periodica(Periodo periodo, Reserva reserva) {
+    public Periodica(Periodo periodo) {
        this.periodo = periodo;
-       this.reserva = reserva;
     }
    
     public Integer getIdReserva() {
         return super.getIdReserva();
     }
     
-    public void setIdReserva(int idReserva) {
-        this.idReserva = idReserva;
+    public void setIdReserva(Integer idReserva) {
+        super.setIdReserva(idReserva);
     }
     public Periodo getPeriodo() {
         return this.periodo;
@@ -35,16 +36,6 @@ public class Periodica extends Reserva implements java.io.Serializable {
     public void setPeriodo(Periodo periodo) {
         this.periodo = periodo;
     }
-    public Reserva getReserva() {
-        return this.reserva;
-    }
-    
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
-    }
-
-
-
 
 }
 

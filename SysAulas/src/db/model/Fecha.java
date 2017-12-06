@@ -15,8 +15,8 @@ public class Fecha  implements java.io.Serializable {
      private Integer duracion;
      private Date horaInicio;
      private Date fecha;
-     private Integer idReserva;
-     private AulaAsociaFecha aulaAsociaFecha;
+     private Esporadica esporadica;
+     private Aula aula;
 
     public Fecha() {
     }
@@ -25,15 +25,26 @@ public class Fecha  implements java.io.Serializable {
     public Fecha(Dia dia) {
         this.dia = dia;
     }
-    public Fecha(Dia dia, Integer duracion, Date horaInicio, Date fecha, Integer idReserva, AulaAsociaFecha aulaAsociaFecha) {
-       this.dia = dia;
-       this.duracion = duracion;
-       this.horaInicio = horaInicio;
-       this.fecha = fecha;
-       this.idReserva = idReserva;
-       this.aulaAsociaFecha = aulaAsociaFecha;
+
+    public Fecha(Integer idFecha, Dia dia, Integer duracion, Date horaInicio, Date fecha, Aula aula) {
+        this.idFecha = idFecha;
+        this.dia = dia;
+        this.duracion = duracion;
+        this.horaInicio = horaInicio;
+        this.fecha = fecha;
+        this.aula = aula;
     }
-   
+
+    public Fecha(Integer idFecha, Dia dia, Integer duracion, Date horaInicio, Date fecha, Esporadica esporadica, Aula aula) {
+        this.idFecha = idFecha;
+        this.dia = dia;
+        this.duracion = duracion;
+        this.horaInicio = horaInicio;
+        this.fecha = fecha;
+        this.esporadica = esporadica;
+        this.aula = aula;
+    }
+      
     public Integer getIdFecha() {
         return this.idFecha;
     }
@@ -69,23 +80,22 @@ public class Fecha  implements java.io.Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    public Integer getIdReserva() {
-        return this.idReserva;
-    }
-    
-    public void setIdReserva(Integer idReserva) {
-        this.idReserva = idReserva;
-    }
-    public AulaAsociaFecha getAulaAsociaFecha() {
-        return this.aulaAsociaFecha;
-    }
-    
-    public void setAulaAsociaFecha(AulaAsociaFecha aulaAsociaFecha) {
-        this.aulaAsociaFecha = aulaAsociaFecha;
+
+    public void setEsporadica(Esporadica esporadica) {
+        this.esporadica = esporadica;
     }
 
+    public void setAula(Aula aula) {
+        this.aula = aula;
+    }
 
+    public Esporadica getEsporadica() {
+        return esporadica;
+    }
 
+    public Aula getAula() {
+        return aula;
+    }
 
 }
 

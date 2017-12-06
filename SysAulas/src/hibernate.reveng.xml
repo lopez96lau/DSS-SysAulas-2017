@@ -48,7 +48,6 @@ Contributor(s):
   <table-filter match-name="fecha"/>
   <table-filter match-name="dia"/>
   <table-filter match-name="historial_contrasenias"/>
-  <table-filter match-name="aula_asocia_fecha"/>
   <table-filter match-name="docente_pertenece_catedra"/>
   <table-filter match-name="catedra"/>
   <table-filter match-name="informatica"/>

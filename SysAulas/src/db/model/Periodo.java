@@ -16,16 +16,14 @@ public class Periodo  implements java.io.Serializable {
      private String tipoPeriodo;
      private Date fechaInicio;
      private Date fechaFin;
-     private Set periodicas = new HashSet(0);
 
     public Periodo() {
     }
 
-    public Periodo(String tipoPeriodo, Date fechaInicio, Date fechaFin, Set periodicas) {
+    public Periodo(String tipoPeriodo, Date fechaInicio, Date fechaFin) {
        this.tipoPeriodo = tipoPeriodo;
        this.fechaInicio = fechaInicio;
        this.fechaFin = fechaFin;
-       this.periodicas = periodicas;
     }
    
     public Integer getIdPeriodo() {
@@ -55,13 +53,6 @@ public class Periodo  implements java.io.Serializable {
     
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
-    }
-    public Set getPeriodicas() {
-        return this.periodicas;
-    }
-    
-    public void setPeriodicas(Set periodicas) {
-        this.periodicas = periodicas;
     }
 
 

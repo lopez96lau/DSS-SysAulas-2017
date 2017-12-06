@@ -12,7 +12,7 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class TurnoDao {
     private static Session sesion;

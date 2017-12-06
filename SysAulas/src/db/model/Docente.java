@@ -16,17 +16,15 @@ public class Docente  implements java.io.Serializable {
      private String apellidoDocente;
      private String emailDocente;
      private Set docentePerteneceCatedras = new HashSet(0);
-     private Set reservas = new HashSet(0);
 
     public Docente() {
     }
 
-    public Docente(String nombreDocente, String apellidoDocente, String emailDocente, Set docentePerteneceCatedras, Set reservas) {
+    public Docente(String nombreDocente, String apellidoDocente, String emailDocente, Set docentePerteneceCatedras) {
        this.nombreDocente = nombreDocente;
        this.apellidoDocente = apellidoDocente;
        this.emailDocente = emailDocente;
        this.docentePerteneceCatedras = docentePerteneceCatedras;
-       this.reservas = reservas;
     }
    
     public Integer getIdDocente() {
@@ -63,13 +61,6 @@ public class Docente  implements java.io.Serializable {
     
     public void setDocentePerteneceCatedras(Set docentePerteneceCatedras) {
         this.docentePerteneceCatedras = docentePerteneceCatedras;
-    }
-    public Set getReservas() {
-        return this.reservas;
-    }
-    
-    public void setReservas(Set reservas) {
-        this.reservas = reservas;
     }
 
 

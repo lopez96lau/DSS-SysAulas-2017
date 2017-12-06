@@ -14,9 +14,7 @@ public class Usuario  implements java.io.Serializable {
      private Integer idUsuario;
      private String nombreUsuario;
      private String contrasenia;
-     private Set bedels = new HashSet(0);
      private Set historialContraseniases = new HashSet(0);
-     private Set administradors = new HashSet(0);
 
     public Usuario() {
     }
@@ -26,12 +24,10 @@ public class Usuario  implements java.io.Serializable {
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
     }
-    public Usuario(String nombreUsuario, String contrasenia, Set bedels, Set historialContraseniases, Set administradors) {
+    public Usuario(String nombreUsuario, String contrasenia, Set historialContraseniases) {
        this.nombreUsuario = nombreUsuario;
        this.contrasenia = contrasenia;
-       this.bedels = bedels;
        this.historialContraseniases = historialContraseniases;
-       this.administradors = administradors;
     }
    
     public Integer getIdUsuario() {
@@ -55,13 +51,7 @@ public class Usuario  implements java.io.Serializable {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
-    public Set getBedels() {
-        return this.bedels;
-    }
     
-    public void setBedels(Set bedels) {
-        this.bedels = bedels;
-    }
     public Set getHistorialContraseniases() {
         return this.historialContraseniases;
     }
@@ -69,16 +59,10 @@ public class Usuario  implements java.io.Serializable {
     public void setHistorialContraseniases(Set historialContraseniases) {
         this.historialContraseniases = historialContraseniases;
     }
-    public Set getAdministradors() {
-        return this.administradors;
-    }
     
-    public void setAdministradors(Set administradors) {
-        this.administradors = administradors;
+    public void addHistorial(HistorialContrasenias h) {
+        this.historialContraseniases.add(h);
     }
-
-
-
 
 }
 

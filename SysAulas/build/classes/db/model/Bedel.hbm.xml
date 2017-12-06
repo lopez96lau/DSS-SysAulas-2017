@@ -20,11 +20,5 @@
         <property name="apellidoBedel" type="string">
             <column name="apellido_bedel" length="20" />
         </property>
-        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_bedel" not-null="true" />
-            </key>
-            <one-to-many class="db.model.Reserva" />
-        </set>
     </union-subclass>
 </hibernate-mapping>

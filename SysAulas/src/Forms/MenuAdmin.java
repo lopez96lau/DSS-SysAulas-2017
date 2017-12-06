@@ -153,7 +153,11 @@ public class MenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionMouseClicked
 
     private void btnBuscarBedelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarBedelMouseClicked
-        JOptionPane.showMessageDialog(this,"Area en construccion.","Error",JOptionPane.ERROR_MESSAGE);
+        //JOptionPane.showMessageDialog(this,"Area en construccion.","Error",JOptionPane.ERROR_MESSAGE);
+        
+        AdministradorInterfaz.getBuscarBedel().setVisible(true);
+        this.setVisible(false);
+        
     }//GEN-LAST:event_btnBuscarBedelMouseClicked
 
     

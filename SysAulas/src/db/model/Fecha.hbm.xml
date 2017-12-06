@@ -20,9 +20,11 @@
         <property name="fecha" type="date">
             <column name="fecha" length="10" />
         </property>
-        <property name="idReserva" type="java.lang.Integer">
-            <column name="id_reserva" />
-        </property>
-        <one-to-one name="aulaAsociaFecha" class="db.model.AulaAsociaFecha"></one-to-one>
+        <many-to-one name="esporadica" class="db.model.Esporadica" fetch="select">
+            <column name="id_reserva" not-null="true" />
+        </many-to-one>
+        <many-to-one name="aula" class="db.model.Aula" fetch="select">
+            <column name="id_aula" not-null="true" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

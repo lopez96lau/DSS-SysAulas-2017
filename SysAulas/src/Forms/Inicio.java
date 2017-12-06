@@ -138,7 +138,9 @@ public class Inicio extends javax.swing.JFrame {
                 this.setVisible(false);
                 break;
             case 1:
-                JOptionPane.showMessageDialog(this, "Solo pueden ingresar administradores.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(this, "Solo pueden ingresar administradores.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                AdministradorInterfaz.getMenuBedel().setVisible(true);
+                this.setVisible(false);
                 break;
             case 2:
                 JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña no corresponden con ningun usuario.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);

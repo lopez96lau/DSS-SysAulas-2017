@@ -11,12 +11,14 @@
         <property name="nombreDia" type="string">
             <column name="nombre_dia" length="9" />
         </property>
+        <many-to-one name="periodica" class="db.model.Periodica" fetch="select">
+            <column name="periodo" not-null="true" />
+        </many-to-one>
         <set name="fechas" table="fecha" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_dia" not-null="true" />
             </key>
             <one-to-many class="db.model.Fecha" />
         </set>
-        <one-to-one name="diaPerteneceAPeriodica" class="db.model.DiaPerteneceAPeriodica"></one-to-one>
     </class>
 </hibernate-mapping>

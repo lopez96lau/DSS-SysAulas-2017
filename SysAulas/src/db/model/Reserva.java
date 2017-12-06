@@ -16,9 +16,7 @@ public class Reserva  implements java.io.Serializable {
      private Catedra catedra;
      private Docente docente;
      private Integer cantidadAlumnos;
-     private Esporadica esporadica;
      private Set aulas = new HashSet(0);
-     private Periodica periodica;
 
     public Reserva() {
     }
@@ -29,14 +27,13 @@ public class Reserva  implements java.io.Serializable {
         this.catedra = catedra;
         this.docente = docente;
     }
-    public Reserva(Bedel bedel, Catedra catedra, Docente docente, Integer cantidadAlumnos, Esporadica esporadica, Set aulas, Periodica periodica) {
+    public Reserva(Bedel bedel, Catedra catedra, Docente docente, Integer cantidadAlumnos, Set aulas) {
        this.bedel = bedel;
        this.catedra = catedra;
        this.docente = docente;
        this.cantidadAlumnos = cantidadAlumnos;
-       this.esporadica = esporadica;
        this.aulas = aulas;
-       this.periodica = periodica;
+
     }
    
     public Integer getIdReserva() {
@@ -74,13 +71,7 @@ public class Reserva  implements java.io.Serializable {
     public void setCantidadAlumnos(Integer cantidadAlumnos) {
         this.cantidadAlumnos = cantidadAlumnos;
     }
-    public Esporadica getEsporadica() {
-        return this.esporadica;
-    }
-    
-    public void setEsporadica(Esporadica esporadica) {
-        this.esporadica = esporadica;
-    }
+
     public Set getAulas() {
         return this.aulas;
     }
@@ -88,13 +79,7 @@ public class Reserva  implements java.io.Serializable {
     public void setAulas(Set aulas) {
         this.aulas = aulas;
     }
-    public Periodica getPeriodica() {
-        return this.periodica;
-    }
-    
-    public void setPeriodica(Periodica periodica) {
-        this.periodica = periodica;
-    }
+
 
 
 

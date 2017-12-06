@@ -5,6 +5,9 @@
  */
 package Forms;
 
+import Gestores.AdministradorInterfaz;
+import Gestores.AdministradorSesion;
+
 /**
  *
  * @author Laureano
@@ -16,6 +19,12 @@ public class MenuBedel extends javax.swing.JFrame {
      */
     public MenuBedel() {
         initComponents();
+    }
+    
+    @Override
+    public void setVisible(boolean b) {
+        lblNombreBedel.setText(AdministradorSesion.getUsuarioActual().getNombreUsuario());
+        super.setVisible(b);
     }
 
     /**
@@ -57,16 +66,26 @@ public class MenuBedel extends javax.swing.JFrame {
         btnCerrarSesion.setText("Cerrar Sesión");
         btnCerrarSesion.setToolTipText("Cierre su sesión y vuelva al inicio");
         btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCerrarSesionMouseClicked(evt);
+            }
+        });
 
-        btnRegistrarAula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/1495069626_chair--plus.png"))); // NOI18N
+        btnRegistrarAula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/aula_add.png"))); // NOI18N
         btnRegistrarAula.setText("Reservar Aula");
         btnRegistrarAula.setToolTipText("Registre la reserva de un aula");
+        btnRegistrarAula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegistrarAulaMouseClicked(evt);
+            }
+        });
 
-        btnBuscarAula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/1495069660_chair--arrow.png"))); // NOI18N
+        btnBuscarAula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/aula_search.png"))); // NOI18N
         btnBuscarAula.setText("Buscar Aula");
         btnBuscarAula.setToolTipText("Busque y modifique la reserva de un aula");
 
-        btnGenerarListado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/1495070904_ui-combo-box-blue.png"))); // NOI18N
+        btnGenerarListado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/generate_list.png"))); // NOI18N
         btnGenerarListado.setText("Generar Listado");
         btnGenerarListado.setToolTipText("Genere distintos listados");
 
@@ -95,7 +114,7 @@ public class MenuBedel extends javax.swing.JFrame {
                                 .addComponent(btnRegistrarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(btnBuscarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnGenerarListado)))
                         .addGap(8, 8, 8)))
                 .addContainerGap())
@@ -123,6 +142,18 @@ public class MenuBedel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
+        AdministradorSesion.setUsuarioActual(null);
+        AdministradorInterfaz.getMenuInicio().resetearCampos();
+        AdministradorInterfaz.getMenuInicio().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesionMouseClicked
+
+    private void btnRegistrarAulaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarAulaMouseClicked
+        AdministradorInterfaz.getReservarAula().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnRegistrarAulaMouseClicked
 
     /**
      * @param args the command line arguments

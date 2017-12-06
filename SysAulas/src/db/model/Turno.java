@@ -13,7 +13,6 @@ public class Turno  implements java.io.Serializable {
 
      private Integer idTurno;
      private String nombreTurno;
-     private Set bedels = new HashSet(0);
 
     public Turno() {
     }
@@ -21,10 +20,6 @@ public class Turno  implements java.io.Serializable {
 	
     public Turno(String nombreTurno) {
         this.nombreTurno = nombreTurno;
-    }
-    public Turno(String nombreTurno, Set bedels) {
-       this.nombreTurno = nombreTurno;
-       this.bedels = bedels;
     }
    
     public Integer getIdTurno() {
@@ -41,17 +36,6 @@ public class Turno  implements java.io.Serializable {
     public void setNombreTurno(String nombreTurno) {
         this.nombreTurno = nombreTurno;
     }
-    public Set getBedels() {
-        return this.bedels;
-    }
-    
-    public void setBedels(Set bedels) {
-        this.bedels = bedels;
-    }
-
-
-
-
 }
 
 

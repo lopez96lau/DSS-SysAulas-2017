@@ -29,4 +29,9 @@ public class AdministradorPolitica {
         Integer limiteInferior = Integer.parseInt(politicaActual.getTipoPolitica().split("-")[2]);
         return(usuario.length() <= limiteSuperior && usuario.length() >= limiteInferior);
     }
+    
+    
+    public static PoliticaContrasenias getPolitica() {
+        return PoliticaDao.find(politicaActualID);
+    }
 }

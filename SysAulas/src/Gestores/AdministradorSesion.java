@@ -29,9 +29,10 @@ public class AdministradorSesion {
                 Usuario encontrado = UsuarioDao.find(tmpUsuario);
                 if (encontrado != null && encontrado.getContrasenia().equals(tmpContraseña)) {
                     if (UsuarioDao.esAdministrador(encontrado.getIdUsuario())) {
-                        AdministradorSesion.setUsuarioActual(encontrado);
+                        AdministradorSesion.setUsuarioActual(encontrado); //Admin
                         return 0;
                     } else {
+                        AdministradorSesion.setUsuarioActual(encontrado); //Bedel
                         return 1;
                     }
                 } else {

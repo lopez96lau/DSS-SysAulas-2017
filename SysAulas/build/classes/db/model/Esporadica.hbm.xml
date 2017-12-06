@@ -6,10 +6,14 @@
     <class name="db.model.Esporadica" table="esporadica" catalog="tpdds2017" optimistic-lock="version">
         <id name="idReserva" type="int">
             <column name="id_reserva" />
-            <generator class="foreign">
-                <param name="property">reserva</param>
-            </generator>
+            <generator class="identity" />
         </id>
-        <one-to-one name="reserva" class="db.model.Reserva" constrained="true"></one-to-one>
+        <set name="fechas" table="fecha" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_reserva" not-null="true" />
+            </key>
+            <one-to-many class="db.model.Fecha" />
+        </set>
     </class>
+    
 </hibernate-mapping>

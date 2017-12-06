@@ -5,17 +5,33 @@
  */
 package Forms;
 
+import Gestores.AdministradorBedeles;
+import Gestores.AdministradorInterfaz;
+import Gestores.AdministradorSesion;
+import db.model.Bedel;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Laureano
  */
 public class BuscarBedel extends javax.swing.JFrame {
 
+    
+    Integer indice = 0;
+    
     /**
      * Creates new form RegistrarBedel
      */
     public BuscarBedel() {
         initComponents();
+    }
+    
+    @Override
+    public void setVisible(boolean b) {
+        lblNombreAdministrador.setText(AdministradorSesion.getUsuarioActual().getNombreUsuario());
+        super.setVisible(b);
     }
 
     /**
@@ -29,7 +45,7 @@ public class BuscarBedel extends javax.swing.JFrame {
 
         lblBuscar = new javax.swing.JLabel();
         lblSesion = new javax.swing.JLabel();
-        lblNombreBedel = new javax.swing.JLabel();
+        lblNombreAdministrador = new javax.swing.JLabel();
         lblSeleccione = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblApellido = new javax.swing.JLabel();
@@ -42,6 +58,7 @@ public class BuscarBedel extends javax.swing.JFrame {
         cmbBuscarTurno = new javax.swing.JComboBox<>();
         chkApellido = new javax.swing.JCheckBox();
         chkTurno = new javax.swing.JCheckBox();
+        btnBuscar = new javax.swing.JButton();
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         cmbTurno = new javax.swing.JComboBox<>();
@@ -60,9 +77,9 @@ public class BuscarBedel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SysAulas - Buscar Bedel [ADMINISTRADOR]");
-        setPreferredSize(new java.awt.Dimension(380, 510));
+        setPreferredSize(new java.awt.Dimension(400, 600));
         setResizable(false);
-        setSize(new java.awt.Dimension(370, 510));
+        setSize(new java.awt.Dimension(400, 600));
         setType(java.awt.Window.Type.UTILITY);
 
         lblBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -70,8 +87,8 @@ public class BuscarBedel extends javax.swing.JFrame {
 
         lblSesion.setText("<html><u>Sesión Actual:</u></html>");
 
-        lblNombreBedel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblNombreBedel.setText("Nombre_Administrador");
+        lblNombreAdministrador.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblNombreAdministrador.setText("Nombre_Administrador");
 
         lblSeleccione.setText("Seleccione un método de búsqueda y modifique o elimine un bedel.");
 
@@ -93,17 +110,38 @@ public class BuscarBedel extends javax.swing.JFrame {
         lblContraseña2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblContraseña2.setText("Confirmar Contraseña");
 
-        pnlBusqueda.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        pnlBusqueda.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
 
         txtBuscarApellido.setText("---Apellido---");
         txtBuscarApellido.setToolTipText("Ingrese el apellido del bedel a buscar");
 
         cmbBuscarTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione Turno---", "MAÑANA", "TARDE", "NOCHE" }));
         cmbBuscarTurno.setToolTipText("Seleccione el turno del bedel a buscar");
+        cmbBuscarTurno.setEnabled(false);
 
+        chkApellido.setSelected(true);
         chkApellido.setText("Buscar por Apellido");
+        chkApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkApellidoActionPerformed(evt);
+            }
+        });
 
         chkTurno.setText("Buscar por Turno");
+        chkTurno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkTurnoActionPerformed(evt);
+            }
+        });
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user_search.png"))); // NOI18N
+        btnBuscar.setLabel("Buscar");
+        btnBuscar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user_search.png"))); // NOI18N
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBusquedaLayout = new javax.swing.GroupLayout(pnlBusqueda);
         pnlBusqueda.setLayout(pnlBusquedaLayout);
@@ -112,12 +150,17 @@ public class BuscarBedel extends javax.swing.JFrame {
             .addGroup(pnlBusquedaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chkApellido)
-                    .addComponent(chkTurno))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtBuscarApellido)
-                    .addComponent(cmbBuscarTurno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlBusquedaLayout.createSequentialGroup()
+                        .addGroup(pnlBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chkApellido)
+                            .addComponent(chkTurno))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscarApellido)
+                            .addComponent(cmbBuscarTurno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBusquedaLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnBuscar)))
                 .addContainerGap())
         );
         pnlBusquedaLayout.setVerticalGroup(
@@ -131,13 +174,17 @@ public class BuscarBedel extends javax.swing.JFrame {
                 .addGroup(pnlBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbBuscarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chkTurno))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(btnBuscar))
         );
+
+        btnBuscar.getAccessibleContext().setAccessibleName("Buscar");
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNombre.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtNombre.setText("Nombre");
         txtNombre.setToolTipText("Nombre del bedel actual");
+        txtNombre.setEnabled(false);
         txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtNombreFocusGained(evt);
@@ -148,10 +195,12 @@ public class BuscarBedel extends javax.swing.JFrame {
         txtApellido.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtApellido.setText("Apellido");
         txtApellido.setToolTipText("Apellido del bedel actual");
+        txtApellido.setEnabled(false);
 
         cmbTurno.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione Turno---", "MAÑANA", "TARDE", "NOCHE" }));
         cmbTurno.setToolTipText("Turno del bedel actual");
+        cmbTurno.setEnabled(false);
 
         txtNombreUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNombreUsuario.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
@@ -163,20 +212,32 @@ public class BuscarBedel extends javax.swing.JFrame {
         txtContraseña1.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtContraseña1.setText("Contraseña");
         txtContraseña1.setToolTipText("Contraseña del bedel actual");
+        txtContraseña1.setEnabled(false);
 
         txtContraseña2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtContraseña2.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtContraseña2.setText("Contraseña");
         txtContraseña2.setToolTipText("Contraseña del bedel actual");
+        txtContraseña2.setEnabled(false);
 
         btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back_menu.png"))); // NOI18N
         btnCerrarSesion.setText("Volver al Menu");
         btnCerrarSesion.setToolTipText("Vuelva al menu administrador");
         btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCerrarSesionMouseClicked(evt);
+            }
+        });
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user_edit.png"))); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.setToolTipText("Modifique los datos del bedel actual");
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
+            }
+        });
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user_delete.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -185,26 +246,58 @@ public class BuscarBedel extends javax.swing.JFrame {
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setToolTipText("Actualice los datos del bedel actual");
+        btnGuardar.setEnabled(false);
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setToolTipText("Cancele los datos actualizados");
+        btnCancelar.setEnabled(false);
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseClicked(evt);
+            }
+        });
 
         btnPrimero.setFont(new java.awt.Font("Webdings", 0, 14)); // NOI18N
         btnPrimero.setText("");
         btnPrimero.setToolTipText("Ir al principio de la lista");
+        btnPrimero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPrimeroMouseClicked(evt);
+            }
+        });
 
         btnAnterior.setFont(new java.awt.Font("Webdings", 0, 14)); // NOI18N
         btnAnterior.setText("");
         btnAnterior.setToolTipText("Ir al elemento anterior");
+        btnAnterior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAnteriorMouseClicked(evt);
+            }
+        });
 
         btnSiguiente.setFont(new java.awt.Font("Webdings", 0, 14)); // NOI18N
         btnSiguiente.setText("");
         btnSiguiente.setToolTipText("Ir al elemento siguiente");
+        btnSiguiente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSiguienteMouseClicked(evt);
+            }
+        });
 
         btnUltimo.setFont(new java.awt.Font("Webdings", 0, 14)); // NOI18N
         btnUltimo.setText("");
         btnUltimo.setToolTipText("Ir al final de la lista");
+        btnUltimo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUltimoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -256,7 +349,7 @@ public class BuscarBedel extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNombreBedel)))
+                                .addComponent(lblNombreAdministrador)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -270,12 +363,12 @@ public class BuscarBedel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombreBedel))
+                    .addComponent(lblNombreAdministrador))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblSeleccione)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -311,7 +404,7 @@ public class BuscarBedel extends javax.swing.JFrame {
                     .addComponent(btnAnterior)
                     .addComponent(btnSiguiente)
                     .addComponent(btnUltimo))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -321,6 +414,134 @@ public class BuscarBedel extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtNombre.setText("");
     }//GEN-LAST:event_txtNombreFocusGained
+
+    private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
+        // TODO add your handling code here:
+        AdministradorInterfaz.getMenuAdmin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesionMouseClicked
+
+    private void chkApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkApellidoActionPerformed
+        if(chkApellido.isSelected()) {
+            txtBuscarApellido.setEnabled(true);
+        } else {
+            txtBuscarApellido.setEnabled(false);
+        }
+        if(chkTurno.isSelected()) {
+            chkTurno.setSelected(false);
+            cmbBuscarTurno.setEnabled(false);
+        }
+    }//GEN-LAST:event_chkApellidoActionPerformed
+
+    private void chkTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkTurnoActionPerformed
+        if(chkTurno.isSelected()) {
+            cmbBuscarTurno.setEnabled(true);
+        } else {
+            cmbBuscarTurno.setEnabled(false);
+        }
+        if(chkApellido.isSelected()) {
+            chkApellido.setSelected(false);
+            txtBuscarApellido.setEnabled(false);
+        }
+    }//GEN-LAST:event_chkTurnoActionPerformed
+
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        
+        if(chkApellido.isSelected()) {
+            AdministradorBedeles.buscarBedelPorApellido(txtBuscarApellido.getText());
+            indice = 0;
+        } else {
+            if(chkTurno.isSelected()) {
+                if (cmbBuscarTurno.getSelectedIndex() != 0) {
+                    AdministradorBedeles.buscarBedelPorTurno(cmbBuscarTurno.getSelectedIndex());
+                    indice = 0;
+                }
+            } else {
+                //Nada seleccionado
+            }
+        }
+        
+        actualizarPanelModificacion();
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
+    private void btnSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSiguienteMouseClicked
+        if (btnSiguiente.isEnabled()) {
+            indice++;
+            if (indice > AdministradorBedeles.getTamañoBedeles()-1) {
+                indice = 0;
+            }
+            actualizarPanelModificacion();
+        }        
+        
+    }//GEN-LAST:event_btnSiguienteMouseClicked
+
+    private void btnAnteriorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnteriorMouseClicked
+        if (btnAnterior.isEnabled()) {
+            indice--;
+            if (indice < 0) {
+                indice = AdministradorBedeles.getTamañoBedeles()-1;
+            }
+            actualizarPanelModificacion();
+        }
+    }//GEN-LAST:event_btnAnteriorMouseClicked
+
+    private void btnPrimeroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrimeroMouseClicked
+        if (btnPrimero.isEnabled()) {
+            indice = 0;
+            actualizarPanelModificacion();
+        }
+    }//GEN-LAST:event_btnPrimeroMouseClicked
+
+    private void btnUltimoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUltimoMouseClicked
+        if (btnUltimo.isEnabled()) {
+            indice = AdministradorBedeles.getTamañoBedeles()-1;
+            actualizarPanelModificacion();
+        }
+    }//GEN-LAST:event_btnUltimoMouseClicked
+
+    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+        if (btnCancelar.isEnabled()) {
+            actualizarPanelModificacion();
+        }
+    }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        btnEliminar.setEnabled(!btnEliminar.isEnabled());
+        txtNombre.setEnabled(!btnEliminar.isEnabled());
+        txtApellido.setEnabled(!btnEliminar.isEnabled());
+        cmbTurno.setEnabled(!btnEliminar.isEnabled());
+        txtNombreUsuario.setEnabled(!btnEliminar.isEnabled());
+        txtContraseña1.setEnabled(!btnEliminar.isEnabled());
+        txtContraseña2.setEnabled(!btnEliminar.isEnabled());
+        btnGuardar.setEnabled(!btnEliminar.isEnabled());
+        btnCancelar.setEnabled(!btnEliminar.isEnabled());
+        btnSiguiente.setEnabled(btnEliminar.isEnabled());
+        btnAnterior.setEnabled(btnEliminar.isEnabled());
+        btnPrimero.setEnabled(btnEliminar.isEnabled());
+        btnUltimo.setEnabled(btnEliminar.isEnabled());
+    }//GEN-LAST:event_btnModificarMouseClicked
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        if (btnGuardar.isEnabled()) {
+            Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas guardar los cambios?", "Guardar?",  JOptionPane.YES_NO_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                if (cmbBuscarTurno.getSelectedIndex() != 0 && Arrays.equals(txtContraseña1.getPassword(), txtContraseña2.getPassword())) {
+                    String nombre = txtNombre.getText();
+                    String apellido = txtApellido.getText();
+                    Integer idTurno = cmbTurno.getSelectedIndex();
+                    String username = txtNombreUsuario.getText();
+                    String contraseña = new String(txtContraseña1.getPassword());
+
+                    AdministradorBedeles.modificarBedel(indice, nombre, apellido,idTurno,username, contraseña);
+                    
+                    JOptionPane.showMessageDialog(this, "Modificaciones al usuario " + username + " hechas con exito!");
+                } else {
+                    JOptionPane.showMessageDialog(this,"Error al cambiar atributos.","Error",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            
+        }
+    }//GEN-LAST:event_btnGuardarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -362,6 +583,7 @@ public class BuscarBedel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnEliminar;
@@ -379,7 +601,7 @@ public class BuscarBedel extends javax.swing.JFrame {
     private javax.swing.JLabel lblContraseña1;
     private javax.swing.JLabel lblContraseña2;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblNombreBedel;
+    private javax.swing.JLabel lblNombreAdministrador;
     private javax.swing.JLabel lblNombreUsuario;
     private javax.swing.JLabel lblSeleccione;
     private javax.swing.JLabel lblSesion;
@@ -392,4 +614,23 @@ public class BuscarBedel extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreUsuario;
     // End of variables declaration//GEN-END:variables
+
+    private void actualizarPanelModificacion() {
+        if (AdministradorBedeles.getTamañoBedeles() > 0) {
+            Bedel tmp = AdministradorBedeles.getBedel(indice);
+            txtNombre.setText(tmp.getNombreBedel());
+            txtApellido.setText(tmp.getApellidoBedel());
+            cmbTurno.setSelectedIndex(tmp.getTurno().getIdTurno());
+            txtNombreUsuario.setText(tmp.getNombreUsuario());
+            txtContraseña1.setText("");
+            txtContraseña2.setText("");
+        } else {
+            txtNombre.setText("Nombre");
+            txtApellido.setText("Apellido");
+            cmbTurno.setSelectedIndex(0);
+            txtNombreUsuario.setText("Usuario");
+            txtContraseña1.setText("Contraseña1");
+            txtContraseña2.setText("Contraseña2");
+        }
+    }
 }

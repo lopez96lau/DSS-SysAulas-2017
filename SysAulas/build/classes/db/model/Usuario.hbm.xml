@@ -14,25 +14,12 @@
         <property name="contrasenia" type="string">
             <column name="contrasenia" length="20" not-null="true" />
         </property>
-        <set name="bedels" table="bedel" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_usuario" not-null="true" />
-            </key>
-            <one-to-many class="db.model.Bedel" />
-        </set>
         <set name="historialContraseniases" table="historial_contrasenias" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_usuario" not-null="true" />
             </key>
             <one-to-many class="db.model.HistorialContrasenias" />
-        </set>
-        <set name="administradors" table="administrador" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_usuario" not-null="true" />
-            </key>
-            <one-to-many class="db.model.Administrador" />
-        </set>
-    
+        </set>    
     <joined-subclass name="db.model.Administrador" table="administrador">
         <key column="id_usuario"></key>
     </joined-subclass>
@@ -47,12 +34,7 @@
         <property name="apellidoBedel" type="string">
             <column name="apellido_bedel" length="20" />
         </property>
-        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_bedel" not-null="true" />
-            </key>
-            <one-to-many class="db.model.Reserva" />
-        </set>
+        
     </joined-subclass>
     </class>
 </hibernate-mapping>

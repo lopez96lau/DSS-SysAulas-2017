@@ -10,7 +10,6 @@ public class Multimedios extends Aula  implements java.io.Serializable {
 
 
      private int idAula;
-     private Aula aula;
      private String televisor;
      private String canion;
      private String computadora;
@@ -19,31 +18,15 @@ public class Multimedios extends Aula  implements java.io.Serializable {
     public Multimedios() {
     }
 
-	
-    public Multimedios(Aula aula) {
-        this.aula = aula;
-    }
-    public Multimedios(Aula aula, String televisor, String canion, String computadora, String dvd) {
-       this.aula = aula;
+    public Multimedios(String televisor, String canion, String computadora, String dvd) {
        this.televisor = televisor;
        this.canion = canion;
        this.computadora = computadora;
        this.dvd = dvd;
     }
-   
-    public int getIdAula() {
-        return this.idAula;
-    }
     
     public void setIdAula(int idAula) {
         this.idAula = idAula;
-    }
-    public Aula getAula() {
-        return this.aula;
-    }
-    
-    public void setAula(Aula aula) {
-        this.aula = aula;
     }
     public String getTelevisor() {
         return this.televisor;

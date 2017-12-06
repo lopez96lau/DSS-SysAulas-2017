@@ -5,9 +5,12 @@
  */
 package Gestores;
 
+import Forms.BuscarBedel;
 import Forms.Inicio;
 import Forms.MenuAdmin;
+import Forms.MenuBedel;
 import Forms.RegistrarBedel;
+import Forms.ReservarAula;
 
 /**
  *
@@ -17,6 +20,9 @@ public class AdministradorInterfaz {
     private static Inicio menuInicio;
     private static MenuAdmin menuAdmin;
     private static RegistrarBedel registarBedel;
+    private static BuscarBedel buscarBedel;
+    private static MenuBedel menuBedel;
+    private static ReservarAula reservarAula;
     
     public static MenuAdmin getMenuAdmin() {
         return menuAdmin;
@@ -41,5 +47,31 @@ public class AdministradorInterfaz {
     public static void setRegistarBedel(RegistrarBedel registarBedel) {
         AdministradorInterfaz.registarBedel = registarBedel;
     }
+
+    public static BuscarBedel getBuscarBedel() {
+        return buscarBedel;
+    }
+
+    public static void setBuscarBedel(BuscarBedel buscarBedel) {
+        AdministradorInterfaz.buscarBedel = buscarBedel;
+    }
+
+    public static MenuBedel getMenuBedel() {
+        return menuBedel;
+    }
+
+    public static void setMenuBedel(MenuBedel menuBedel) {
+        AdministradorInterfaz.menuBedel = menuBedel;
+    }
+
+    public static ReservarAula getReservarAula() {
+        return reservarAula;
+    }
+
+    public static void setReservarAula(ReservarAula reservarAula) {
+        AdministradorInterfaz.reservarAula = reservarAula;
+    }
+    
+    
     
 }

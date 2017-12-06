@@ -10,12 +10,10 @@ import java.util.Set;
  */
 public class Bedel extends Usuario implements java.io.Serializable {
 
-
      private Integer idBedel;
      private Turno turno;
      private String nombreBedel;
      private String apellidoBedel;
-     private Set reservas = new HashSet(0);
 
     public Bedel() {
     }
@@ -25,13 +23,12 @@ public class Bedel extends Usuario implements java.io.Serializable {
         this.turno = turno;
         super.setNombreUsuario(usuario);
     }
-    public Bedel(Turno turno, String usuario, String contraseña, String nombreBedel, String apellidoBedel, Set reservas) {
+    public Bedel(Turno turno, String usuario, String contraseña, String nombreBedel, String apellidoBedel) {
        this.turno = turno;
        super.setNombreUsuario(usuario);
        super.setContrasenia(contraseña);
        this.nombreBedel = nombreBedel;
        this.apellidoBedel = apellidoBedel;
-       this.reservas = reservas;
     }
    
     public Integer getIdBedel() {
@@ -62,16 +59,6 @@ public class Bedel extends Usuario implements java.io.Serializable {
     public void setApellidoBedel(String apellidoBedel) {
         this.apellidoBedel = apellidoBedel;
     }
-    public Set getReservas() {
-        return this.reservas;
-    }
-    
-    public void setReservas(Set reservas) {
-        this.reservas = reservas;
-    }
-
-
-
 
 }
 
