@@ -8,6 +8,7 @@ package Forms;
 import Gestores.AdministradorInterfaz;
 import db.model.Aula;
 import db.model.Dia;
+import db.model.Esporadica;
 import db.model.Fecha;
 import db.model.InfoAulasDisponibles;
 import db.model.InformacionSolicitante;
@@ -29,6 +30,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
 
     
     private Periodica reservaPeriodica;
+    private Esporadica reservaEsporadica;
     private ArrayList<InfoAulasDisponibles> opciones;
     private ArrayList<Fecha> fechas;
     
@@ -567,6 +569,28 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                 
             }
             
+        }
+    }
+
+    void enviarInformacion(Esporadica nuevaReserva, ArrayList<InfoAulasDisponibles> opciones) {
+        reservaEsporadica = nuevaReserva;
+        fechas = new ArrayList<>();
+        this.opciones = opciones;
+        DefaultListModel model = (DefaultListModel) lstDias.getModel();
+        //model.removeAllElements();
+        
+        Dia d;
+        ArrayList<Object> tmp;
+        Time horaInicio;
+        java.sql.Date fecha;
+        Integer duracion;
+        tmp = new ArrayList<>(nuevaReserva.getFechas());
+        for(Object ob: tmp) {
+            horaInicio = (Time) ((Fecha) ob).getHoraInicio();
+            fecha = (java.sql.Date) ((Fecha) ob).getFecha();
+            duracion = ((Fecha) ob).getDuracion();
+            model.addElement(((Fecha) ob).getDia().getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+duracion);
+            fechas.add((Fecha) ob);
         }
     }
 }

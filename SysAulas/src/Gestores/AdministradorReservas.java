@@ -10,6 +10,7 @@ import Dao.DiaDao;
 import Dao.PeriodoDao;
 import db.model.Aula;
 import db.model.Dia;
+import db.model.Esporadica;
 import db.model.Fecha;
 import db.model.InfoAulasDisponibles;
 import db.model.InformacionSolicitante;
@@ -116,6 +117,64 @@ public class AdministradorReservas {
             }
             fechas = new ArrayList<>();
         }
+        
+        return opciones;
+    }
+
+    public static ArrayList<InfoAulasDisponibles> obtenerAulas(Esporadica nuevaReserva, InformacionSolicitante infoSo) {
+        
+        ArrayList<InfoAulasDisponibles> opciones = new ArrayList<>();
+        
+        ArrayList<Fecha> fechas = new ArrayList<>();
+        fechas.addAll(nuevaReserva.getFechas());
+
+        for (Fecha f : fechas) {
+            HashSet<Integer> rechazadas = new HashSet<>();
+            System.out.println("-------------------------------------------------------------------------");
+            System.out.println((java.sql.Date) f.getFecha());
+            System.out.println("-------------------------------------------------------------------------");
+            rechazadas.addAll(AulaDao.findBetween((java.sql.Date) f.getFecha(), (Time) f.getHoraInicio(), f.getDuracion()));
+            System.out.println(rechazadas);
+
+            ArrayList<Integer> rechazadasAux = new ArrayList<>();
+            rechazadasAux.addAll(rechazadas);
+
+            ArrayList<Aula> aulas = AulaDao.findComplemento(rechazadasAux);
+            System.out.println(aulas);
+
+            ArrayList<Aula> quitar = new ArrayList<>();
+            for(Aula a : aulas) {
+                System.out.print(a.getIdAula());
+                if (a.getCapacidad() < nuevaReserva.getCantidadAlumnos()) {
+                    quitar.add(a);
+                    System.out.println(" borrado(1)");
+                }
+                switch(infoSo.getTipoAula()) {
+                    case "multi":
+                        if (!(Hibernate.getClass(a) == Multimedios.class)) {
+                            quitar.add(a);System.out.println(" borrado(2)");
+                        }
+                        break;
+                    case "info":
+                        if (!(Hibernate.getClass(a) == Informatica.class)) {
+                            quitar.add(a);System.out.println(" borrado(3)");
+                        }
+                        break;
+                    case "sinrec":
+                        if (!(Hibernate.getClass(a) == SinRecursos.class)) {
+                            quitar.add(a);System.out.println(" borrado(4)");
+                        }
+                        break;
+                }
+            }
+            for(Aula a : quitar) {
+                aulas.remove(a);
+            }
+
+            InfoAulasDisponibles iAD = new InfoAulasDisponibles(f);
+            iAD.setOpcionesAulas(aulas);
+            opciones.add(iAD);
+        }       
         
         return opciones;
     }

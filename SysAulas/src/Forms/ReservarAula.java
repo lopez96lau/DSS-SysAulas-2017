@@ -834,6 +834,25 @@ public class ReservarAula extends javax.swing.JFrame {
                 nuevaReserva.setFechas(new HashSet(fechas));
                 nuevaReserva.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
                 nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
+                
+                String tipo = null;
+                switch(cmbTipoAula.getSelectedIndex()) {
+                    case 1: tipo  = "multi";
+                        break;
+                    case 2: tipo = "info";
+                        break;
+                    case 3: tipo = "sinrec";
+                        break;
+                }
+                
+                InformacionSolicitante infoSo = new InformacionSolicitante(txtNombreSolicitante.getText(), txtApellidoSolicitante.getText(), txtCatedra.getText(), txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
+                
+                ArrayList<InfoAulasDisponibles> opciones = AdministradorReservas.obtenerAulas(nuevaReserva, infoSo);
+                
+                
+                AdministradorInterfaz.getObtenerDisp().setVisible(true);
+                AdministradorInterfaz.getObtenerDisp().enviarInformacion(nuevaReserva, opciones);
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Debe añadir al menos una fecha para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
             }
@@ -860,6 +879,8 @@ public class ReservarAula extends javax.swing.JFrame {
             String[] dias = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
             
             nuevoDia.addFecha(nuevaFecha);
+            nuevaFecha.setDia(nuevoDia);
+            
             nuevoDia.setNombreDia(dias[dayOfWeek]);
             
             
