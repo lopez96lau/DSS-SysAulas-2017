@@ -5,12 +5,24 @@
  */
 package Forms;
 
+import db.model.Dia;
+import db.model.Fecha;
+import db.model.InformacionSolicitante;
+import db.model.Periodica;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Laureano
  */
 public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
 
+    
+    private Periodica reservaPeriodica;
+    
     /**
      * Creates new form ObtenerDisponibilidadAula
      */
@@ -132,7 +144,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         btnVolver.setToolTipText("Vuelva a la reserva del aula");
         btnVolver.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Solicitud", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Solicitud", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
 
         txtFecha.setText("  /  /    ");
         txtFecha.setToolTipText("Fecha de la solicitud de reserva");
@@ -296,11 +308,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         btnCancelarSolicitud.setText("Cancelar Solicitud");
         btnCancelarSolicitud.setToolTipText("Cancelar la solicitud de reserva");
 
-        lstDias.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "DÍA 1: Día, Fecha, Hora, Duración", "DÍA 2: Día, Fecha, Hora, Duración", "DÍA 3: Día, Fecha, Hora, Duración", "DÍA 4: Día, Fecha, Hora, Duración", "DÍA 5: Día, Fecha, Hora, Duración" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        lstDias.setModel(new DefaultListModel ());
         jScrollPane2.setViewportView(lstDias);
 
         btnRefrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh.png"))); // NOI18N
@@ -453,4 +461,28 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
     private javax.swing.JTextField txtHoraInicio;
     private javax.swing.JTextField txtTipoAula;
     // End of variables declaration//GEN-END:variables
+
+    void enviarInformacion(Periodica nuevaReserva, InformacionSolicitante infoSo) {
+        reservaPeriodica = nuevaReserva;
+        DefaultListModel model = (DefaultListModel) lstDias.getModel();
+        //model.removeAllElements();
+        
+        Dia d;
+        ArrayList<Object> tmp;
+        Date horaInicio;
+        Integer duracion;
+        for(Object o: nuevaReserva.getDias()) {
+            d = (Dia) o;
+            tmp = new ArrayList<>(d.getFechas());
+            
+            for(Object ob: tmp) {
+                horaInicio = ((Fecha) ob).getFecha();
+                duracion = ((Fecha) ob).getDuracion();
+                model.addElement(d.getNombreDia()+" - Inicio: "+horaInicio+" -Duracion: "+duracion);
+            }
+            
+        }
+        
+        
+    }
 }

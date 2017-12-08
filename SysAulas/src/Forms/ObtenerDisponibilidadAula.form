@@ -520,14 +520,8 @@
       <SubComponents>
         <Component class="javax.swing.JList" name="lstDias">
           <Properties>
-            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="D&#xcd;A 1: D&#xed;a, Fecha, Hora, Duraci&#xf3;n"/>
-                <StringItem index="1" value="D&#xcd;A 2: D&#xed;a, Fecha, Hora, Duraci&#xf3;n"/>
-                <StringItem index="2" value="D&#xcd;A 3: D&#xed;a, Fecha, Hora, Duraci&#xf3;n"/>
-                <StringItem index="3" value="D&#xcd;A 4: D&#xed;a, Fecha, Hora, Duraci&#xf3;n"/>
-                <StringItem index="4" value="D&#xcd;A 5: D&#xed;a, Fecha, Hora, Duraci&#xf3;n"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultListModel ()" type="code"/>
             </Property>
           </Properties>
           <AuxValues>

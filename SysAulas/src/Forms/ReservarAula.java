@@ -6,8 +6,33 @@
 package Forms;
 
 import Gestores.AdministradorInterfaz;
+import Gestores.AdministradorReservas;
 import Gestores.AdministradorSesion;
+import db.model.Bedel;
+import db.model.Dia;
+import db.model.Fecha;
+import db.model.InformacionSolicitante;
+import db.model.Periodica;
+import db.model.Periodo;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,6 +40,13 @@ import javax.swing.DefaultCellEditor;
  */
 public class ReservarAula extends javax.swing.JFrame {
 
+    
+    String modo = "periodico";
+    ArrayList<Fecha> fechas = new ArrayList<>(); //Para esporadica
+    ArrayList<Dia> dias = new ArrayList<>(); //Para periodica
+    
+    
+    
     /**
      * Creates new form RegistrarBedel
      */
@@ -42,8 +74,6 @@ public class ReservarAula extends javax.swing.JFrame {
         lblSesion = new javax.swing.JLabel();
         lblNombreBedel = new javax.swing.JLabel();
         lblComplete = new javax.swing.JLabel();
-        btnCancelar = new javax.swing.JButton();
-        btnSolicitar = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
         pnlPeriodo = new javax.swing.JPanel();
         chkLunes = new javax.swing.JCheckBox();
@@ -73,9 +103,23 @@ public class ReservarAula extends javax.swing.JFrame {
         cmbDuracion5 = new javax.swing.JComboBox<>();
         cmbPeriodo = new javax.swing.JComboBox<>();
         pnlFecha = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblFechas = new javax.swing.JTable();
+        lblHoraInicio6 = new javax.swing.JLabel();
+        txtHoraInicio6 = new javax.swing.JTextField();
+        lblDuracion6 = new javax.swing.JLabel();
+        cmbDuracion6 = new javax.swing.JComboBox<>();
+        txtFechaNueva = new javax.swing.JTextField();
+        lblFechaNueva = new javax.swing.JLabel();
+        btnAñadirFecha = new javax.swing.JButton();
+        btnEliminarFecha = new javax.swing.JButton();
         btnPeriodo = new javax.swing.JButton();
         btnFecha = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        txtCantAlumnos = new javax.swing.JTextField();
+        btnCancelar = new javax.swing.JButton();
         lblNombreSolicitante = new javax.swing.JLabel();
+        btnSolicitar = new javax.swing.JButton();
         lblApellidoSolicitante = new javax.swing.JLabel();
         lblCatedra = new javax.swing.JLabel();
         lblTipoAula = new javax.swing.JLabel();
@@ -85,7 +129,6 @@ public class ReservarAula extends javax.swing.JFrame {
         txtApellidoSolicitante = new javax.swing.JTextField();
         txtCatedra = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        txtCantAlumnos = new javax.swing.JTextField();
         cmbTipoAula = new javax.swing.JComboBox<>();
 
         cmbDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duración", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }));
@@ -106,16 +149,6 @@ public class ReservarAula extends javax.swing.JFrame {
 
         lblComplete.setText("<html>Complete todos los campos para solicitar la reserva de un aula.</html>");
 
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setToolTipText("Cancele el ingreso de los datos");
-        btnCancelar.setEnabled(false);
-
-        btnSolicitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/solicitate.png"))); // NOI18N
-        btnSolicitar.setText("Solicitar");
-        btnSolicitar.setToolTipText("Solicite la reserva del aula y obtenga su disponibilidad");
-        btnSolicitar.setEnabled(false);
-
         btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back_menu.png"))); // NOI18N
         btnCerrarSesion.setText("Volver al Menu");
         btnCerrarSesion.setToolTipText("Vuelva al menu de bedel");
@@ -127,106 +160,79 @@ public class ReservarAula extends javax.swing.JFrame {
         });
 
         pnlPeriodo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Fijos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
-        pnlPeriodo.setEnabled(false);
 
         chkLunes.setText("Lunes");
         chkLunes.setAutoscrolls(true);
-        chkLunes.setEnabled(false);
 
         chkMartes.setText("Martes");
         chkMartes.setAutoscrolls(true);
-        chkMartes.setEnabled(false);
 
         chkMiercoles.setText("Miércoles");
         chkMiercoles.setAutoscrolls(true);
-        chkMiercoles.setEnabled(false);
 
         chkJueves.setText("Jueves");
         chkJueves.setAutoscrolls(true);
-        chkJueves.setEnabled(false);
 
         chkViernes.setText("Viernes");
         chkViernes.setAutoscrolls(true);
-        chkViernes.setEnabled(false);
 
         lblHoraInicio1.setText("Hora Inicio");
         lblHoraInicio1.setAutoscrolls(true);
-        lblHoraInicio1.setEnabled(false);
 
         txtHoraInicio1.setText("  :  ");
         txtHoraInicio1.setToolTipText("Ingrese la hora de inicio de la reserva");
-        txtHoraInicio1.setEnabled(false);
 
         lblDuracion1.setText("Duración");
         lblDuracion1.setAutoscrolls(true);
-        lblDuracion1.setEnabled(false);
 
         cmbDuracion1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duración", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }));
-        cmbDuracion1.setEnabled(false);
 
         lblHoraInicio2.setText("Hora Inicio");
         lblHoraInicio2.setAutoscrolls(true);
-        lblHoraInicio2.setEnabled(false);
 
         txtHoraInicio2.setText("  :  ");
         txtHoraInicio2.setToolTipText("Ingrese la hora de inicio de la reserva");
-        txtHoraInicio2.setEnabled(false);
 
         lblDuracion2.setText("Duración");
         lblDuracion2.setAutoscrolls(true);
-        lblDuracion2.setEnabled(false);
 
         cmbDuracion2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duración", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }));
-        cmbDuracion2.setEnabled(false);
 
         lblHoraInicio3.setText("Hora Inicio");
         lblHoraInicio3.setAutoscrolls(true);
-        lblHoraInicio3.setEnabled(false);
 
         txtHoraInicio3.setText("  :  ");
         txtHoraInicio3.setToolTipText("Ingrese la hora de inicio de la reserva");
-        txtHoraInicio3.setEnabled(false);
 
         lblDuracion3.setText("Duración");
         lblDuracion3.setAutoscrolls(true);
-        lblDuracion3.setEnabled(false);
 
         cmbDuracion3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duración", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }));
-        cmbDuracion3.setEnabled(false);
 
         lblHoraInicio4.setText("Hora Inicio");
         lblHoraInicio4.setAutoscrolls(true);
-        lblHoraInicio4.setEnabled(false);
 
         txtHoraInicio4.setText("  :  ");
         txtHoraInicio4.setToolTipText("Ingrese la hora de inicio de la reserva");
-        txtHoraInicio4.setEnabled(false);
 
         lblDuracion4.setText("Duración");
         lblDuracion4.setAutoscrolls(true);
-        lblDuracion4.setEnabled(false);
 
         cmbDuracion4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duración", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }));
-        cmbDuracion4.setEnabled(false);
 
         lblHoraInicio5.setText("Hora Inicio");
         lblHoraInicio5.setAutoscrolls(true);
-        lblHoraInicio5.setEnabled(false);
 
         txtHoraInicio5.setText("  :  ");
         txtHoraInicio5.setToolTipText("Ingrese la hora de inicio de la reserva");
-        txtHoraInicio5.setEnabled(false);
 
         lblDuracion5.setText("Duración");
         lblDuracion5.setAutoscrolls(true);
-        lblDuracion5.setEnabled(false);
 
         cmbDuracion5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duración", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }));
-        cmbDuracion5.setEnabled(false);
 
         cmbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione período---", "PRIMER CUATRIMESTRE", "SEGUNDO CUATRIMESTRE", "ANUAL" }));
         cmbPeriodo.setToolTipText("Seleccione el período por el que desea reservar el aula");
-        cmbPeriodo.setEnabled(false);
 
         javax.swing.GroupLayout pnlPeriodoLayout = new javax.swing.GroupLayout(pnlPeriodo);
         pnlPeriodo.setLayout(pnlPeriodoLayout);
@@ -234,16 +240,16 @@ public class ReservarAula extends javax.swing.JFrame {
             pnlPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPeriodoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chkViernes)
-                    .addComponent(chkJueves)
-                    .addComponent(chkMiercoles)
-                    .addComponent(chkMartes)
-                    .addComponent(chkLunes))
-                .addGap(16, 16, 16)
-                .addGroup(pnlPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlPeriodoLayout.createSequentialGroup()
+                        .addGroup(pnlPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chkViernes)
+                            .addComponent(chkJueves)
+                            .addComponent(chkMiercoles)
+                            .addComponent(chkMartes)
+                            .addComponent(chkLunes))
+                        .addGap(16, 16, 16)
                         .addGroup(pnlPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(pnlPeriodoLayout.createSequentialGroup()
                                 .addComponent(lblHoraInicio5)
@@ -269,28 +275,25 @@ public class ReservarAula extends javax.swing.JFrame {
                         .addGroup(pnlPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlPeriodoLayout.createSequentialGroup()
                                 .addComponent(lblDuracion4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmbDuracion4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlPeriodoLayout.createSequentialGroup()
-                                .addComponent(lblDuracion1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmbDuracion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPeriodoLayout.createSequentialGroup()
                                 .addComponent(lblDuracion2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmbDuracion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlPeriodoLayout.createSequentialGroup()
-                                .addGroup(pnlPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(pnlPeriodoLayout.createSequentialGroup()
-                                        .addComponent(lblDuracion5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cmbDuracion5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnlPeriodoLayout.createSequentialGroup()
-                                        .addComponent(lblDuracion3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cmbDuracion3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                                .addComponent(lblDuracion1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbDuracion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlPeriodoLayout.createSequentialGroup()
+                                .addComponent(lblDuracion5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbDuracion5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlPeriodoLayout.createSequentialGroup()
+                                .addComponent(lblDuracion3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbDuracion3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlPeriodoLayout.setVerticalGroup(
             pnlPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,86 +340,269 @@ public class ReservarAula extends javax.swing.JFrame {
         pnlFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Específicos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
         pnlFecha.setEnabled(false);
 
+        jScrollPane1.setEnabled(false);
+
+        tblFechas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Dia", "Fecha", "HorarioInicio", "Duracion"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblFechas);
+
+        lblHoraInicio6.setText("Hora Inicio");
+        lblHoraInicio6.setAutoscrolls(true);
+        lblHoraInicio6.setEnabled(false);
+
+        txtHoraInicio6.setText("  :  ");
+        txtHoraInicio6.setToolTipText("Ingrese la hora de inicio de la reserva");
+        txtHoraInicio6.setEnabled(false);
+
+        lblDuracion6.setText("Duración");
+        lblDuracion6.setAutoscrolls(true);
+        lblDuracion6.setEnabled(false);
+
+        cmbDuracion6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duración", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }));
+        cmbDuracion6.setEnabled(false);
+
+        txtFechaNueva.setText("  /  /    ");
+        txtFechaNueva.setEnabled(false);
+
+        lblFechaNueva.setText("Fecha");
+        lblFechaNueva.setEnabled(false);
+
+        btnAñadirFecha.setText("Añadir");
+        btnAñadirFecha.setEnabled(false);
+        btnAñadirFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAñadirFechaMouseClicked(evt);
+            }
+        });
+
+        btnEliminarFecha.setText("Eliminar");
+        btnEliminarFecha.setEnabled(false);
+        btnEliminarFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarFechaMouseClicked(evt);
+            }
+        });
+        btnEliminarFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarFechaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlFechaLayout = new javax.swing.GroupLayout(pnlFecha);
         pnlFecha.setLayout(pnlFechaLayout);
         pnlFechaLayout.setHorizontalGroup(
             pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(pnlFechaLayout.createSequentialGroup()
+                .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFechaLayout.createSequentialGroup()
+                        .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFechaLayout.createSequentialGroup()
+                                .addComponent(lblFechaNueva)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtFechaNueva))
+                            .addGroup(pnlFechaLayout.createSequentialGroup()
+                                .addComponent(lblHoraInicio6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtHoraInicio6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblDuracion6)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbDuracion6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnEliminarFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                            .addComponent(btnAñadirFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(1, 1, 1))
         );
         pnlFechaLayout.setVerticalGroup(
             pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 133, Short.MAX_VALUE)
+            .addGroup(pnlFechaLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFechaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFechaNueva)
+                    .addComponent(btnAñadirFecha))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHoraInicio6)
+                    .addComponent(txtHoraInicio6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDuracion6)
+                    .addComponent(cmbDuracion6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarFecha))
+                .addContainerGap())
         );
 
         btnPeriodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/calendar_period.png"))); // NOI18N
         btnPeriodo.setText("Por Período");
         btnPeriodo.setToolTipText("Solicite la reserva de un aula por un determinado período de tiempo");
-        btnPeriodo.setEnabled(false);
         btnPeriodo.setIconTextGap(6);
+        btnPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPeriodoMouseClicked(evt);
+            }
+        });
 
         btnFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/calendar_date.png"))); // NOI18N
         btnFecha.setText("Por Fecha");
         btnFecha.setToolTipText("Solicite un aula de manera esporádica para una fecha en particular");
-        btnFecha.setEnabled(false);
         btnFecha.setIconTextGap(6);
+        btnFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFechaMouseClicked(evt);
+            }
+        });
+        btnFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFechaActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setToolTipText("");
+
+        txtCantAlumnos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCantAlumnos.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
+        txtCantAlumnos.setToolTipText("Ingrese la cantidad de alumnos");
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setToolTipText("Cancele el ingreso de los datos");
 
         lblNombreSolicitante.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblNombreSolicitante.setText("Nombre del Solicitante");
-        lblNombreSolicitante.setEnabled(false);
+
+        btnSolicitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/solicitate.png"))); // NOI18N
+        btnSolicitar.setText("Solicitar");
+        btnSolicitar.setToolTipText("Solicite la reserva del aula y obtenga su disponibilidad");
+        btnSolicitar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSolicitarMouseClicked(evt);
+            }
+        });
 
         lblApellidoSolicitante.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblApellidoSolicitante.setText("Apellido del Solicitante");
-        lblApellidoSolicitante.setEnabled(false);
 
         lblCatedra.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblCatedra.setText("Nombre de la Cátedra");
-        lblCatedra.setEnabled(false);
 
         lblTipoAula.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTipoAula.setText("Tipo de Aula");
-        lblTipoAula.setEnabled(false);
 
         lblCantAlumnos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblCantAlumnos.setText("Cantidad de Alumnos");
-        lblCantAlumnos.setEnabled(false);
 
         lblEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblEmail.setText("Email de Contacto");
-        lblEmail.setEnabled(false);
 
         txtNombreSolicitante.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNombreSolicitante.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtNombreSolicitante.setText("Nombre");
         txtNombreSolicitante.setToolTipText("Ingrese el nombre del solicitante");
-        txtNombreSolicitante.setEnabled(false);
 
         txtApellidoSolicitante.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtApellidoSolicitante.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtApellidoSolicitante.setText("Apellido");
         txtApellidoSolicitante.setToolTipText("Ingrese el apellido del solicitante");
-        txtApellidoSolicitante.setEnabled(false);
 
         txtCatedra.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCatedra.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtCatedra.setText("Cátedra");
         txtCatedra.setToolTipText("Ingrese la cátedra que solicita el aula");
-        txtCatedra.setEnabled(false);
 
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtEmail.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtEmail.setText("usuario@dominio.com");
         txtEmail.setToolTipText("Ingrese un correo electrónico de contacto");
-        txtEmail.setEnabled(false);
-
-        txtCantAlumnos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtCantAlumnos.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
-        txtCantAlumnos.setToolTipText("Ingrese la cantidad de alumnos");
-        txtCantAlumnos.setEnabled(false);
 
         cmbTipoAula.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbTipoAula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aula", "Multimedios", "Informática", "Sin Recursos" }));
         cmbTipoAula.setToolTipText("Seleccione el tipo de aula");
-        cmbTipoAula.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnSolicitar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCantAlumnos)
+                        .addGap(12, 12, 12)
+                        .addComponent(txtCantAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(lblTipoAula)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbTipoAula, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCatedra)
+                            .addComponent(lblEmail))
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEmail)
+                            .addComponent(txtCatedra)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNombreSolicitante)
+                            .addComponent(lblApellidoSolicitante))
+                        .addGap(4, 4, 4)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombreSolicitante)
+                            .addComponent(txtApellidoSolicitante))))
+                .addGap(2, 2, 2))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreSolicitante)
+                    .addComponent(txtNombreSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblApellidoSolicitante)
+                    .addComponent(txtApellidoSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCatedra)
+                    .addComponent(txtCatedra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEmail)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCantAlumnos)
+                    .addComponent(txtCantAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTipoAula)
+                    .addComponent(cmbTipoAula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSolicitar)
+                    .addComponent(btnCancelar))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -425,62 +611,35 @@ public class ReservarAula extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lblReservar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCerrarSesion))
-                    .addComponent(pnlPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnSolicitar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCantAlumnos)
-                        .addGap(12, 12, 12)
-                        .addComponent(txtCantAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblTipoAula)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbTipoAula, 0, 1, Short.MAX_VALUE))
-                    .addComponent(pnlFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblComplete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNombreBedel)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCatedra)
-                            .addComponent(lblEmail))
-                        .addGap(8, 8, 8)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEmail)
-                            .addComponent(txtCatedra)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNombreSolicitante)
-                            .addComponent(lblApellidoSolicitante))
-                        .addGap(4, 4, 4)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombreSolicitante)
-                            .addComponent(txtApellidoSolicitante))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                                .addComponent(lblNombreBedel))
+                            .addComponent(lblComplete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(22, 22, 22)
+                                .addComponent(btnFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pnlPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblReservar)
                     .addComponent(btnCerrarSesion))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNombreBedel))
@@ -491,37 +650,14 @@ public class ReservarAula extends javax.swing.JFrame {
                     .addComponent(btnPeriodo)
                     .addComponent(btnFecha))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombreSolicitante)
-                    .addComponent(txtNombreSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblApellidoSolicitante)
-                    .addComponent(txtApellidoSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCatedra)
-                    .addComponent(txtCatedra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmail)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCantAlumnos)
-                    .addComponent(txtCantAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTipoAula)
-                    .addComponent(cmbTipoAula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSolicitar)
-                    .addComponent(btnCancelar))
-                .addContainerGap())
+                .addComponent(pnlFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1.getAccessibleContext().setAccessibleName("Datos Generales");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -530,6 +666,232 @@ public class ReservarAula extends javax.swing.JFrame {
         AdministradorInterfaz.getMenuBedel().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCerrarSesionMouseClicked
+
+    private void btnPeriodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPeriodoMouseClicked
+        chkLunes.setEnabled(true);
+        chkMartes.setEnabled(true);
+        chkMiercoles.setEnabled(true);
+        chkJueves.setEnabled(true);
+        chkViernes.setEnabled(true);
+        txtHoraInicio1.setEnabled(true);
+        txtHoraInicio2.setEnabled(true);
+        txtHoraInicio3.setEnabled(true);
+        txtHoraInicio4.setEnabled(true);
+        txtHoraInicio5.setEnabled(true);
+        cmbDuracion1.setEnabled(true);
+        cmbDuracion2.setEnabled(true);
+        cmbDuracion3.setEnabled(true);
+        cmbDuracion4.setEnabled(true);
+        cmbDuracion5.setEnabled(true);
+        cmbPeriodo.setEnabled(true);
+        pnlPeriodo.setEnabled(true);
+        lblHoraInicio1.setEnabled(true);
+        lblHoraInicio2.setEnabled(true);
+        lblHoraInicio3.setEnabled(true);
+        lblHoraInicio4.setEnabled(true);
+        lblHoraInicio5.setEnabled(true);
+        lblDuracion1.setEnabled(true);
+        lblDuracion2.setEnabled(true);
+        lblDuracion3.setEnabled(true);
+        lblDuracion4.setEnabled(true);
+        lblDuracion5.setEnabled(true);
+        
+        if (modo == "especifico") {
+            pnlFecha.setEnabled(false);
+            tblFechas.setEnabled(false);
+            lblDuracion6.setEnabled(false);
+            cmbDuracion6.setEnabled(false);
+            txtFechaNueva.setEnabled(false);
+            lblFechaNueva.setEnabled(false);
+            txtHoraInicio6.setEnabled(false);
+            lblHoraInicio6.setEnabled(false);
+            btnAñadirFecha.setEnabled(false);
+            btnEliminarFecha.setEnabled(false);
+            
+            modo ="periodico";
+        }
+    }//GEN-LAST:event_btnPeriodoMouseClicked
+
+    private void btnFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFechaMouseClicked
+        pnlFecha.setEnabled(true);
+        tblFechas.setEnabled(true);
+        lblDuracion6.setEnabled(true);
+        cmbDuracion6.setEnabled(true);
+        txtFechaNueva.setEnabled(true);
+        lblFechaNueva.setEnabled(true);
+        txtHoraInicio6.setEnabled(true);
+        lblHoraInicio6.setEnabled(true);
+        btnAñadirFecha.setEnabled(true);
+        btnEliminarFecha.setEnabled(true);
+        
+        if (modo == "periodico") {
+            chkLunes.setEnabled(false);
+            chkMartes.setEnabled(false);
+            chkMiercoles.setEnabled(false);
+            chkJueves.setEnabled(false);
+            chkViernes.setEnabled(false);
+            txtHoraInicio1.setEnabled(false);
+            txtHoraInicio2.setEnabled(false);
+            txtHoraInicio3.setEnabled(false);
+            txtHoraInicio4.setEnabled(false);
+            txtHoraInicio5.setEnabled(false);
+            cmbDuracion1.setEnabled(false);
+            cmbDuracion2.setEnabled(false);
+            cmbDuracion3.setEnabled(false);
+            cmbDuracion4.setEnabled(false);
+            cmbDuracion5.setEnabled(false);
+            cmbPeriodo.setEnabled(false);
+            pnlPeriodo.setEnabled(false);
+            lblHoraInicio1.setEnabled(false);
+            lblHoraInicio2.setEnabled(false);
+            lblHoraInicio3.setEnabled(false);
+            lblHoraInicio4.setEnabled(false);
+            lblHoraInicio5.setEnabled(false);
+            lblDuracion1.setEnabled(false);
+            lblDuracion2.setEnabled(false);
+            lblDuracion3.setEnabled(false);
+            lblDuracion4.setEnabled(false);
+            lblDuracion5.setEnabled(false);
+            modo = "especifico";
+        }
+    }//GEN-LAST:event_btnFechaMouseClicked
+
+    private void btnEliminarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarFechaActionPerformed
+
+    private void btnFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFechaActionPerformed
+
+    private void btnSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarMouseClicked
+        if (modo == "periodico") {
+            Periodo periodo = AdministradorReservas.buscarPeriodo(cmbPeriodo.getSelectedIndex());
+            
+            if (chkLunes.isSelected() || chkMartes.isSelected() || chkMiercoles.isSelected() || chkJueves.isSelected() || chkViernes.isSelected()) {
+                
+                DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                
+                if (chkLunes.isSelected()) {
+                    //System.out.print(str);
+                    try {
+                        LocalDate inicio = ((java.sql.Date) periodo.getFechaInicio()).toLocalDate();
+                        LocalDate fin = ((java.sql.Date) periodo.getFechaFin()).toLocalDate();
+                        
+                        List<LocalDate> totalDates = new ArrayList<>();
+                        
+                        LocalDate lunes = inicio.with(TemporalAdjusters.nextOrSame(DayOfWeek.MONDAY));
+                        while (!lunes.isAfter(fin)) {
+                            totalDates.add(lunes);
+                            lunes = lunes.plusWeeks(1);
+                        }
+                        
+                        Dia nuevoDia = new Dia();
+                        nuevoDia.setNombreDia("Lunes");
+                        for(LocalDate ld: totalDates) {
+                            
+                            String str = ld.format(formatter)+ " " + txtHoraInicio1.getText();
+                            Date date = format.parse(str);
+                            
+                            Fecha nuevaFecha = new Fecha();
+                            nuevaFecha.setFecha(date);
+                            nuevaFecha.setDuracion(cmbDuracion1.getSelectedIndex()/2);
+                            nuevoDia.addFecha(nuevaFecha);
+                        }
+                        
+                        dias.add(nuevoDia);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (chkMartes.isSelected()) {
+                    try {
+                        Fecha nuevaFecha = new Fecha();
+                        Date date = null;
+                        Dia nuevoDia = new Dia();
+                        String str = "05/12/2017 "+ txtHoraInicio2.getText();
+                        date = format.parse(str); //Un lunes cualquiera que ya paso
+                        nuevaFecha.setFecha(date);
+                        nuevaFecha.setDuracion(cmbDuracion2.getSelectedIndex()/2);
+                        nuevoDia.addFecha(nuevaFecha);
+                        nuevoDia.setNombreDia("Martes");
+                        dias.add(nuevoDia);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } //Implementar miercoles a viernes
+                
+                String tipo = null;
+                switch(cmbTipoAula.getSelectedIndex()) {
+                    case 1: tipo  = "multi";
+                        break;
+                    case 2: tipo = "info";
+                        break;
+                    case 3: tipo = "sinRec";
+                        break;
+                }
+                
+                InformacionSolicitante infoSo = new InformacionSolicitante(txtNombreSolicitante.getText(), txtApellidoSolicitante.getText(), txtCatedra.getText(), txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
+                
+                
+                Periodica nuevaReserva = new Periodica();
+                nuevaReserva.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
+                nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
+                nuevaReserva.setDias(new HashSet(dias));
+                System.out.print(dias);
+                
+                AdministradorInterfaz.getObtenerDisp().setVisible(true);
+                AdministradorInterfaz.getObtenerDisp().enviarInformacion(nuevaReserva, infoSo);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe tener al menos una fecha para la reserva", "Error de cargado de datos", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+        
+        }
+    }//GEN-LAST:event_btnSolicitarMouseClicked
+
+    private void btnAñadirFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirFechaMouseClicked
+        Fecha nuevaFecha = new Fecha();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = null;
+        Dia nuevoDia = new Dia();
+        try {
+            date = format.parse(txtFechaNueva.getText() +" "+ txtHoraInicio6.getText());
+            nuevaFecha.setFecha(date);
+            nuevaFecha.setDuracion(cmbDuracion6.getSelectedIndex()/2);
+            
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+            
+            String[] dias = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
+            
+            nuevoDia.addFecha(nuevaFecha);
+            nuevoDia.setNombreDia(dias[dayOfWeek]);
+            
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        boolean permitir = true;
+        for(Fecha f: fechas) {
+            if (nuevaFecha.getFecha().equals(f.getFecha())) {
+                permitir = false;
+            }
+        }
+        if (permitir) {
+            fechas.add(nuevaFecha);
+            DefaultTableModel model = (DefaultTableModel) tblFechas.getModel();
+            model.addRow(new Object[]{nuevoDia.getNombreDia(),txtFechaNueva.getText(), txtHoraInicio6.getText(), Double.toString(cmbDuracion6.getSelectedIndex()/2)});
+        }
+    }//GEN-LAST:event_btnAñadirFechaMouseClicked
+
+    private void btnEliminarFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarFechaMouseClicked
+        fechas.remove(tblFechas.getSelectedRow());
+        ((DefaultTableModel) tblFechas.getModel()).removeRow(tblFechas.getSelectedRow());
+    }//GEN-LAST:event_btnEliminarFechaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -570,8 +932,10 @@ public class ReservarAula extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAñadirFecha;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCerrarSesion;
+    private javax.swing.JButton btnEliminarFecha;
     private javax.swing.JButton btnFecha;
     private javax.swing.JButton btnPeriodo;
     private javax.swing.JButton btnSolicitar;
@@ -586,8 +950,11 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbDuracion3;
     private javax.swing.JComboBox<String> cmbDuracion4;
     private javax.swing.JComboBox<String> cmbDuracion5;
+    private javax.swing.JComboBox<String> cmbDuracion6;
     private javax.swing.JComboBox<String> cmbPeriodo;
     private javax.swing.JComboBox<String> cmbTipoAula;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblApellidoSolicitante;
     private javax.swing.JLabel lblCantAlumnos;
     private javax.swing.JLabel lblCatedra;
@@ -597,12 +964,15 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JLabel lblDuracion3;
     private javax.swing.JLabel lblDuracion4;
     private javax.swing.JLabel lblDuracion5;
+    private javax.swing.JLabel lblDuracion6;
     private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblFechaNueva;
     private javax.swing.JLabel lblHoraInicio1;
     private javax.swing.JLabel lblHoraInicio2;
     private javax.swing.JLabel lblHoraInicio3;
     private javax.swing.JLabel lblHoraInicio4;
     private javax.swing.JLabel lblHoraInicio5;
+    private javax.swing.JLabel lblHoraInicio6;
     private javax.swing.JLabel lblNombreBedel;
     private javax.swing.JLabel lblNombreSolicitante;
     private javax.swing.JLabel lblReservar;
@@ -610,15 +980,18 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JLabel lblTipoAula;
     private javax.swing.JPanel pnlFecha;
     private javax.swing.JPanel pnlPeriodo;
+    private javax.swing.JTable tblFechas;
     private javax.swing.JTextField txtApellidoSolicitante;
     private javax.swing.JTextField txtCantAlumnos;
     private javax.swing.JTextField txtCatedra;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtFechaNueva;
     private javax.swing.JTextField txtHoraInicio1;
     private javax.swing.JTextField txtHoraInicio2;
     private javax.swing.JTextField txtHoraInicio3;
     private javax.swing.JTextField txtHoraInicio4;
     private javax.swing.JTextField txtHoraInicio5;
+    private javax.swing.JTextField txtHoraInicio6;
     private javax.swing.JTextField txtNombreSolicitante;
     // End of variables declaration//GEN-END:variables
 }

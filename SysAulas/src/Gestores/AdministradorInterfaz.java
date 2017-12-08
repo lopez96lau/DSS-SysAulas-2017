@@ -9,6 +9,7 @@ import Forms.BuscarBedel;
 import Forms.Inicio;
 import Forms.MenuAdmin;
 import Forms.MenuBedel;
+import Forms.ObtenerDisponibilidadAula;
 import Forms.RegistrarBedel;
 import Forms.ReservarAula;
 
@@ -23,6 +24,7 @@ public class AdministradorInterfaz {
     private static BuscarBedel buscarBedel;
     private static MenuBedel menuBedel;
     private static ReservarAula reservarAula;
+    private static ObtenerDisponibilidadAula obtenerDisp;
     
     public static MenuAdmin getMenuAdmin() {
         return menuAdmin;
@@ -70,6 +72,14 @@ public class AdministradorInterfaz {
 
     public static void setReservarAula(ReservarAula reservarAula) {
         AdministradorInterfaz.reservarAula = reservarAula;
+    }
+
+    public static ObtenerDisponibilidadAula getObtenerDisp() {
+        return obtenerDisp;
+    }
+
+    public static void setObtenerDisp(ObtenerDisponibilidadAula obtenerDisp) {
+        AdministradorInterfaz.obtenerDisp = obtenerDisp;
     }
     
     

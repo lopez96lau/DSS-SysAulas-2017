@@ -10,7 +10,7 @@ import db.model.Usuario;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class AdministradorSesion {
     private static Usuario usuarioActual;

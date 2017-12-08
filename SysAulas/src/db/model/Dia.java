@@ -23,6 +23,10 @@ public class Dia  implements java.io.Serializable {
     public Periodica getPeriodica() {
         return periodica;
     }
+    
+    public void addFecha(Fecha fecha) {
+        fechas.add(fecha);
+    }
 
     public Dia() {
     }

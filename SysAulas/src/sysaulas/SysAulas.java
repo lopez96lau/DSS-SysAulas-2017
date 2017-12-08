@@ -6,6 +6,7 @@
 package sysaulas;
 
 import Dao.HistorialContraseniasDao;
+import Dao.PeriodoDao;
 import Dao.PoliticaDao;
 import Dao.TurnoDao;
 import Dao.UsuarioDao;
@@ -13,6 +14,7 @@ import Forms.BuscarBedel;
 import Forms.Inicio;
 import Forms.MenuAdmin;
 import Forms.MenuBedel;
+import Forms.ObtenerDisponibilidadAula;
 import Forms.RegistrarBedel;
 import Forms.ReservarAula;
 import Gestores.AdministradorInterfaz;
@@ -51,8 +53,14 @@ public class SysAulas {
         UsuarioDao.setSesion(sesion);
         PoliticaDao.setSesion(sesion);
         TurnoDao.setSesion(sesion);
+        PeriodoDao.setSesion(sesion);
         HistorialContraseniasDao.setSesion(sesion);
         
+        
+        ObtenerDisponibilidadAula obtenerDisp = new ObtenerDisponibilidadAula();
+        obtenerDisp.setLocationRelativeTo(null);
+        obtenerDisp.setAlwaysOnTop(true);
+        AdministradorInterfaz.setObtenerDisp(obtenerDisp);
         
         ReservarAula reservarAula = new ReservarAula();
         reservarAula.setLocationRelativeTo(null);

@@ -37,6 +37,16 @@ public class Periodica extends Reserva implements java.io.Serializable {
         this.periodo = periodo;
     }
 
+    public Set getDias() {
+        return dias;
+    }
+
+    public void setDias(Set dias) {
+        this.dias = dias;
+    }
+    
+    
+
 }
 
 
