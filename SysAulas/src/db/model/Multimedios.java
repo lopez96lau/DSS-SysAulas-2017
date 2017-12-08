@@ -9,7 +9,6 @@ package db.model;
 public class Multimedios extends Aula  implements java.io.Serializable {
 
 
-     private int idAula;
      private String televisor;
      private String canion;
      private String computadora;
@@ -26,7 +25,7 @@ public class Multimedios extends Aula  implements java.io.Serializable {
     }
     
     public void setIdAula(int idAula) {
-        this.idAula = idAula;
+        super.setIdAula(idAula);
     }
     public String getTelevisor() {
         return this.televisor;

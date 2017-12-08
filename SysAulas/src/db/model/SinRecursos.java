@@ -9,7 +9,6 @@ package db.model;
 public class SinRecursos extends Aula  implements java.io.Serializable {
 
 
-     private int idAula;
      private String ventiladores;
 
     public SinRecursos() {
@@ -20,7 +19,7 @@ public class SinRecursos extends Aula  implements java.io.Serializable {
     }
     
     public void setIdAula(int idAula) {
-        this.idAula = idAula;
+        super.setIdAula(idAula);
     }
     public String getVentiladores() {
         return this.ventiladores;

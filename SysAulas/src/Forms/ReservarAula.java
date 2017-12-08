@@ -8,12 +8,16 @@ package Forms;
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorReservas;
 import Gestores.AdministradorSesion;
+import db.model.Aula;
 import db.model.Bedel;
 import db.model.Dia;
+import db.model.Esporadica;
 import db.model.Fecha;
+import db.model.InfoAulasDisponibles;
 import db.model.InformacionSolicitante;
 import db.model.Periodica;
 import db.model.Periodo;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -396,11 +400,6 @@ public class ReservarAula extends javax.swing.JFrame {
                 btnEliminarFechaMouseClicked(evt);
             }
         });
-        btnEliminarFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarFechaActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlFechaLayout = new javax.swing.GroupLayout(pnlFecha);
         pnlFecha.setLayout(pnlFechaLayout);
@@ -466,11 +465,6 @@ public class ReservarAula extends javax.swing.JFrame {
         btnFecha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnFechaMouseClicked(evt);
-            }
-        });
-        btnFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFechaActionPerformed(evt);
             }
         });
 
@@ -756,14 +750,6 @@ public class ReservarAula extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFechaMouseClicked
 
-    private void btnEliminarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarFechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarFechaActionPerformed
-
-    private void btnFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnFechaActionPerformed
-
     private void btnSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarMouseClicked
         if (modo == "periodico") {
             Periodo periodo = AdministradorReservas.buscarPeriodo(cmbPeriodo.getSelectedIndex());
@@ -789,13 +775,18 @@ public class ReservarAula extends javax.swing.JFrame {
                         
                         Dia nuevoDia = new Dia();
                         nuevoDia.setNombreDia("Lunes");
+                        
                         for(LocalDate ld: totalDates) {
-                            
+                            java.sql.Date date = java.sql.Date.valueOf(ld); 
                             String str = ld.format(formatter)+ " " + txtHoraInicio1.getText();
-                            Date date = format.parse(str);
-                            
+                            System.out.println(str);
+                            //java.sql.Date date = format.parse(str);
+                            long ms = format.parse(str).getTime();
+                            Time time = new Time(ms);
+                            System.out.println(time);
                             Fecha nuevaFecha = new Fecha();
                             nuevaFecha.setFecha(date);
+                            nuevaFecha.setHoraInicio(time);
                             nuevaFecha.setDuracion(cmbDuracion1.getSelectedIndex()/2);
                             nuevoDia.addFecha(nuevaFecha);
                         }
@@ -806,20 +797,7 @@ public class ReservarAula extends javax.swing.JFrame {
                     }
                 }
                 if (chkMartes.isSelected()) {
-                    try {
-                        Fecha nuevaFecha = new Fecha();
-                        Date date = null;
-                        Dia nuevoDia = new Dia();
-                        String str = "05/12/2017 "+ txtHoraInicio2.getText();
-                        date = format.parse(str); //Un lunes cualquiera que ya paso
-                        nuevaFecha.setFecha(date);
-                        nuevaFecha.setDuracion(cmbDuracion2.getSelectedIndex()/2);
-                        nuevoDia.addFecha(nuevaFecha);
-                        nuevoDia.setNombreDia("Martes");
-                        dias.add(nuevoDia);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //...
                 } //Implementar miercoles a viernes
                 
                 String tipo = null;
@@ -828,7 +806,7 @@ public class ReservarAula extends javax.swing.JFrame {
                         break;
                     case 2: tipo = "info";
                         break;
-                    case 3: tipo = "sinRec";
+                    case 3: tipo = "sinrec";
                         break;
                 }
                 
@@ -839,16 +817,26 @@ public class ReservarAula extends javax.swing.JFrame {
                 nuevaReserva.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
                 nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
                 nuevaReserva.setDias(new HashSet(dias));
-                System.out.print(dias);
+                //System.out.print(dias);
+                
+                ArrayList<InfoAulasDisponibles> opciones = AdministradorReservas.obtenerAulas(nuevaReserva, infoSo);
+                
                 
                 AdministradorInterfaz.getObtenerDisp().setVisible(true);
-                AdministradorInterfaz.getObtenerDisp().enviarInformacion(nuevaReserva, infoSo);
+                AdministradorInterfaz.getObtenerDisp().enviarInformacion(nuevaReserva, opciones);
                 
             } else {
-                JOptionPane.showMessageDialog(this, "Debe tener al menos una fecha para la reserva", "Error de cargado de datos", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Debe tener al menos un dia seleccionado para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-        
+            if (tblFechas.getRowCount() > 0){
+                Esporadica nuevaReserva = new Esporadica();
+                nuevaReserva.setFechas(new HashSet(fechas));
+                nuevaReserva.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
+                nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe añadir al menos una fecha para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnSolicitarMouseClicked
 
@@ -859,7 +847,10 @@ public class ReservarAula extends javax.swing.JFrame {
         Dia nuevoDia = new Dia();
         try {
             date = format.parse(txtFechaNueva.getText() +" "+ txtHoraInicio6.getText());
-            nuevaFecha.setFecha(date);
+            nuevaFecha.setFecha(new java.sql.Date(date.getTime()));
+            long ms = date.getTime();
+            Time time = new Time(ms);
+            nuevaFecha.setHoraInicio(time);
             nuevaFecha.setDuracion(cmbDuracion6.getSelectedIndex()/2);
             
             Calendar c = Calendar.getInstance();
@@ -877,7 +868,7 @@ public class ReservarAula extends javax.swing.JFrame {
         }
         boolean permitir = true;
         for(Fecha f: fechas) {
-            if (nuevaFecha.getFecha().equals(f.getFecha())) {
+            if (nuevaFecha.getFecha().equals(f.getFecha()) && nuevaFecha.getHoraInicio().equals(f.getHoraInicio())) {
                 permitir = false;
             }
         }

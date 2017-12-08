@@ -5,11 +5,18 @@
  */
 package Forms;
 
+import Gestores.AdministradorInterfaz;
+import db.model.Aula;
 import db.model.Dia;
 import db.model.Fecha;
+import db.model.InfoAulasDisponibles;
 import db.model.InformacionSolicitante;
 import db.model.Periodica;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +29,9 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
 
     
     private Periodica reservaPeriodica;
+    private ArrayList<InfoAulasDisponibles> opciones;
+    private ArrayList<Fecha> fechas;
+    
     
     /**
      * Creates new form ObtenerDisponibilidadAula
@@ -51,8 +61,8 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         lblFecha = new javax.swing.JLabel();
         lblHoraInicio = new javax.swing.JLabel();
         txtHoraInicio = new javax.swing.JTextField();
-        lblHoraFin = new javax.swing.JLabel();
-        txtHoraFin = new javax.swing.JTextField();
+        lblDuracion = new javax.swing.JLabel();
+        txtDuracion = new javax.swing.JTextField();
         lblDia = new javax.swing.JLabel();
         txtDia = new javax.swing.JTextField();
         lblCatedra = new javax.swing.JLabel();
@@ -143,6 +153,11 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         btnVolver.setText("Volver a la Reserva");
         btnVolver.setToolTipText("Vuelva a la reserva del aula");
         btnVolver.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnVolver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVolverMouseClicked(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Solicitud", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
 
@@ -169,12 +184,11 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
             }
         });
 
-        lblHoraFin.setText("Hora Fin");
-        lblHoraFin.setAutoscrolls(true);
+        lblDuracion.setText("Duracion");
+        lblDuracion.setAutoscrolls(true);
 
-        txtHoraFin.setText("  :");
-        txtHoraFin.setToolTipText("Hora de finalización de la solicitud de reserva");
-        txtHoraFin.setEnabled(false);
+        txtDuracion.setToolTipText("");
+        txtDuracion.setEnabled(false);
 
         lblDia.setText("Día");
 
@@ -229,11 +243,11 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtCatedra)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblHoraFin)
+                        .addComponent(txtHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblDuracion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtTipoAula, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -246,8 +260,8 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblHoraInicio)
-                    .addComponent(lblHoraFin)
-                    .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDuracion)
+                    .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDia)
@@ -265,9 +279,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
 
         tblAulasDisponibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "N° de Aula", "Piso", "Capacidad", "Características"
@@ -314,6 +326,11 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         btnRefrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh.png"))); // NOI18N
         btnRefrescar.setText("Refrescar Datos");
         btnRefrescar.setToolTipText("Actualice los datos de la solicitud actual");
+        btnRefrescar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRefrescarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -392,6 +409,44 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDiaActionPerformed
 
+    private void btnRefrescarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefrescarMouseClicked
+        DefaultTableModel model = (DefaultTableModel) tblAulasDisponibles.getModel();
+        
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+        
+        Integer ind = lstDias.getSelectedIndex();
+        Fecha fecha = fechas.get(ind);
+        InfoAulasDisponibles opcionSelect = null;
+        for(InfoAulasDisponibles iAD : opciones) {
+            if (iAD.getFecha() == fecha) {
+                opcionSelect = iAD;
+                break;
+            }
+        }
+        txtFecha.setText(((java.sql.Date)fecha.getFecha()).toString());
+        txtHoraInicio.setText(((Time)fecha.getHoraInicio()).toString());
+        
+        txtDuracion.setText(fecha.getDuracion().toString());
+        if (opcionSelect != null) {
+            for(Aula a : opcionSelect.getOpcionesAulas()) {
+                model.addRow(new Object[]{a.getIdAula(),a.getUbicacion(), a.getCapacidad(), a.getClass()});
+            }
+        }
+        
+    }//GEN-LAST:event_btnRefrescarMouseClicked
+
+    private void btnVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseClicked
+        ObtenerDisponibilidadAula nuevo = new ObtenerDisponibilidadAula();
+        nuevo.setLocationRelativeTo(null);
+        nuevo.setAlwaysOnTop(true);
+        AdministradorInterfaz.setObtenerDisp(nuevo);
+        AdministradorInterfaz.getReservarAula().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVolverMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -444,8 +499,8 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
     private javax.swing.JLabel lblDia;
     private javax.swing.JLabel lblDisponibilidad;
     private javax.swing.JLabel lblDisponibilidad1;
+    private javax.swing.JLabel lblDuracion;
     private javax.swing.JLabel lblFecha;
-    private javax.swing.JLabel lblHoraFin;
     private javax.swing.JLabel lblHoraInicio;
     private javax.swing.JLabel lblNombreBedel;
     private javax.swing.JLabel lblSeleccione;
@@ -456,33 +511,62 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
     private javax.swing.JTextField txtCantAlumnos;
     private javax.swing.JTextField txtCatedra;
     private javax.swing.JTextField txtDia;
+    private javax.swing.JTextField txtDuracion;
     private javax.swing.JTextField txtFecha;
-    private javax.swing.JTextField txtHoraFin;
     private javax.swing.JTextField txtHoraInicio;
     private javax.swing.JTextField txtTipoAula;
     // End of variables declaration//GEN-END:variables
 
-    void enviarInformacion(Periodica nuevaReserva, InformacionSolicitante infoSo) {
+    /*void enviarInformacion(Periodica nuevaReserva, InformacionSolicitante infoSo) {
         reservaPeriodica = nuevaReserva;
         DefaultListModel model = (DefaultListModel) lstDias.getModel();
         //model.removeAllElements();
         
         Dia d;
         ArrayList<Object> tmp;
-        Date horaInicio;
+        Time horaInicio;
+        java.sql.Date fecha;
         Integer duracion;
         for(Object o: nuevaReserva.getDias()) {
             d = (Dia) o;
             tmp = new ArrayList<>(d.getFechas());
             
             for(Object ob: tmp) {
-                horaInicio = ((Fecha) ob).getFecha();
+                horaInicio = (Time) ((Fecha) ob).getHoraInicio();
+                fecha = (java.sql.Date) ((Fecha) ob).getFecha();
                 duracion = ((Fecha) ob).getDuracion();
-                model.addElement(d.getNombreDia()+" - Inicio: "+horaInicio+" -Duracion: "+duracion);
+                model.addElement(d.getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+duracion);
             }
             
         }
         
+    }*/
+
+    void enviarInformacion(Periodica nuevaReserva, ArrayList<InfoAulasDisponibles> opciones) {
+        reservaPeriodica = nuevaReserva;
+        fechas = new ArrayList<>();
+        this.opciones = opciones;
+        DefaultListModel model = (DefaultListModel) lstDias.getModel();
+        //model.removeAllElements();
         
+        Dia d;
+        ArrayList<Object> tmp;
+        Time horaInicio;
+        java.sql.Date fecha;
+        Integer duracion;
+        for(Object o: nuevaReserva.getDias()) {
+            d = (Dia) o;
+            tmp = new ArrayList<>(d.getFechas());
+            
+            for(Object ob: tmp) {
+                horaInicio = (Time) ((Fecha) ob).getHoraInicio();
+                fecha = (java.sql.Date) ((Fecha) ob).getFecha();
+                duracion = ((Fecha) ob).getDuracion();
+                model.addElement(d.getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+duracion);
+                fechas.add((Fecha) ob);
+                
+            }
+            
+        }
     }
 }

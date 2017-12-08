@@ -5,6 +5,8 @@
  */
 package sysaulas;
 
+import Dao.AulaDao;
+import Dao.DiaDao;
 import Dao.HistorialContraseniasDao;
 import Dao.PeriodoDao;
 import Dao.PoliticaDao;
@@ -51,9 +53,11 @@ public class SysAulas {
         }
 
         UsuarioDao.setSesion(sesion);
+        AulaDao.setSesion(sesion);
         PoliticaDao.setSesion(sesion);
         TurnoDao.setSesion(sesion);
         PeriodoDao.setSesion(sesion);
+        DiaDao.setSesion(sesion);
         HistorialContraseniasDao.setSesion(sesion);
         
         

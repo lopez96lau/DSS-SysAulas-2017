@@ -9,7 +9,6 @@ package db.model;
 public class Informatica extends Aula  implements java.io.Serializable {
 
 
-     private int idAula;
      private String canion;
      private Integer cantidadPcs;
 
@@ -22,7 +21,7 @@ public class Informatica extends Aula  implements java.io.Serializable {
     }
     
     public void setIdAula(int idAula) {
-        this.idAula = idAula;
+        super.setIdAula(idAula);
     }
     public String getCanion() {
         return this.canion;
