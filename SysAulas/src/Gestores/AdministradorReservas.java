@@ -79,7 +79,6 @@ public class AdministradorReservas {
                 DiaDao.crearDia(d);
                 for(Object ob : d.getFechas()) {
                     Fecha f = (Fecha) ob;
-                    f.setDia(d);
                     FechaDao.crearFecha(f);
                 }
             }
@@ -130,6 +129,7 @@ public class AdministradorReservas {
             Time time = new Time(ms);
             System.out.println(time);
             Fecha nuevaFecha = new Fecha();
+            nuevaFecha.setDia(nuevoDia);
             nuevaFecha.setFecha(date);
             nuevaFecha.setHoraInicio(time);
             nuevaFecha.setDuracion(duracionIndex/2);
