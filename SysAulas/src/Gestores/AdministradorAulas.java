@@ -6,6 +6,7 @@
 package Gestores;
 
 import Dao.AulaDao;
+import Dao.FechaDao;
 import db.model.Aula;
 import db.model.Dia;
 import db.model.Esporadica;
@@ -37,41 +38,44 @@ public class AdministradorAulas {
             
             for (Fecha f : fechas) {
                 HashSet<Integer> rechazadas = new HashSet<>();
-                System.out.println("-------------------------------------------------------------------------");
-                System.out.println((java.sql.Date) f.getFecha());
-                System.out.println("-------------------------------------------------------------------------");
-                //rechazadas.addAll(AulaDao.findBetweenDias(d.getNombreDia(), (java.sql.Date) f.getFecha(), (Time) f.getHoraInicio(), f.getDuracion()));
-                rechazadas.addAll(AulaDao.findBetween((java.sql.Date) f.getFecha(), (Time) f.getHoraInicio(), f.getDuracion()));
+                //System.out.println("-------------------------------------------------------------------------");
+                //System.out.println((java.sql.Date) f.getFecha());
+                //System.out.println("-------------------------------------------------------------------------");
                 
-                System.out.println(rechazadas);
+                ArrayList<Fecha> fechasRechazadas = FechaDao.findBetween((java.sql.Date) f.getFecha(), (Time) f.getHoraInicio(), f.getDuracion());
+                for(Fecha fec : fechasRechazadas) {
+                    rechazadas.add(fec.getAula().getIdAula());
+                }
+                
+                //System.out.println(rechazadas);
 
                 ArrayList<Integer> rechazadasAux = new ArrayList<>();
                 rechazadasAux.addAll(rechazadas);
                 
                 ArrayList<Aula> aulas = AulaDao.findComplemento(rechazadasAux);
-                System.out.println(aulas);
+                //System.out.println(aulas);
                 
                 ArrayList<Aula> quitar = new ArrayList<>();
                 for(Aula a : aulas) {
-                    System.out.print(a.getIdAula());
+                    //System.out.print(a.getIdAula());
                     if (a.getCapacidad() < nuevaReserva.getCantidadAlumnos()) {
                         quitar.add(a);
-                        System.out.println(" borrado(1)");
+                        //System.out.println(" borrado(1)");
                     }
                     switch(infoSo.getTipoAula()) {
                         case "multi":
                             if (!(Hibernate.getClass(a) == Multimedios.class)) {
-                                quitar.add(a);System.out.println(" borrado(2)");
+                                quitar.add(a);//System.out.println(" borrado(2)");
                             }
                             break;
                         case "info":
                             if (!(Hibernate.getClass(a) == Informatica.class)) {
-                                quitar.add(a);System.out.println(" borrado(3)");
+                                quitar.add(a);//System.out.println(" borrado(3)");
                             }
                             break;
                         case "sinrec":
                             if (!(Hibernate.getClass(a) == SinRecursos.class)) {
-                                quitar.add(a);System.out.println(" borrado(4)");
+                                quitar.add(a);//System.out.println(" borrado(4)");
                             }
                             break;
                     }
@@ -99,39 +103,44 @@ public class AdministradorAulas {
 
         for (Fecha f : fechas) {
             HashSet<Integer> rechazadas = new HashSet<>();
-            System.out.println("-------------------------------------------------------------------------");
-            System.out.println((java.sql.Date) f.getFecha());
-            System.out.println("-------------------------------------------------------------------------");
-            rechazadas.addAll(AulaDao.findBetween((java.sql.Date) f.getFecha(), (Time) f.getHoraInicio(), f.getDuracion()));
-            System.out.println(rechazadas);
+            //System.out.println("-------------------------------------------------------------------------");
+            //System.out.println((java.sql.Date) f.getFecha());
+            //System.out.println("-------------------------------------------------------------------------");
+            
+            ArrayList<Fecha> fechasRechazadas = FechaDao.findBetween((java.sql.Date) f.getFecha(), (Time) f.getHoraInicio(), f.getDuracion());
+            for(Fecha fec : fechasRechazadas) {
+                rechazadas.add(fec.getAula().getIdAula());
+            }
+                
+            //System.out.println(rechazadas);
 
             ArrayList<Integer> rechazadasAux = new ArrayList<>();
             rechazadasAux.addAll(rechazadas);
 
             ArrayList<Aula> aulas = AulaDao.findComplemento(rechazadasAux);
-            System.out.println(aulas);
+            //System.out.println(aulas);
 
             ArrayList<Aula> quitar = new ArrayList<>();
             for(Aula a : aulas) {
-                System.out.print(a.getIdAula());
+                //System.out.print(a.getIdAula());
                 if (a.getCapacidad() < nuevaReserva.getCantidadAlumnos()) {
                     quitar.add(a);
-                    System.out.println(" borrado(1)");
+                    //System.out.println(" borrado(1)");
                 }
                 switch(infoSo.getTipoAula()) {
                     case "multi":
                         if (!(Hibernate.getClass(a) == Multimedios.class)) {
-                            quitar.add(a);System.out.println(" borrado(2)");
+                            quitar.add(a);//System.out.println(" borrado(2)");
                         }
                         break;
                     case "info":
                         if (!(Hibernate.getClass(a) == Informatica.class)) {
-                            quitar.add(a);System.out.println(" borrado(3)");
+                            quitar.add(a);//System.out.println(" borrado(3)");
                         }
                         break;
                     case "sinrec":
                         if (!(Hibernate.getClass(a) == SinRecursos.class)) {
-                            quitar.add(a);System.out.println(" borrado(4)");
+                            quitar.add(a);//System.out.println(" borrado(4)");
                         }
                         break;
                 }

@@ -27,27 +27,6 @@ public class DiaDao {
     public static void setSesion(Session sesion) {
         DiaDao.sesion = sesion;
     }
-
-    public static Dia find(String nombre, String horaInicio) {
-
-        Transaction tx = null;
-        List fechas = new ArrayList<>();
-        try {
-            tx = sesion.beginTransaction();
-            fechas = sesion.createQuery("FROM Fecha f WHERE f.horaInicio ='" + horaInicio+":00' AND f.dia.nombreDia ='" + nombre+"'").list();
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        }
-        if (fechas.size() > 0) {
-            return ((Fecha) fechas.get(0)).getDia();
-        } else {
-            return null;
-        }
-    }
     
     public static void crearDia(Dia nuevoDia) {
         Transaction tx = null;

@@ -155,7 +155,7 @@ public class UsuarioDao {
         return (administradores.size() == 1);
     }
 
-    public static Bedel findBedel(Integer idUsuario) {
+    /*public static Bedel findBedel(Integer idUsuario) {
         Transaction tx = null;
         List bedeles = new ArrayList<>();
         try {
@@ -174,5 +174,5 @@ public class UsuarioDao {
         } else {
             return null;
         }
-    }
+    }*/
 }

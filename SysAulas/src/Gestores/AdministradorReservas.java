@@ -11,7 +11,6 @@ import Dao.DocenteDao;
 import Dao.FechaDao;
 import Dao.PeriodoDao;
 import Dao.ReservaDao;
-import Dao.UsuarioDao;
 import db.model.Bedel;
 import db.model.Catedra;
 import db.model.Dia;
@@ -41,10 +40,6 @@ public class AdministradorReservas {
         return PeriodoDao.find(periodoID);
     }
 
-    public static Dia buscarDia(String nombre, String horaInicio) {
-        return DiaDao.find(nombre, horaInicio);
-    }
-
     public static void guardarEsporadica(Esporadica reservaEsporadica, InformacionSolicitante infoSolicitante) {
         Docente docente = DocenteDao.find(infoSolicitante.getNombre(), infoSolicitante.getApellido());
         Catedra cat = CatedraDao.find(infoSolicitante.getCatedra());
@@ -59,9 +54,9 @@ public class AdministradorReservas {
                 DiaDao.crearDia(f.getDia());
                 FechaDao.crearFecha(f);
             }
-        } else {
+        } /*else {
             System.out.println("error");
-        }
+        }*/
     }
     
     public static void guardarPeriodica(Periodica reservaPeriodica, InformacionSolicitante infoSolicitante) {
@@ -82,9 +77,9 @@ public class AdministradorReservas {
                     FechaDao.crearFecha(f);
                 }
             }
-        } else {
+        } /*else {
             System.out.println("error");
-        }
+        }*/
     }
     
     public static Dia generarDiaYFechas(Periodo periodo, String nombreDia, String horaInicioText, int duracionIndex) throws ParseException {
@@ -123,11 +118,11 @@ public class AdministradorReservas {
         for(LocalDate ld: totalDates) {
             java.sql.Date date = java.sql.Date.valueOf(ld); 
             String str = ld.format(formatter)+ " " + horaInicioText;
-            System.out.println(str);
+            //System.out.println(str);
             //java.sql.Date date = format.parse(str);
             long ms = format.parse(str).getTime();
             Time time = new Time(ms);
-            System.out.println(time);
+            //System.out.println(time);
             Fecha nuevaFecha = new Fecha();
             nuevaFecha.setDia(nuevoDia);
             nuevaFecha.setFecha(date);
