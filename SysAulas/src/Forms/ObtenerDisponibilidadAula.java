@@ -485,11 +485,11 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
 
     private void jGuardarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jGuardarTodoActionPerformed
         if (reservaEsporadica != null) {
-            AdministradorReservas.guardarReserva(reservaEsporadica, infoSolicitante);
+            AdministradorReservas.guardarEsporadica(reservaEsporadica, infoSolicitante);
             reservaEsporadica = null;
         }
         if (reservaPeriodica != null) {
-            AdministradorReservas.guardarReserva(reservaEsporadica, infoSolicitante);
+            AdministradorReservas.guardarPeriodica(reservaPeriodica, infoSolicitante);
             reservaPeriodica = null;
         }
         
@@ -598,7 +598,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         
     }*/
 
-    void enviarInformacion(Periodica nuevaReserva, ArrayList<InfoAulasDisponibles> opciones, InformacionSolicitante infoSo) {
+    void enviarInformacionPeriodica(Periodica nuevaReserva, ArrayList<InfoAulasDisponibles> opciones, InformacionSolicitante infoSo) {
         infoSolicitante = infoSo;
         reservaPeriodica = nuevaReserva;
         fechas = new ArrayList<>();
@@ -627,7 +627,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         }
     }
 
-    void enviarInformacion(Esporadica nuevaReserva, ArrayList<InfoAulasDisponibles> opciones, InformacionSolicitante infoSo) {
+    void enviarInformacionEsporadica(Esporadica nuevaReserva, ArrayList<InfoAulasDisponibles> opciones, InformacionSolicitante infoSo) {
         infoSolicitante = infoSo;
         reservaEsporadica = nuevaReserva;
         fechas = new ArrayList<>();

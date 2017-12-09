@@ -13,7 +13,7 @@
         </one-to-one>
         <set name="dias" table="dia" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="id_reserva" not-null="true" />
+                <column name="id_dia" not-null="true" /> <!--id_reserva-->
             </key>
             <one-to-many class="db.model.Dia" />
         </set>

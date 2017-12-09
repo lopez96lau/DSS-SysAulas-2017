@@ -816,6 +816,7 @@ public class ReservarAula extends javax.swing.JFrame {
                 
                 Periodica nuevaReserva = new Periodica();
                 nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
+                nuevaReserva.setPeriodo(periodo);
                 nuevaReserva.setDias(new HashSet(dias));
                 //System.out.print(dias);
                 
@@ -823,7 +824,7 @@ public class ReservarAula extends javax.swing.JFrame {
                 
                 
                 AdministradorInterfaz.getObtenerDisp().setVisible(true);
-                AdministradorInterfaz.getObtenerDisp().enviarInformacion(nuevaReserva, opciones, infoSo);
+                AdministradorInterfaz.getObtenerDisp().enviarInformacionPeriodica(nuevaReserva, opciones, infoSo);
                 
             } else {
                 JOptionPane.showMessageDialog(this, "Debe tener al menos un dia seleccionado para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
@@ -850,7 +851,7 @@ public class ReservarAula extends javax.swing.JFrame {
                 
                 
                 AdministradorInterfaz.getObtenerDisp().setVisible(true);
-                AdministradorInterfaz.getObtenerDisp().enviarInformacion(nuevaReserva, opciones, infoSo);
+                AdministradorInterfaz.getObtenerDisp().enviarInformacionEsporadica(nuevaReserva, opciones, infoSo);
                 
             } else {
                 JOptionPane.showMessageDialog(this, "Debe añadir al menos una fecha para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);

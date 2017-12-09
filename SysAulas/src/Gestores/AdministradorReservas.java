@@ -19,6 +19,7 @@ import db.model.Docente;
 import db.model.Esporadica;
 import db.model.Fecha;
 import db.model.InformacionSolicitante;
+import db.model.Periodica;
 import db.model.Periodo;
 
 /**
@@ -34,19 +35,43 @@ public class AdministradorReservas {
         return DiaDao.find(nombre, horaInicio);
     }
 
-    public static void guardarReserva(Esporadica reservaEsporadica, InformacionSolicitante infoSolicitante) {
+    public static void guardarEsporadica(Esporadica reservaEsporadica, InformacionSolicitante infoSolicitante) {
         Docente docente = DocenteDao.find(infoSolicitante.getNombre(), infoSolicitante.getApellido());
         Catedra cat = CatedraDao.find(infoSolicitante.getCatedra());
         if (cat != null && docente != null && AdministradorSesion.getUsuarioActual() != null) {
             reservaEsporadica.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
             reservaEsporadica.setCatedra(cat);
             reservaEsporadica.setDocente(docente);
-            ReservaDao.crearReserva(reservaEsporadica);
+            ReservaDao.crearEsporadica(reservaEsporadica);
             for(Object o : reservaEsporadica.getFechas()) {
                 Fecha f = (Fecha) o;
                 f.setEsporadica(reservaEsporadica);
                 DiaDao.crearDia(f.getDia());
                 FechaDao.crearFecha(f);
+            }
+        } else {
+            System.out.println("error");
+        }
+    }
+    
+    public static void guardarPeriodica(Periodica reservaPeriodica, InformacionSolicitante infoSolicitante) {
+        Docente docente = DocenteDao.find(infoSolicitante.getNombre(), infoSolicitante.getApellido());
+        Catedra cat = CatedraDao.find(infoSolicitante.getCatedra());
+        if (cat != null && docente != null && AdministradorSesion.getUsuarioActual() != null) {
+            reservaPeriodica.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
+            reservaPeriodica.setCatedra(cat);
+            reservaPeriodica.setDocente(docente);
+            ReservaDao.crearPeriodica(reservaPeriodica);
+            
+            for(Object o : reservaPeriodica.getDias()) {
+                Dia d = (Dia) o;
+                d.setPeriodica(reservaPeriodica);
+                DiaDao.crearDia(d);
+                for(Object ob : d.getFechas()) {
+                    Fecha f = (Fecha) ob;
+                    f.setDia(d);
+                    FechaDao.crearFecha(f);
+                }
             }
         } else {
             System.out.println("error");

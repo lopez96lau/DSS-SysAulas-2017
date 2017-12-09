@@ -29,7 +29,7 @@ public class ReservaDao {
         ReservaDao.sesion = sesion;
     }
     
-    public static void crearReserva(Periodica nuevaReserva) {
+    public static void crearPeriodica(Periodica nuevaReserva) {
         Transaction tx = null;
         try {
             tx = sesion.beginTransaction();
@@ -46,7 +46,7 @@ public class ReservaDao {
                 session.close(); 
                 }*/
     }
-    public static void crearReserva(Esporadica nuevaReserva) {
+    public static void crearEsporadica(Esporadica nuevaReserva) {
         Transaction tx = null;
         try {
             tx = sesion.beginTransaction();
