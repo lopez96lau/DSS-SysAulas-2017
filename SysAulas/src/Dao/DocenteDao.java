@@ -1,22 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Dao;
 
-import db.model.Catedra;
+import db.model.Docente;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *
  * @author luciano
  */
-public class CatedraDao {
+public class DocenteDao {
     private static Session sesion;
     
 
@@ -25,15 +26,15 @@ public class CatedraDao {
     }
 
     public static void setSesion(Session sesion) {
-        CatedraDao.sesion = sesion;
+        DocenteDao.sesion = sesion;
     }
 
-    public static Catedra find(String nombreCatedra) {
+    public static Docente find(String nombreDocente, String apellidoDocente) {
         Transaction tx = null;
-        List catedras = new ArrayList<>();
+        List docentes = new ArrayList<>();
         try {
             tx = sesion.beginTransaction();
-            catedras = sesion.createQuery("FROM Catedra c WHERE c.nombreCatedra ='" + nombreCatedra+"'").list();
+            docentes = sesion.createQuery("FROM Docente d WHERE d.nombreDocente ='" + nombreDocente+"' AND d.apellidoDocente='" + apellidoDocente+"'").list();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -42,8 +43,8 @@ public class CatedraDao {
             e.printStackTrace();
         }
         
-        if (catedras.size() == 1) {
-            return (Catedra) catedras.get(0);
+        if (docentes.size() == 1) {
+            return (Docente) docentes.get(0);
         } else {
             return null;
         }

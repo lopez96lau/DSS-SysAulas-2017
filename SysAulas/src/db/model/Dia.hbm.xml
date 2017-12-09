@@ -12,7 +12,7 @@
             <column name="nombre_dia" length="9" />
         </property>
         <many-to-one name="periodica" class="db.model.Periodica" fetch="select">
-            <column name="id_periodica" not-null="true" />
+            <column name="id_periodica"  /> <!--not-null="true"-->
         </many-to-one>
         <set name="fechas" table="fecha" inverse="true" lazy="true" fetch="select">
             <key>

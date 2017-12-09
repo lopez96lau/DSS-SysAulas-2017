@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import Gestores.AdministradorAulas;
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorReservas;
 import Gestores.AdministradorSesion;
@@ -814,16 +815,15 @@ public class ReservarAula extends javax.swing.JFrame {
                 
                 
                 Periodica nuevaReserva = new Periodica();
-                nuevaReserva.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
                 nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
                 nuevaReserva.setDias(new HashSet(dias));
                 //System.out.print(dias);
                 
-                ArrayList<InfoAulasDisponibles> opciones = AdministradorReservas.obtenerAulas(nuevaReserva, infoSo);
+                ArrayList<InfoAulasDisponibles> opciones = AdministradorAulas.obtenerAulas(nuevaReserva, infoSo);
                 
                 
                 AdministradorInterfaz.getObtenerDisp().setVisible(true);
-                AdministradorInterfaz.getObtenerDisp().enviarInformacion(nuevaReserva, opciones);
+                AdministradorInterfaz.getObtenerDisp().enviarInformacion(nuevaReserva, opciones, infoSo);
                 
             } else {
                 JOptionPane.showMessageDialog(this, "Debe tener al menos un dia seleccionado para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
@@ -832,7 +832,6 @@ public class ReservarAula extends javax.swing.JFrame {
             if (tblFechas.getRowCount() > 0){
                 Esporadica nuevaReserva = new Esporadica();
                 nuevaReserva.setFechas(new HashSet(fechas));
-                nuevaReserva.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
                 nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
                 
                 String tipo = null;
@@ -847,11 +846,11 @@ public class ReservarAula extends javax.swing.JFrame {
                 
                 InformacionSolicitante infoSo = new InformacionSolicitante(txtNombreSolicitante.getText(), txtApellidoSolicitante.getText(), txtCatedra.getText(), txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
                 
-                ArrayList<InfoAulasDisponibles> opciones = AdministradorReservas.obtenerAulas(nuevaReserva, infoSo);
+                ArrayList<InfoAulasDisponibles> opciones = AdministradorAulas.obtenerAulas(nuevaReserva, infoSo);
                 
                 
                 AdministradorInterfaz.getObtenerDisp().setVisible(true);
-                AdministradorInterfaz.getObtenerDisp().enviarInformacion(nuevaReserva, opciones);
+                AdministradorInterfaz.getObtenerDisp().enviarInformacion(nuevaReserva, opciones, infoSo);
                 
             } else {
                 JOptionPane.showMessageDialog(this, "Debe añadir al menos una fecha para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);

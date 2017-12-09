@@ -107,7 +107,7 @@ public class UsuarioDao {
             //Integer usuarioID = (Integer) sesion.save(nuevoUsuario);
             //nuevoUsuario.setIdUsuario(usuarioID);
             Integer bedelID = (Integer) sesion.save(nuevoBedel);
-            nuevoBedel.setIdBedel(bedelID);
+            nuevoBedel.setIdUsuario(bedelID);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -155,4 +155,24 @@ public class UsuarioDao {
         return (administradores.size() == 1);
     }
 
+    public static Bedel findBedel(Integer idUsuario) {
+        Transaction tx = null;
+        List bedeles = new ArrayList<>();
+        try {
+            tx = sesion.beginTransaction();
+            bedeles = sesion.createQuery("FROM Bedel b WHERE b.idUsuario =" + idUsuario).list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        
+        if (bedeles.size() == 1) {
+            return (Bedel) bedeles.get(0);
+        } else {
+            return null;
+        }
+    }
 }

@@ -5,7 +5,10 @@
  */
 package Gestores;
 
+import Dao.ReservaDao;
 import Dao.UsuarioDao;
+import db.model.Bedel;
+import db.model.Esporadica;
 import db.model.Usuario;
 
 /**
@@ -33,6 +36,12 @@ public class AdministradorSesion {
                         return 0;
                     } else {
                         AdministradorSesion.setUsuarioActual(encontrado); //Bedel
+                        /*System.out.println(UsuarioDao.findBedel( AdministradorSesion.getUsuarioActual().getIdUsuario() ));
+                        Esporadica reservaEsporadica = new Esporadica();
+                        reservaEsporadica.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
+                        reservaEsporadica.setCatedra(null);
+                        reservaEsporadica.setDocente(null);
+                        ReservaDao.crearReserva(reservaEsporadica);*/
                         return 1;
                     }
                 } else {

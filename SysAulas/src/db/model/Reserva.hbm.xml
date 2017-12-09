@@ -9,13 +9,13 @@
             <generator class="identity" />
         </id>
         <many-to-one name="bedel" class="db.model.Bedel" fetch="select">
-            <column name="id_bedel" not-null="true" />
+            <column name="id_bedel" /><!-- not-null="true" -->
         </many-to-one>
         <many-to-one name="catedra" class="db.model.Catedra" fetch="select">
-            <column name="id_catedra" not-null="true" />
+            <column name="id_catedra"  /><!-- not-null="true" -->
         </many-to-one>
         <many-to-one name="docente" class="db.model.Docente" fetch="select">
-            <column name="id_docente" not-null="true" />
+            <column name="id_docente"  /> <!-- not-null="true" -->
         </many-to-one>
         <property name="cantidadAlumnos" type="java.lang.Integer">
             <column name="cantidad_alumnos" />
@@ -28,9 +28,9 @@
         </set>
         <joined-subclass name="db.model.Periodica" table="periodica" catalog="tpdds2017">
             <key column="id_reserva"></key>
-        <many-to-one name="periodo" class="db.model.Periodo" fetch="select">
-            <column name="id_periodo" not-null="true" />
-        </many-to-one>
+            <many-to-one name="periodo" class="db.model.Periodo" fetch="select">
+                <column name="id_periodo" not-null="true" />
+            </many-to-one>
         </joined-subclass>
         <joined-subclass name="db.model.Esporadica" table="esporadica" catalog="tpdds2017">
             <key column="id_reserva"></key>

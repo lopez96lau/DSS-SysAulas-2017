@@ -5,7 +5,6 @@
  */
 package Dao;
 
-import db.model.Dia;
 import db.model.Fecha;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import org.hibernate.Transaction;
  *
  * @author luciano
  */
-public class DiaDao {
+public class FechaDao {
     private static Session sesion;
 
     public static Session getSesion() {
@@ -25,36 +24,14 @@ public class DiaDao {
     }
 
     public static void setSesion(Session sesion) {
-        DiaDao.sesion = sesion;
+        FechaDao.sesion = sesion;
     }
-
-    public static Dia find(String nombre, String horaInicio) {
-
-        Transaction tx = null;
-        List fechas = new ArrayList<>();
-        try {
-            tx = sesion.beginTransaction();
-            fechas = sesion.createQuery("FROM Fecha f WHERE f.horaInicio ='" + horaInicio+":00' AND f.dia.nombreDia ='" + nombre+"'").list();
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        }
-        if (fechas.size() > 0) {
-            return ((Fecha) fechas.get(0)).getDia();
-        } else {
-            return null;
-        }
-    }
-    
-    public static void crearDia(Dia nuevoDia) {
+    public static void crearFecha(Fecha nuevaFecha) {
         Transaction tx = null;
         try {
             tx = sesion.beginTransaction();
-            Integer diaID = (Integer) sesion.save(nuevoDia);
-            nuevoDia.setIdDia(diaID);
+            Integer fechaID = (Integer) sesion.save(nuevaFecha);
+            nuevaFecha.setIdFecha(fechaID);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -66,5 +43,4 @@ public class DiaDao {
                 session.close(); 
                 }*/
     }
-    
 }

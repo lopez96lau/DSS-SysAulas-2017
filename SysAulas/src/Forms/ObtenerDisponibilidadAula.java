@@ -6,6 +6,7 @@
 package Forms;
 
 import Gestores.AdministradorInterfaz;
+import Gestores.AdministradorReservas;
 import db.model.Aula;
 import db.model.Dia;
 import db.model.Esporadica;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,10 +31,13 @@ import javax.swing.table.DefaultTableModel;
 public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
 
     
-    private Periodica reservaPeriodica;
-    private Esporadica reservaEsporadica;
+    private Periodica reservaPeriodica = null;
+    private Esporadica reservaEsporadica = null;
     private ArrayList<InfoAulasDisponibles> opciones;
     private ArrayList<Fecha> fechas;
+    private ArrayList<Aula> aulasDisponibles;
+    private Integer fechaInd;
+    private InformacionSolicitante infoSolicitante;
     
     
     /**
@@ -83,6 +88,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         lstDias = new javax.swing.JList<>();
         btnRefrescar = new javax.swing.JButton();
+        jGuardarTodo = new javax.swing.JButton();
 
         ReservasSuperpuestas.setTitle("Disponibilidad de Aulas");
         ReservasSuperpuestas.setType(java.awt.Window.Type.UTILITY);
@@ -295,8 +301,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblAulasDisponibles.setEnabled(false);
-        tblAulasDisponibles.setRowSelectionAllowed(false);
+        tblAulasDisponibles.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblAulasDisponibles.getTableHeader().setResizingAllowed(false);
         tblAulasDisponibles.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblAulasDisponibles);
@@ -317,6 +322,11 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         btnGuardarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save.png"))); // NOI18N
         btnGuardarReserva.setText("Guardar Reserva");
         btnGuardarReserva.setToolTipText("Guardar y confirmar la reserva del aula");
+        btnGuardarReserva.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarReservaMouseClicked(evt);
+            }
+        });
 
         btnCancelarSolicitud.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
         btnCancelarSolicitud.setText("Cancelar Solicitud");
@@ -331,6 +341,15 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         btnRefrescar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRefrescarMouseClicked(evt);
+            }
+        });
+
+        jGuardarTodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save.png"))); // NOI18N
+        jGuardarTodo.setText("Guardar todo y volver");
+        jGuardarTodo.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jGuardarTodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jGuardarTodoActionPerformed(evt);
             }
         });
 
@@ -353,11 +372,13 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSeleccione)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNombreBedel))
+                                .addComponent(lblNombreBedel)
+                                .addGap(86, 86, 86)
+                                .addComponent(jGuardarTodo))
+                            .addComponent(lblSeleccione)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnGuardarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -375,8 +396,9 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombreBedel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lblNombreBedel)
+                    .addComponent(jGuardarTodo))
+                .addGap(11, 11, 11)
                 .addComponent(lblSeleccione)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -418,9 +440,10 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
+        aulasDisponibles = new ArrayList<>();
         
-        Integer ind = lstDias.getSelectedIndex();
-        Fecha fecha = fechas.get(ind);
+        fechaInd = lstDias.getSelectedIndex();
+        Fecha fecha = fechas.get(fechaInd);
         InfoAulasDisponibles opcionSelect = null;
         for(InfoAulasDisponibles iAD : opciones) {
             if (iAD.getFecha() == fecha) {
@@ -434,6 +457,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         txtDuracion.setText(fecha.getDuracion().toString());
         if (opcionSelect != null) {
             for(Aula a : opcionSelect.getOpcionesAulas()) {
+                aulasDisponibles.add(a);
                 model.addRow(new Object[]{a.getIdAula(),a.getUbicacion(), a.getCapacidad(), a.getClass()});
             }
         }
@@ -448,6 +472,35 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         AdministradorInterfaz.getReservarAula().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverMouseClicked
+
+    private void btnGuardarReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarReservaMouseClicked
+        Integer ind = tblAulasDisponibles.getSelectedRow();
+        Aula seleccionada = aulasDisponibles.get(ind);
+        Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas reservar el aula "+seleccionada.getIdAula()+" para el dia "+fechas.get(fechaInd).getFecha()+"?", "Guardar?",  JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            fechas.get(fechaInd).setAula(seleccionada);
+            JOptionPane.showMessageDialog(this, "Aula asociada a reserva con exito!");
+        }
+    }//GEN-LAST:event_btnGuardarReservaMouseClicked
+
+    private void jGuardarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jGuardarTodoActionPerformed
+        if (reservaEsporadica != null) {
+            AdministradorReservas.guardarReserva(reservaEsporadica, infoSolicitante);
+            reservaEsporadica = null;
+        }
+        if (reservaPeriodica != null) {
+            AdministradorReservas.guardarReserva(reservaEsporadica, infoSolicitante);
+            reservaPeriodica = null;
+        }
+        
+        //Volver al menu anterior
+        ObtenerDisponibilidadAula nuevo = new ObtenerDisponibilidadAula();
+        nuevo.setLocationRelativeTo(null);
+        nuevo.setAlwaysOnTop(true);
+        AdministradorInterfaz.setObtenerDisp(nuevo);
+        AdministradorInterfaz.getReservarAula().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jGuardarTodoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -492,6 +545,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
     private javax.swing.JButton btnVolver;
     private javax.swing.JButton btnVolver1;
     private javax.swing.JTable grdAulas;
+    private javax.swing.JButton jGuardarTodo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -544,7 +598,8 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         
     }*/
 
-    void enviarInformacion(Periodica nuevaReserva, ArrayList<InfoAulasDisponibles> opciones) {
+    void enviarInformacion(Periodica nuevaReserva, ArrayList<InfoAulasDisponibles> opciones, InformacionSolicitante infoSo) {
+        infoSolicitante = infoSo;
         reservaPeriodica = nuevaReserva;
         fechas = new ArrayList<>();
         this.opciones = opciones;
@@ -572,7 +627,8 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         }
     }
 
-    void enviarInformacion(Esporadica nuevaReserva, ArrayList<InfoAulasDisponibles> opciones) {
+    void enviarInformacion(Esporadica nuevaReserva, ArrayList<InfoAulasDisponibles> opciones, InformacionSolicitante infoSo) {
+        infoSolicitante = infoSo;
         reservaEsporadica = nuevaReserva;
         fechas = new ArrayList<>();
         this.opciones = opciones;

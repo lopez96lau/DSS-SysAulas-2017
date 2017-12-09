@@ -4,15 +4,12 @@
 <!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <union-subclass name="db.model.Bedel" table="bedel" catalog="tpdds2017" optimistic-lock="version" extends="db.model.Usuario">
-        <id name="idBedel" type="java.lang.Integer">
-            <column name="id_bedel" />
+        <id name="idUsuario" type="java.lang.Integer">
+            <column name="id_usuario" />
             <generator class="identity" />
         </id>
         <many-to-one name="turno" class="db.model.Turno" fetch="select">
             <column name="id_turno" not-null="true" />
-        </many-to-one>
-        <many-to-one name="usuario" class="db.model.Usuario" fetch="select">
-            <column name="id_usuario" not-null="true" />
         </many-to-one>
         <property name="nombreBedel" type="string">
             <column name="nombre_bedel" length="20" />

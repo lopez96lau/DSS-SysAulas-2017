@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.6" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JFrame" name="ReservasSuperpuestas">
       <Properties>
@@ -168,12 +168,14 @@
                   <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblSeleccione" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="lblSesion" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblNombreBedel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                              <Component id="jGuardarTodo" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="lblSeleccione" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="btnGuardarReserva" min="-2" pref="183" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -199,11 +201,12 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblSesion" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblNombreBedel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jGuardarTodo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Component id="lblSeleccione" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="71" max="-2" attributes="0"/>
                   </Group>
@@ -468,8 +471,9 @@
                 </Column>
               </TableColumnModel>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
-            <Property name="rowSelectionAllowed" type="boolean" value="false"/>
+            <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
+              <JTableSelectionModel selectionMode="0"/>
+            </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
             </Property>
@@ -503,6 +507,9 @@
         <Property name="text" type="java.lang.String" value="Guardar Reserva"/>
         <Property name="toolTipText" type="java.lang.String" value="Guardar y confirmar la reserva del aula"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnGuardarReservaMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelarSolicitud">
       <Properties>
@@ -542,6 +549,18 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRefrescarMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jGuardarTodo">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Iconos/save.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Guardar todo y volver"/>
+        <Property name="horizontalTextPosition" type="int" value="10"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jGuardarTodoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

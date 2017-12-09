@@ -5,10 +5,10 @@
  */
 package Dao;
 
-import db.model.Dia;
-import db.model.Fecha;
-import java.util.ArrayList;
-import java.util.List;
+import db.model.Esporadica;
+import db.model.Periodica;
+import db.model.Reserva;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,7 +17,8 @@ import org.hibernate.Transaction;
  *
  * @author luciano
  */
-public class DiaDao {
+public class ReservaDao {
+    
     private static Session sesion;
 
     public static Session getSesion() {
@@ -25,36 +26,15 @@ public class DiaDao {
     }
 
     public static void setSesion(Session sesion) {
-        DiaDao.sesion = sesion;
-    }
-
-    public static Dia find(String nombre, String horaInicio) {
-
-        Transaction tx = null;
-        List fechas = new ArrayList<>();
-        try {
-            tx = sesion.beginTransaction();
-            fechas = sesion.createQuery("FROM Fecha f WHERE f.horaInicio ='" + horaInicio+":00' AND f.dia.nombreDia ='" + nombre+"'").list();
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        }
-        if (fechas.size() > 0) {
-            return ((Fecha) fechas.get(0)).getDia();
-        } else {
-            return null;
-        }
+        ReservaDao.sesion = sesion;
     }
     
-    public static void crearDia(Dia nuevoDia) {
+    public static void crearReserva(Periodica nuevaReserva) {
         Transaction tx = null;
         try {
             tx = sesion.beginTransaction();
-            Integer diaID = (Integer) sesion.save(nuevoDia);
-            nuevoDia.setIdDia(diaID);
+            Integer reservaID = (Integer) sesion.save(nuevaReserva);
+            nuevaReserva.setIdReserva(reservaID);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -66,5 +46,21 @@ public class DiaDao {
                 session.close(); 
                 }*/
     }
-    
+    public static void crearReserva(Esporadica nuevaReserva) {
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            Integer reservaID = (Integer) sesion.save(nuevaReserva);
+            nuevaReserva.setIdReserva(reservaID);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        /*finally {
+                session.close(); 
+                }*/
+    }
 }

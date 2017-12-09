@@ -10,7 +10,6 @@ import java.util.Set;
  */
 public class Bedel extends Usuario implements java.io.Serializable {
 
-     private Integer idBedel;
      private Turno turno;
      private String nombreBedel;
      private String apellidoBedel;
@@ -31,13 +30,6 @@ public class Bedel extends Usuario implements java.io.Serializable {
        this.apellidoBedel = apellidoBedel;
     }
    
-    public Integer getIdBedel() {
-        return this.idBedel;
-    }
-    
-    public void setIdBedel(Integer idBedel) {
-        this.idBedel = idBedel;
-    }
     public Turno getTurno() {
         return this.turno;
     }

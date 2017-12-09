@@ -24,7 +24,7 @@
         <key column="id_usuario"></key>
     </joined-subclass>
     <joined-subclass name="db.model.Bedel" table="bedel">
-        <key column="id_usuario"></key>  
+        <key column="id_usuario"></key>  <!--id_bedel-->
         <many-to-one name="turno" class="db.model.Turno" fetch="select">
             <column name="id_turno" not-null="true" />
         </many-to-one>
