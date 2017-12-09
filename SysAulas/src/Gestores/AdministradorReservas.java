@@ -21,6 +21,16 @@ import db.model.Fecha;
 import db.model.InformacionSolicitante;
 import db.model.Periodica;
 import db.model.Periodo;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -78,5 +88,53 @@ public class AdministradorReservas {
         }
     }
     
-    
+    public static Dia generarDiaYFechas(Periodo periodo, String nombreDia, String horaInicioText, int duracionIndex) throws ParseException {
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+        
+        LocalDate inicio = ((java.sql.Date) periodo.getFechaInicio()).toLocalDate();
+        LocalDate fin = ((java.sql.Date) periodo.getFechaFin()).toLocalDate();
+
+        List<LocalDate> totalDates = new ArrayList<>();
+        
+        
+        LocalDate dia = null;
+        switch(nombreDia) {
+            case "Lunes": dia = inicio.with(TemporalAdjusters.nextOrSame(DayOfWeek.MONDAY));
+                break;
+            case "Martes": dia = inicio.with(TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY));
+                break;
+            case "Miercoles": dia = inicio.with(TemporalAdjusters.nextOrSame(DayOfWeek.WEDNESDAY));
+                break;
+            case "Jueves": dia = inicio.with(TemporalAdjusters.nextOrSame(DayOfWeek.THURSDAY));
+                break;
+            case "Viernes": dia = inicio.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
+                break;
+        }
+        
+        while (!dia.isAfter(fin)) {
+            totalDates.add(dia);
+            dia = dia.plusWeeks(1);
+        }
+
+        Dia nuevoDia = new Dia();
+        nuevoDia.setNombreDia(nombreDia);
+
+        for(LocalDate ld: totalDates) {
+            java.sql.Date date = java.sql.Date.valueOf(ld); 
+            String str = ld.format(formatter)+ " " + horaInicioText;
+            System.out.println(str);
+            //java.sql.Date date = format.parse(str);
+            long ms = format.parse(str).getTime();
+            Time time = new Time(ms);
+            System.out.println(time);
+            Fecha nuevaFecha = new Fecha();
+            nuevaFecha.setFecha(date);
+            nuevaFecha.setHoraInicio(time);
+            nuevaFecha.setDuracion(duracionIndex/2);
+            nuevoDia.addFecha(nuevaFecha);
+        }
+        return nuevoDia;
+    }
 }

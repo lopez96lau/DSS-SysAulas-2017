@@ -40,7 +40,9 @@ public class AdministradorAulas {
                 System.out.println("-------------------------------------------------------------------------");
                 System.out.println((java.sql.Date) f.getFecha());
                 System.out.println("-------------------------------------------------------------------------");
+                //rechazadas.addAll(AulaDao.findBetweenDias(d.getNombreDia(), (java.sql.Date) f.getFecha(), (Time) f.getHoraInicio(), f.getDuracion()));
                 rechazadas.addAll(AulaDao.findBetween((java.sql.Date) f.getFecha(), (Time) f.getHoraInicio(), f.getDuracion()));
+                
                 System.out.println(rechazadas);
 
                 ArrayList<Integer> rechazadasAux = new ArrayList<>();

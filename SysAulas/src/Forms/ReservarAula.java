@@ -9,8 +9,6 @@ import Gestores.AdministradorAulas;
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorReservas;
 import Gestores.AdministradorSesion;
-import db.model.Aula;
-import db.model.Bedel;
 import db.model.Dia;
 import db.model.Esporadica;
 import db.model.Fecha;
@@ -22,20 +20,14 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -754,53 +746,24 @@ public class ReservarAula extends javax.swing.JFrame {
     private void btnSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarMouseClicked
         if (modo == "periodico") {
             Periodo periodo = AdministradorReservas.buscarPeriodo(cmbPeriodo.getSelectedIndex());
+            Boolean[] diasSelect = {chkLunes.isSelected(), chkMartes.isSelected(), chkMiercoles.isSelected(), chkJueves.isSelected(), chkViernes.isSelected()};
+            String[] diasNombre = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
+            String[] diasHoraInicio = {txtHoraInicio1.getText(),txtHoraInicio2.getText(),txtHoraInicio3.getText(),txtHoraInicio4.getText(),txtHoraInicio5.getText()};
+            Integer[] diasDuracion = {cmbDuracion1.getSelectedIndex(), cmbDuracion2.getSelectedIndex(), cmbDuracion3.getSelectedIndex(), cmbDuracion4.getSelectedIndex(), cmbDuracion5.getSelectedIndex()};
             
-            if (chkLunes.isSelected() || chkMartes.isSelected() || chkMiercoles.isSelected() || chkJueves.isSelected() || chkViernes.isSelected()) {
-                
-                DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                
-                if (chkLunes.isSelected()) {
-                    //System.out.print(str);
-                    try {
-                        LocalDate inicio = ((java.sql.Date) periodo.getFechaInicio()).toLocalDate();
-                        LocalDate fin = ((java.sql.Date) periodo.getFechaFin()).toLocalDate();
-                        
-                        List<LocalDate> totalDates = new ArrayList<>();
-                        
-                        LocalDate lunes = inicio.with(TemporalAdjusters.nextOrSame(DayOfWeek.MONDAY));
-                        while (!lunes.isAfter(fin)) {
-                            totalDates.add(lunes);
-                            lunes = lunes.plusWeeks(1);
+            if (Arrays.asList(diasSelect).contains(true)) {
+                //Generar dias y fechas
+                for(int i=0; i<diasSelect.length; i++) {
+                    if (diasSelect[i]) {
+                        Dia nuevoDia = null;
+                        try {
+                            nuevoDia = AdministradorReservas.generarDiaYFechas(periodo, diasNombre[i], diasHoraInicio[i], diasDuracion[i]);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
-                        Dia nuevoDia = new Dia();
-                        nuevoDia.setNombreDia("Lunes");
-                        
-                        for(LocalDate ld: totalDates) {
-                            java.sql.Date date = java.sql.Date.valueOf(ld); 
-                            String str = ld.format(formatter)+ " " + txtHoraInicio1.getText();
-                            System.out.println(str);
-                            //java.sql.Date date = format.parse(str);
-                            long ms = format.parse(str).getTime();
-                            Time time = new Time(ms);
-                            System.out.println(time);
-                            Fecha nuevaFecha = new Fecha();
-                            nuevaFecha.setFecha(date);
-                            nuevaFecha.setHoraInicio(time);
-                            nuevaFecha.setDuracion(cmbDuracion1.getSelectedIndex()/2);
-                            nuevoDia.addFecha(nuevaFecha);
-                        }
-                        
                         dias.add(nuevoDia);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if (chkMartes.isSelected()) {
-                    //...
-                } //Implementar miercoles a viernes
-                
                 String tipo = null;
                 switch(cmbTipoAula.getSelectedIndex()) {
                     case 1: tipo  = "multi";
@@ -887,12 +850,15 @@ public class ReservarAula extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //Para evitar fechas repetidas
         boolean permitir = true;
         for(Fecha f: fechas) {
             if (nuevaFecha.getFecha().equals(f.getFecha()) && nuevaFecha.getHoraInicio().equals(f.getHoraInicio())) {
                 permitir = false;
             }
-        }
+        }//
+        
         if (permitir) {
             fechas.add(nuevaFecha);
             DefaultTableModel model = (DefaultTableModel) tblFechas.getModel();
@@ -1006,4 +972,6 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JTextField txtHoraInicio6;
     private javax.swing.JTextField txtNombreSolicitante;
     // End of variables declaration//GEN-END:variables
+
+    
 }
