@@ -476,8 +476,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
             if (reservaPeriodica != null) {
                 txtCantAlumnos.setText(reservaPeriodica.getCantidadAlumnos().toString());
             }
-
-            txtDuracion.setText(fecha.getDuracion().toString());
+            txtDuracion.setText(String.format("%.1f", (double) fecha.getDuracion()/1000)+" h");
             if (opcionSelect != null) {
                 for(Aula a : opcionSelect.getOpcionesAulas()) {
                     aulasDisponibles.add(a);
@@ -516,22 +515,35 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarReservaMouseClicked
 
     private void jGuardarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jGuardarTodoActionPerformed
-        if (reservaEsporadica != null) {
-            AdministradorReservas.guardarEsporadica(reservaEsporadica, infoSolicitante);
-            reservaEsporadica = null;
-        }
-        if (reservaPeriodica != null) {
-            AdministradorReservas.guardarPeriodica(reservaPeriodica, infoSolicitante);
-            reservaPeriodica = null;
+        boolean permitir = true;
+        int i = 0;
+        while(permitir && i < fechas.size()) {
+            if (fechas.get(i).getAula() == null) {
+                permitir = false;
+            }
+            i++;
         }
         
-        //Volver al menu anterior
-        ObtenerDisponibilidadAula nuevo = new ObtenerDisponibilidadAula();
-        nuevo.setLocationRelativeTo(null);
-        //nuevo.setAlwaysOnTop(true);
-        AdministradorInterfaz.setObtenerDisp(nuevo);
-        AdministradorInterfaz.getReservarAula().setVisible(true);
+        if (permitir) {
+            if (reservaEsporadica != null) {
+                AdministradorReservas.guardarEsporadica(reservaEsporadica, infoSolicitante);
+                reservaEsporadica = null;
+            }
+            if (reservaPeriodica != null) {
+                AdministradorReservas.guardarPeriodica(reservaPeriodica, infoSolicitante);
+                reservaPeriodica = null;
+            }
+
+            //Volver al menu anterior
+            ObtenerDisponibilidadAula nuevo = new ObtenerDisponibilidadAula();
+            nuevo.setLocationRelativeTo(null);
+            //nuevo.setAlwaysOnTop(true);
+            AdministradorInterfaz.setObtenerDisp(nuevo);
+            AdministradorInterfaz.getReservarAula().setVisible(true);
         this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "No puede guardar la reserva sin seleccionar un aula para cada fecha", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jGuardarTodoActionPerformed
 
     private void txtCantAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantAlumnosActionPerformed
@@ -638,7 +650,8 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                 horaInicio = (Time) ((Fecha) ob).getHoraInicio();
                 fecha = (java.sql.Date) ((Fecha) ob).getFecha();
                 duracion = ((Fecha) ob).getDuracion();
-                model.addElement(d.getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+duracion);
+                
+                model.addElement(d.getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+String.format("%.1f", (double) duracion/1000)+" h");
                 fechas.add((Fecha) ob);
                 
             }
@@ -664,7 +677,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
             horaInicio = (Time) ((Fecha) ob).getHoraInicio();
             fecha = (java.sql.Date) ((Fecha) ob).getFecha();
             duracion = ((Fecha) ob).getDuracion();
-            model.addElement(((Fecha) ob).getDia().getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+duracion);
+            model.addElement(((Fecha) ob).getDia().getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+String.format("%.1f", (double) duracion/1000)+" h");
             fechas.add((Fecha) ob);
         }
     }

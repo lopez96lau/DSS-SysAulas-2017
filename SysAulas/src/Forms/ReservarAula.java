@@ -344,7 +344,7 @@ public class ReservarAula extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Dia", "Fecha", "HorarioInicio", "Duracion"
+                "Dia", "Fecha", "Hora Inicio", "Duracion"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -751,7 +751,7 @@ public class ReservarAula extends javax.swing.JFrame {
     private void btnSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarMouseClicked
         if (cmbTipoAula.getSelectedIndex() == 0 ) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado un tipo de aula", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-        } else if (!isInteger(txtCantAlumnos.getText())) {
+        } else if (!esInteger(txtCantAlumnos.getText())) {
             JOptionPane.showMessageDialog(this, "La cantidad de alumnos ingresada no es valida", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
         } else {
             if (modo == "periodico") {
@@ -882,7 +882,8 @@ public class ReservarAula extends javax.swing.JFrame {
             long ms = date.getTime();
             Time time = new Time(ms);
             nuevaFecha.setHoraInicio(time);
-            nuevaFecha.setDuracion(cmbDuracion6.getSelectedIndex()/2);
+            //y = 500+500*(x-1) --> x=3 --> y = 500+500*2 = 1500
+            nuevaFecha.setDuracion(500+500*(cmbDuracion6.getSelectedIndex()-1));
             
             Calendar c = Calendar.getInstance();
             c.setTime(date);
@@ -904,7 +905,8 @@ public class ReservarAula extends javax.swing.JFrame {
 
             fechas.add(nuevaFecha);
             DefaultTableModel model = (DefaultTableModel) tblFechas.getModel();
-            model.addRow(new Object[]{nuevoDia.getNombreDia(),txtFechaNueva.getText(), txtHoraInicio6.getText(), Double.toString(cmbDuracion6.getSelectedIndex()/2)});
+            
+            model.addRow(new Object[]{nuevoDia.getNombreDia(),txtFechaNueva.getText(), txtHoraInicio6.getText(), String.format("%.1f", (double) cmbDuracion6.getSelectedIndex()/2)+" h"});
             
             
         } catch (ParseException | IllegalArgumentException ex) {
@@ -1040,7 +1042,7 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreSolicitante;
     // End of variables declaration//GEN-END:variables
 
-    public static boolean isInteger(String str) {
+    public static boolean esInteger(String str) {
         if (str == null) {
             return false;
         }
@@ -1050,10 +1052,10 @@ public class ReservarAula extends javax.swing.JFrame {
         }
         int i = 0;
         if (str.charAt(0) == '-') {
-            if (length == 1) {
+            //if (length == 1) {
                 return false;
-            }
-            i = 1;
+            /*}
+            i = 1;*/
         }
         for (; i < length; i++) {
             char c = str.charAt(i);

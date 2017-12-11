@@ -126,7 +126,8 @@ public class AdministradorReservas {
             nuevaFecha.setDia(nuevoDia);
             nuevaFecha.setFecha(date);
             nuevaFecha.setHoraInicio(time);
-            nuevaFecha.setDuracion(duracionIndex/2);
+            //500+500*(x-1) --> x=3 --> 500+500*2 = 1500
+            nuevaFecha.setDuracion(500+500*(duracionIndex-1));
             nuevoDia.addFecha(nuevaFecha);
         }
         return nuevoDia;

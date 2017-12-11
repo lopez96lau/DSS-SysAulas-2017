@@ -643,7 +643,7 @@
                   <Table columnCount="4" rowCount="0">
                     <Column editable="false" title="Dia" type="java.lang.Object"/>
                     <Column editable="false" title="Fecha" type="java.lang.Object"/>
-                    <Column editable="false" title="HorarioInicio" type="java.lang.Object"/>
+                    <Column editable="false" title="Hora Inicio" type="java.lang.Object"/>
                     <Column editable="false" title="Duracion" type="java.lang.Object"/>
                   </Table>
                 </Property>

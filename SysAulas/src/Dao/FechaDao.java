@@ -62,7 +62,7 @@ public class FechaDao {
         Date inicio = dateCal.getTime();
         System.out.println("YoI: "+inicio);
         
-        Date fin = new Date(inicio.getTime()+3600*duracion*1000);
+        Date fin = new Date(inicio.getTime()+3600*duracion);
         System.out.println("YoF: "+fin);
         
         
@@ -93,7 +93,7 @@ public class FechaDao {
             Date inicioF = dateFCal.getTime();
 
             
-            Date finF = new Date(inicioF.getTime()+3600*f.getDuracion()*1000);
+            Date finF = new Date(inicioF.getTime()+3600*f.getDuracion());
             
             System.out.println("I: "+inicioF);
             System.out.println("F: "+finF);

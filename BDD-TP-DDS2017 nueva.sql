@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `docente` (
   PRIMARY KEY (`id_docente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.docente: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.docente: ~2 rows (aproximadamente)
 DELETE FROM `docente`;
 /*!40000 ALTER TABLE `docente` DISABLE KEYS */;
 INSERT INTO `docente` (`id_docente`, `nombre_docente`, `apellido_docente`, `email_docente`) VALUES
@@ -181,11 +181,11 @@ CREATE TABLE IF NOT EXISTS `fecha` (
 DELETE FROM `fecha`;
 /*!40000 ALTER TABLE `fecha` DISABLE KEYS */;
 INSERT INTO `fecha` (`id_fecha`, `duracion`, `hora_inicio`, `fecha`, `id_dia`, `id_reserva`, `id_aula`) VALUES
-	(4, 3, '22:00:00', '2018-07-26', 2, 21, 3),
-	(9, 2, '10:30:00', '2017-11-27', 10, NULL, 3),
-	(10, 2, '10:30:00', '2017-12-04', 10, NULL, 2),
-	(11, 2, '10:30:00', '2017-12-11', 10, NULL, 1),
-	(12, 2, '10:30:00', '2017-12-18', 10, NULL, 1);
+	(4, 1500, '22:00:00', '2018-07-26', 2, 21, 3),
+	(9, 1000, '10:30:00', '2017-11-27', 10, NULL, 3),
+	(10, 1000, '10:30:00', '2017-12-04', 10, NULL, 2),
+	(11, 1000, '10:30:00', '2017-12-11', 10, NULL, 1),
+	(12, 1000, '10:30:00', '2017-12-18', 10, NULL, 1);
 /*!40000 ALTER TABLE `fecha` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.historial_contrasenias
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `historial_contrasenias` (
   CONSTRAINT `FK_RESPETA_HISTORIAL_CONTRASENIAS` FOREIGN KEY (`id_politica`) REFERENCES `politica_contrasenias` (`id_politica`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.historial_contrasenias: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.historial_contrasenias: ~1 rows (aproximadamente)
 DELETE FROM `historial_contrasenias`;
 /*!40000 ALTER TABLE `historial_contrasenias` DISABLE KEYS */;
 INSERT INTO `historial_contrasenias` (`id_cambio`, `fecha_cambio`, `contrasenia_nueva`, `id_usuario`, `id_politica`) VALUES
@@ -236,7 +236,7 @@ CREATE TABLE IF NOT EXISTS `multimedios` (
   CONSTRAINT `FK_MULTIMEDIOS_AULA` FOREIGN KEY (`id_aula`) REFERENCES `aula` (`id_aula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.multimedios: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.multimedios: ~3 rows (aproximadamente)
 DELETE FROM `multimedios`;
 /*!40000 ALTER TABLE `multimedios` DISABLE KEYS */;
 INSERT INTO `multimedios` (`televisor`, `canion`, `computadora`, `dvd`, `id_aula`) VALUES
@@ -272,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `periodo` (
   PRIMARY KEY (`id_periodo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.periodo: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.periodo: ~4 rows (aproximadamente)
 DELETE FROM `periodo`;
 /*!40000 ALTER TABLE `periodo` DISABLE KEYS */;
 INSERT INTO `periodo` (`id_periodo`, `tipo_periodo`, `fecha_inicio`, `fecha_fin`) VALUES
@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `politica_contrasenias` (
   PRIMARY KEY (`id_politica`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.politica_contrasenias: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.politica_contrasenias: ~1 rows (aproximadamente)
 DELETE FROM `politica_contrasenias`;
 /*!40000 ALTER TABLE `politica_contrasenias` DISABLE KEYS */;
 INSERT INTO `politica_contrasenias` (`id_politica`, `tipo_politica`) VALUES
