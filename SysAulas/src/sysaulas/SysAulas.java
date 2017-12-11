@@ -70,7 +70,7 @@ public class SysAulas {
         
         ObtenerDisponibilidadAula obtenerDisp = new ObtenerDisponibilidadAula();
         obtenerDisp.setLocationRelativeTo(null);
-        obtenerDisp.setAlwaysOnTop(true);
+        //obtenerDisp.setAlwaysOnTop(true);
         AdministradorInterfaz.setObtenerDisp(obtenerDisp);
         
         ReservarAula reservarAula = new ReservarAula();

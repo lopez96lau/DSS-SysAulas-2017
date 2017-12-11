@@ -272,7 +272,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="69" green="69" id="Button.darkShadow" palette="3" red="69" type="palette"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
+        <Property name="text" type="java.lang.String" value="Contr1"/>
         <Property name="toolTipText" type="java.lang.String" value="Ingrese la contrase&#xf1;a para el bedel (10 - 20 caracteres alfanumericos y s&#xed;mbolos y sin espacios)"/>
       </Properties>
     </Component>
@@ -284,7 +284,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="69" green="69" id="Button.darkShadow" palette="3" red="69" type="palette"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
+        <Property name="text" type="java.lang.String" value="Contr2"/>
         <Property name="toolTipText" type="java.lang.String" value="Vuelva a ingresar la contrase&#xf1;a"/>
       </Properties>
     </Component>

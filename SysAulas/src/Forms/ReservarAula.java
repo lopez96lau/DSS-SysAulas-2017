@@ -470,6 +470,11 @@ public class ReservarAula extends javax.swing.JFrame {
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setToolTipText("Cancele el ingreso de los datos");
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseClicked(evt);
+            }
+        });
 
         lblNombreSolicitante.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblNombreSolicitante.setText("Nombre del Solicitante");
@@ -744,80 +749,113 @@ public class ReservarAula extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFechaMouseClicked
 
     private void btnSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarMouseClicked
-        if (modo == "periodico") {
-            Periodo periodo = AdministradorReservas.buscarPeriodo(cmbPeriodo.getSelectedIndex());
-            Boolean[] diasSelect = {chkLunes.isSelected(), chkMartes.isSelected(), chkMiercoles.isSelected(), chkJueves.isSelected(), chkViernes.isSelected()};
-            String[] diasNombre = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
-            String[] diasHoraInicio = {txtHoraInicio1.getText(),txtHoraInicio2.getText(),txtHoraInicio3.getText(),txtHoraInicio4.getText(),txtHoraInicio5.getText()};
-            Integer[] diasDuracion = {cmbDuracion1.getSelectedIndex(), cmbDuracion2.getSelectedIndex(), cmbDuracion3.getSelectedIndex(), cmbDuracion4.getSelectedIndex(), cmbDuracion5.getSelectedIndex()};
-            
-            if (Arrays.asList(diasSelect).contains(true)) {
-                //Generar dias y fechas
+        if (cmbTipoAula.getSelectedIndex() == 0 ) {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado un tipo de aula", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+        } else if (!isInteger(txtCantAlumnos.getText())) {
+            JOptionPane.showMessageDialog(this, "La cantidad de alumnos ingresada no es valida", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (modo == "periodico") {
+                //Validacion de datos
+
+                Boolean[] diasSelect = {chkLunes.isSelected(), chkMartes.isSelected(), chkMiercoles.isSelected(), chkJueves.isSelected(), chkViernes.isSelected()};
+                String[] diasNombre = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
+                String[] diasHoraInicio = {txtHoraInicio1.getText(),txtHoraInicio2.getText(),txtHoraInicio3.getText(),txtHoraInicio4.getText(),txtHoraInicio5.getText()};
+                Integer[] diasDuracion = {cmbDuracion1.getSelectedIndex(), cmbDuracion2.getSelectedIndex(), cmbDuracion3.getSelectedIndex(), cmbDuracion4.getSelectedIndex(), cmbDuracion5.getSelectedIndex()};
+
+
+                boolean datosValidos = true;
                 for(int i=0; i<diasSelect.length; i++) {
                     if (diasSelect[i]) {
-                        Dia nuevoDia = null;
-                        try {
-                            nuevoDia = AdministradorReservas.generarDiaYFechas(periodo, diasNombre[i], diasHoraInicio[i], diasDuracion[i]);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
+                        if (!diasHoraInicio[i].matches("([01]?[0-9]|2[0-3]):[0-5][0-9]")) {
+                            datosValidos = false;
                         }
-                        dias.add(nuevoDia);
+                        if (diasDuracion[i] == 0) {
+                            datosValidos = false;
+                        }
                     }
                 }
-                String tipo = null;
-                switch(cmbTipoAula.getSelectedIndex()) {
-                    case 1: tipo  = "multi";
-                        break;
-                    case 2: tipo = "info";
-                        break;
-                    case 3: tipo = "sinrec";
-                        break;
+                if (cmbPeriodo.getSelectedIndex() == 0) {
+                    datosValidos = false;
                 }
-                
-                InformacionSolicitante infoSo = new InformacionSolicitante(txtNombreSolicitante.getText(), txtApellidoSolicitante.getText(), txtCatedra.getText(), txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
-                
-                
-                Periodica nuevaReserva = new Periodica();
-                nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
-                nuevaReserva.setPeriodo(periodo);
-                nuevaReserva.setDias(new HashSet(dias));
-                //System.out.print(dias);
-                
-                ArrayList<InfoAulasDisponibles> opciones = AdministradorAulas.obtenerAulas(nuevaReserva, infoSo);
-                
-                
-                AdministradorInterfaz.getObtenerDisp().setVisible(true);
-                AdministradorInterfaz.getObtenerDisp().enviarInformacionPeriodica(nuevaReserva, opciones, infoSo);
-                
-            } else {
-                JOptionPane.showMessageDialog(this, "Debe tener al menos un dia seleccionado para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            if (tblFechas.getRowCount() > 0){
-                Esporadica nuevaReserva = new Esporadica();
-                nuevaReserva.setFechas(new HashSet(fechas));
-                nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
-                
-                String tipo = null;
-                switch(cmbTipoAula.getSelectedIndex()) {
-                    case 1: tipo  = "multi";
-                        break;
-                    case 2: tipo = "info";
-                        break;
-                    case 3: tipo = "sinrec";
-                        break;
+
+
+
+                //Creacion de datos
+                if (datosValidos) {
+                    Periodo periodo = AdministradorReservas.buscarPeriodo(cmbPeriodo.getSelectedIndex());
+                    if (Arrays.asList(diasSelect).contains(true)) {
+                        //Generar dias y fechas
+                        for(int i=0; i<diasSelect.length; i++) {
+                            if (diasSelect[i]) {
+                                Dia nuevoDia = null;
+                                try {
+                                    nuevoDia = AdministradorReservas.generarDiaYFechas(periodo, diasNombre[i], diasHoraInicio[i], diasDuracion[i]);
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                dias.add(nuevoDia);
+                            }
+                        }
+                        String tipo = null;
+                        switch(cmbTipoAula.getSelectedIndex()) {
+                            case 1: tipo  = "multi";
+                                break;
+                            case 2: tipo = "info";
+                                break;
+                            case 3: tipo = "sinrec";
+                                break;
+                        }
+
+                        InformacionSolicitante infoSo = new InformacionSolicitante(txtNombreSolicitante.getText(), txtApellidoSolicitante.getText(), txtCatedra.getText(), txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
+
+
+                        Periodica nuevaReserva = new Periodica();
+                        nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
+                        nuevaReserva.setPeriodo(periodo);
+                        nuevaReserva.setDias(new HashSet(dias));
+                        //System.out.print(dias);
+
+                        ArrayList<InfoAulasDisponibles> opciones = AdministradorAulas.obtenerAulas(nuevaReserva, infoSo.getTipoAula());
+
+
+                        AdministradorInterfaz.getObtenerDisp().setVisible(true);
+                        AdministradorInterfaz.getObtenerDisp().enviarInformacionPeriodica(nuevaReserva, opciones, infoSo);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Debe tener al menos un dia seleccionado para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Algun dato relacionado con los dias o el periodo es invalido", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                 }
-                
-                InformacionSolicitante infoSo = new InformacionSolicitante(txtNombreSolicitante.getText(), txtApellidoSolicitante.getText(), txtCatedra.getText(), txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
-                
-                ArrayList<InfoAulasDisponibles> opciones = AdministradorAulas.obtenerAulas(nuevaReserva, infoSo);
-                
-                
-                AdministradorInterfaz.getObtenerDisp().setVisible(true);
-                AdministradorInterfaz.getObtenerDisp().enviarInformacionEsporadica(nuevaReserva, opciones, infoSo);
-                
             } else {
-                JOptionPane.showMessageDialog(this, "Debe añadir al menos una fecha para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+                if (tblFechas.getRowCount() > 0){
+                    Esporadica nuevaReserva = new Esporadica();
+                    for(Fecha f : fechas) {
+                        f.setEsporadica(nuevaReserva);
+                    }
+                    nuevaReserva.setFechas(new HashSet(fechas));
+                    nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
+
+                    String tipo = null;
+                    switch(cmbTipoAula.getSelectedIndex()) {
+                        case 1: tipo  = "multi";
+                            break;
+                        case 2: tipo = "info";
+                            break;
+                        case 3: tipo = "sinrec";
+                            break;
+                    }
+
+                    InformacionSolicitante infoSo = new InformacionSolicitante(txtNombreSolicitante.getText(), txtApellidoSolicitante.getText(), txtCatedra.getText(), txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
+
+                    ArrayList<InfoAulasDisponibles> opciones = AdministradorAulas.obtenerAulas(nuevaReserva, infoSo.getTipoAula());
+
+
+                    AdministradorInterfaz.getObtenerDisp().setVisible(true);
+                    AdministradorInterfaz.getObtenerDisp().enviarInformacionEsporadica(nuevaReserva, opciones, infoSo);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Debe añadir al menos una fecha para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_btnSolicitarMouseClicked
@@ -825,10 +863,21 @@ public class ReservarAula extends javax.swing.JFrame {
     private void btnAñadirFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirFechaMouseClicked
         Fecha nuevaFecha = new Fecha();
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        format.setLenient(false);
         Date date = null;
         Dia nuevoDia = new Dia();
         try {
+            
+            if (!txtHoraInicio6.getText().matches("([01]?[0-9]|2[0-3]):[0-5][0-9]")) {
+                throw new IllegalArgumentException();
+            }
             date = format.parse(txtFechaNueva.getText() +" "+ txtHoraInicio6.getText());
+            
+            Calendar cal = Calendar.getInstance();
+            cal.setLenient(false);
+            cal.setTime(date);
+            cal.getTime();
+            
             nuevaFecha.setFecha(new java.sql.Date(date.getTime()));
             long ms = date.getTime();
             Time time = new Time(ms);
@@ -846,30 +895,48 @@ public class ReservarAula extends javax.swing.JFrame {
             
             nuevoDia.setNombreDia(dias[dayOfWeek]);
             
-            
-        } catch (ParseException ex) {
-            Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        //Para evitar fechas repetidas
-        boolean permitir = true;
-        for(Fecha f: fechas) {
-            if (nuevaFecha.getFecha().equals(f.getFecha()) && nuevaFecha.getHoraInicio().equals(f.getHoraInicio())) {
-                permitir = false;
-            }
-        }//
-        
-        if (permitir) {
+            //Para evitar fechas repetidas
+            for(Fecha f: fechas) {
+                if (nuevaFecha.getFecha().equals(f.getFecha()) && nuevaFecha.getHoraInicio().equals(f.getHoraInicio())) {
+                    throw new IllegalStateException();
+                }
+            }//
+
             fechas.add(nuevaFecha);
             DefaultTableModel model = (DefaultTableModel) tblFechas.getModel();
             model.addRow(new Object[]{nuevoDia.getNombreDia(),txtFechaNueva.getText(), txtHoraInicio6.getText(), Double.toString(cmbDuracion6.getSelectedIndex()/2)});
+            
+            
+        } catch (ParseException | IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha u hora de inicio invalido", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+            //Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalStateException ex) {
+            JOptionPane.showMessageDialog(this, "Esta fecha ya ha sido sido agregada", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+            
         }
     }//GEN-LAST:event_btnAñadirFechaMouseClicked
 
     private void btnEliminarFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarFechaMouseClicked
-        fechas.remove(tblFechas.getSelectedRow());
+        if (tblFechas.getSelectedRow() != -1) {
+            fechas.remove(tblFechas.getSelectedRow());
         ((DefaultTableModel) tblFechas.getModel()).removeRow(tblFechas.getSelectedRow());
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar la fecha que desea eliminar", "Error eliminando datos", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarFechaMouseClicked
+
+    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+        Integer respuesta = JOptionPane.showConfirmDialog(null, "Seguro que desea borrar los datos del solicitante ingresados?", "Cancelar?",  JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            txtNombreSolicitante.setText("Nombre");
+            txtApellidoSolicitante.setText("Apellido");
+            txtCatedra.setText("Cátedra");
+            txtEmail.setText("usuario@dominio.com");
+            txtCantAlumnos.setText("");
+            cmbTipoAula.setSelectedIndex(0);
+            JOptionPane.showMessageDialog(this, "Datos borrados con exito!");
+        }
+    }//GEN-LAST:event_btnCancelarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -973,5 +1040,27 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreSolicitante;
     // End of variables declaration//GEN-END:variables
 
-    
+    public static boolean isInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
 }

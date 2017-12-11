@@ -50,7 +50,6 @@ public class AdministradorReservas {
             ReservaDao.crearEsporadica(reservaEsporadica);
             for(Object o : reservaEsporadica.getFechas()) {
                 Fecha f = (Fecha) o;
-                f.setEsporadica(reservaEsporadica);
                 DiaDao.crearDia(f.getDia());
                 FechaDao.crearFecha(f);
             }

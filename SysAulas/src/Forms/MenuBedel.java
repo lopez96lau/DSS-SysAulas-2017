@@ -7,6 +7,7 @@ package Forms;
 
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorSesion;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,7 +48,6 @@ public class MenuBedel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SysAulas - Menu [BEDEL]");
-        setPreferredSize(new java.awt.Dimension(430, 170));
         setResizable(false);
         setSize(new java.awt.Dimension(430, 170));
         setType(java.awt.Window.Type.UTILITY);
@@ -84,10 +84,20 @@ public class MenuBedel extends javax.swing.JFrame {
         btnBuscarAula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/aula_search.png"))); // NOI18N
         btnBuscarAula.setText("Buscar Aula");
         btnBuscarAula.setToolTipText("Busque y modifique la reserva de un aula");
+        btnBuscarAula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarAulaMouseClicked(evt);
+            }
+        });
 
         btnGenerarListado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/generate_list.png"))); // NOI18N
         btnGenerarListado.setText("Generar Listado");
         btnGenerarListado.setToolTipText("Genere distintos listados");
+        btnGenerarListado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGenerarListadoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,6 +164,14 @@ public class MenuBedel extends javax.swing.JFrame {
         AdministradorInterfaz.getReservarAula().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRegistrarAulaMouseClicked
+
+    private void btnBuscarAulaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarAulaMouseClicked
+        JOptionPane.showMessageDialog(this,"Caso de uso no implementado.","Advertencia",JOptionPane.WARNING_MESSAGE);
+    }//GEN-LAST:event_btnBuscarAulaMouseClicked
+
+    private void btnGenerarListadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarListadoMouseClicked
+        JOptionPane.showMessageDialog(this,"Caso de uso no implementado.","Advertencia",JOptionPane.WARNING_MESSAGE);
+    }//GEN-LAST:event_btnGenerarListadoMouseClicked
 
     /**
      * @param args the command line arguments

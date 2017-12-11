@@ -46,7 +46,6 @@ public class Inicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SysAulas - Inicio");
-        setPreferredSize(new java.awt.Dimension(350, 170));
         setResizable(false);
         setSize(new java.awt.Dimension(350, 170));
         setType(java.awt.Window.Type.UTILITY);

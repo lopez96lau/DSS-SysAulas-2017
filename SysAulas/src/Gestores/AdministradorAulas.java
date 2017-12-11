@@ -27,7 +27,7 @@ import org.hibernate.Hibernate;
  * @author luciano
  */
 public class AdministradorAulas {
-    public static ArrayList<InfoAulasDisponibles> obtenerAulas(Periodica nuevaReserva, InformacionSolicitante infoSo) {
+    public static ArrayList<InfoAulasDisponibles> obtenerAulas(Periodica nuevaReserva, String tipoAula) {
         
         ArrayList<InfoAulasDisponibles> opciones = new ArrayList<>();
         
@@ -62,7 +62,7 @@ public class AdministradorAulas {
                         quitar.add(a);
                         //System.out.println(" borrado(1)");
                     }
-                    switch(infoSo.getTipoAula()) {
+                    switch(tipoAula) {
                         case "multi":
                             if (!(Hibernate.getClass(a) == Multimedios.class)) {
                                 quitar.add(a);//System.out.println(" borrado(2)");
@@ -94,7 +94,7 @@ public class AdministradorAulas {
         return opciones;
     }
 
-    public static ArrayList<InfoAulasDisponibles> obtenerAulas(Esporadica nuevaReserva, InformacionSolicitante infoSo) {
+    public static ArrayList<InfoAulasDisponibles> obtenerAulas(Esporadica nuevaReserva, String tipoAula) {
         
         ArrayList<InfoAulasDisponibles> opciones = new ArrayList<>();
         
@@ -127,7 +127,7 @@ public class AdministradorAulas {
                     quitar.add(a);
                     //System.out.println(" borrado(1)");
                 }
-                switch(infoSo.getTipoAula()) {
+                switch(tipoAula) {
                     case "multi":
                         if (!(Hibernate.getClass(a) == Multimedios.class)) {
                             quitar.add(a);//System.out.println(" borrado(2)");

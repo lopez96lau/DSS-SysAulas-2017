@@ -16,14 +16,14 @@ public class AdministradorPolitica {
     private static final Integer politicaActualID = 1;
     
     
-    public static Boolean validarLongitudContraseña(String contraseña) {
+    public static Boolean validarContraseña(String contraseña) {
         PoliticaContrasenias politicaActual = PoliticaDao.find(politicaActualID);
         Integer limiteSuperior = Integer.parseInt(politicaActual.getTipoPolitica().split("-")[1]);
         Integer limiteInferior = Integer.parseInt(politicaActual.getTipoPolitica().split("-")[0]);
         return(contraseña.length() <= limiteSuperior && contraseña.length() >= limiteInferior);
     }
     
-    public static Boolean validarLongitudUsuario(String usuario) {
+    public static Boolean validarUsuario(String usuario) {
         PoliticaContrasenias politicaActual = PoliticaDao.find(politicaActualID);
         Integer limiteSuperior = Integer.parseInt(politicaActual.getTipoPolitica().split("-")[3]);
         Integer limiteInferior = Integer.parseInt(politicaActual.getTipoPolitica().split("-")[2]);

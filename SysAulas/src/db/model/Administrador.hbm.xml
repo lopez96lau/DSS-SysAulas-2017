@@ -3,13 +3,10 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 24/10/2017 16:38:55 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <union-subclass name="db.model.Administrador" table="administrador" catalog="tpdds2017" optimistic-lock="version">
-        <id name="idAdmin" type="java.lang.Integer">
-            <column name="id_admin" />
+    <union-subclass name="db.model.Administrador" table="administrador" catalog="tpdds2017" optimistic-lock="version" extends="db.model.Usuario">
+        <id name="idUsuario" type="java.lang.Integer">
+            <column name="id_usuario" />
             <generator class="identity" />
         </id>
-        <many-to-one name="usuario" class="db.model.Usuario" fetch="select">
-            <column name="id_usuario" not-null="true" />
-        </many-to-one>
     </union-subclass>
 </hibernate-mapping>

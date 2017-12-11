@@ -26,7 +26,7 @@ public class AdministradorBedeles {
         if (contraseña.equals(contraseñaRepetir)) {
             if (turnoID != 0) {
                 if (UsuarioDao.find(usuario) == null) {
-                    if (AdministradorPolitica.validarLongitudUsuario(usuario) && AdministradorPolitica.validarLongitudContraseña(contraseña)) {
+                    if (AdministradorPolitica.validarUsuario(usuario) && AdministradorPolitica.validarContraseña(contraseña)) {
                         Turno turno = TurnoDao.find(turnoID);
                         Bedel nuevoBedel = new Bedel(turno, usuario, contraseña, nombre, apellido);
                         UsuarioDao.crearBedel(nuevoBedel);
@@ -76,27 +76,30 @@ public class AdministradorBedeles {
         bedeles = UsuarioDao.findConTurno(idTurno);
     }
 
-    public static void modificarBedel(Integer indice, String nombre, String apellido, Integer idTurno, String username, String contraseña) {
-        Turno nuevoTurno = TurnoDao.find(idTurno);
-        
-        Bedel modificado = bedeles.get(indice);
-        modificado.setNombreBedel(nombre);
-        modificado.setApellidoBedel(apellido);
-        modificado.setTurno(nuevoTurno);
-        modificado.setNombreUsuario(username);
-        if (modificado.getContrasenia() != contraseña) {
-            HistorialContrasenias nuevoHistorial = new HistorialContrasenias(AdministradorPolitica.getPolitica(), modificado);
-            nuevoHistorial.setContraseniaNueva(contraseña);
-            nuevoHistorial.setFechaCambio(new Date());
-            
-            HistorialContraseniasDao.crearHistorial(nuevoHistorial);
-            
-            modificado.addHistorial(nuevoHistorial);
-            modificado.setContrasenia(contraseña);
+    public static Boolean modificarBedel(Integer indice, String nombre, String apellido, Integer idTurno, String username, String contraseña) {
+        if (AdministradorPolitica.validarUsuario(username) && AdministradorPolitica.validarContraseña(contraseña)) {  
+            Turno nuevoTurno = TurnoDao.find(idTurno);
+
+            Bedel modificado = bedeles.get(indice);
+            modificado.setNombreBedel(nombre);
+            modificado.setApellidoBedel(apellido);
+            modificado.setTurno(nuevoTurno);
+            modificado.setNombreUsuario(username);
+            if (modificado.getContrasenia() != contraseña) {
+                HistorialContrasenias nuevoHistorial = new HistorialContrasenias(AdministradorPolitica.getPolitica(), modificado);
+                nuevoHistorial.setContraseniaNueva(contraseña);
+                nuevoHistorial.setFechaCambio(new Date());
+
+                HistorialContraseniasDao.crearHistorial(nuevoHistorial);
+
+                modificado.addHistorial(nuevoHistorial);
+                modificado.setContrasenia(contraseña);
+            }
+
+            UsuarioDao.guardarBedel(modificado);
+            return true;
+        } else {
+            return false;
         }
-        
-        UsuarioDao.guardarBedel(modificado);
-    }
-    
-    
+    } 
 }

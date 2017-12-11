@@ -27,8 +27,8 @@ public class AdministradorSesion {
     }
 
     public static Integer iniciarSesion(String tmpUsuario, String tmpContraseña) {
-        if (AdministradorPolitica.validarLongitudUsuario(tmpUsuario)) {
-            if (AdministradorPolitica.validarLongitudContraseña(tmpContraseña)) {
+        if (AdministradorPolitica.validarUsuario(tmpUsuario)) {
+            if (AdministradorPolitica.validarContraseña(tmpContraseña)) {
                 Usuario encontrado = UsuarioDao.find(tmpUsuario);
                 if (encontrado != null && encontrado.getContrasenia().equals(tmpContraseña)) {
                     if (UsuarioDao.esAdministrador(encontrado.getIdUsuario())) {

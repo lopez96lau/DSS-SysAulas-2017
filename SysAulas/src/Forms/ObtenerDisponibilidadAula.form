@@ -167,20 +167,20 @@
                   </Group>
                   <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblSesion" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblNombreBedel" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnGuardarReserva" min="-2" pref="190" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jGuardarTodo" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnCancelarSolicitud" min="-2" pref="190" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="lblSeleccione" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="btnGuardarReserva" min="-2" pref="190" max="-2" attributes="0"/>
+                      <Component id="lblSesion" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblNombreBedel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnCancelarSolicitud" min="-2" pref="190" max="-2" attributes="0"/>
+                      <Component id="jGuardarTodo" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -308,13 +308,15 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblFecha" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtHoraInicio" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblHoraInicio" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblDuracion" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtDuracion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txtFecha" alignment="1" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblFecha" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtHoraInicio" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblHoraInicio" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDuracion" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtDuracion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -520,6 +522,9 @@
         <Property name="text" type="java.lang.String" value="Cancelar Solicitud"/>
         <Property name="toolTipText" type="java.lang.String" value="Cancelar la solicitud de reserva"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCancelarSolicitudMouseClicked"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
@@ -555,7 +560,7 @@
     <Component class="javax.swing.JButton" name="jGuardarTodo">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Iconos/save.png"/>
+          <Image iconType="3" name="/Iconos/save_all.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Guardar todo y volver"/>
         <Property name="horizontalTextPosition" type="int" value="10"/>

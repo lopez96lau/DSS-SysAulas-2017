@@ -123,12 +123,12 @@ public class RegistrarBedel extends javax.swing.JFrame {
 
         txtContraseña1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtContraseña1.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
-        txtContraseña1.setText("Contraseña");
+        txtContraseña1.setText("Contr1");
         txtContraseña1.setToolTipText("Ingrese la contraseña para el bedel (10 - 20 caracteres alfanumericos y símbolos y sin espacios)");
 
         txtContraseña2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtContraseña2.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
-        txtContraseña2.setText("Contraseña");
+        txtContraseña2.setText("Contr2");
         txtContraseña2.setToolTipText("Vuelva a ingresar la contraseña");
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
@@ -270,8 +270,8 @@ public class RegistrarBedel extends javax.swing.JFrame {
                 txtApellido.setText("Apellido");
                 cmbTurno.setSelectedIndex(0);
                 txtNombreUsuario.setText("Usuario");
-                txtContraseña1.setText("Contraseñ1");
-                txtContraseña2.setText("Contraseñ2");
+                txtContraseña1.setText("Contr1");
+                txtContraseña2.setText("Contr2");
                 break;
             case 1:
                 JOptionPane.showMessageDialog(this, "No ha seleccionado un turno para el bedel.", "Error de registro", JOptionPane.ERROR_MESSAGE);

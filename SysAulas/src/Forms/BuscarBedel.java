@@ -77,7 +77,6 @@ public class BuscarBedel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SysAulas - Buscar Bedel [ADMINISTRADOR]");
-        setPreferredSize(new java.awt.Dimension(400, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(400, 600));
         setType(java.awt.Window.Type.UTILITY);
@@ -178,8 +177,6 @@ public class BuscarBedel extends javax.swing.JFrame {
                 .addComponent(btnBuscar))
         );
 
-        btnBuscar.getAccessibleContext().setAccessibleName("Buscar");
-
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNombre.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtNombre.setText("Nombre");
@@ -242,6 +239,11 @@ public class BuscarBedel extends javax.swing.JFrame {
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user_delete.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setToolTipText("Elimine al bedel actual del sistema");
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
@@ -455,6 +457,8 @@ public class BuscarBedel extends javax.swing.JFrame {
                 if (cmbBuscarTurno.getSelectedIndex() != 0) {
                     AdministradorBedeles.buscarBedelPorTurno(cmbBuscarTurno.getSelectedIndex());
                     indice = 0;
+                } else {
+                    JOptionPane.showMessageDialog(this, "No ha seleccionado un turno", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 //Nada seleccionado
@@ -531,10 +535,13 @@ public class BuscarBedel extends javax.swing.JFrame {
                     Integer idTurno = cmbTurno.getSelectedIndex();
                     String username = txtNombreUsuario.getText();
                     String contraseña = new String(txtContraseña1.getPassword());
-
-                    AdministradorBedeles.modificarBedel(indice, nombre, apellido,idTurno,username, contraseña);
                     
-                    JOptionPane.showMessageDialog(this, "Modificaciones al usuario " + username + " hechas con exito!");
+                    Boolean resultado = AdministradorBedeles.modificarBedel(indice, nombre, apellido,idTurno,username, contraseña);
+                    if (resultado == true) {
+                        JOptionPane.showMessageDialog(this, "Modificaciones al usuario " + username + " hechas con exito!");
+                    } else {
+                        JOptionPane.showMessageDialog(this,"El nombre de usuario o la contraseña no cumple con las politicas establecidas","Error",JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(this,"Error al cambiar atributos.","Error",JOptionPane.ERROR_MESSAGE);
                 }
@@ -542,6 +549,10 @@ public class BuscarBedel extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btnGuardarMouseClicked
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        JOptionPane.showMessageDialog(this,"Caso de uso no implementado.","Advertencia",JOptionPane.WARNING_MESSAGE);
+    }//GEN-LAST:event_btnEliminarMouseClicked
 
     /**
      * @param args the command line arguments

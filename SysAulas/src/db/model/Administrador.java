@@ -8,22 +8,11 @@ package db.model;
  */
 public class Administrador extends Usuario implements java.io.Serializable {
 
-
-     private Integer idAdmin;
-
     public Administrador() {
     }
 
     public Administrador(String usuario) {
        super.setNombreUsuario(usuario);
-    }
-   
-    public Integer getIdAdmin() {
-        return this.idAdmin;
-    }
-    
-    public void setIdAdmin(Integer idAdmin) {
-        this.idAdmin = idAdmin;
     }
 
 }
