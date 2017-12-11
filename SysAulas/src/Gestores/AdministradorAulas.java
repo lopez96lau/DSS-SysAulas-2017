@@ -19,6 +19,8 @@ import db.model.Periodica;
 import db.model.SinRecursos;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import org.hibernate.Hibernate;
 
@@ -84,8 +86,22 @@ public class AdministradorAulas {
                     aulas.remove(a);
                 }
                 
+                Collections.sort(aulas, new Comparator<Aula>() {
+                    public int compare(Aula a1, Aula a2){
+                       return a1.getCapacidad() - a2.getCapacidad();
+                    }
+                });
+                
+                //System.out.println(rechazadas);
+
+                ArrayList<Aula> ultimasTres = new ArrayList<>();
+                ultimasTres.add(aulas.get(0));
+                ultimasTres.add(aulas.get(1));
+                ultimasTres.add(aulas.get(2));
+                
+                
                 InfoAulasDisponibles iAD = new InfoAulasDisponibles(f);
-                iAD.setOpcionesAulas(aulas);
+                iAD.setOpcionesAulas(ultimasTres);
                 opciones.add(iAD);
             }
             fechas = new ArrayList<>();
@@ -148,9 +164,22 @@ public class AdministradorAulas {
             for(Aula a : quitar) {
                 aulas.remove(a);
             }
+            
+            Collections.sort(aulas, new Comparator<Aula>() {
+                public int compare(Aula a1, Aula a2){
+                   return a1.getCapacidad() - a2.getCapacidad();
+                }
+            });
+
+            //System.out.println(rechazadas);
+
+            ArrayList<Aula> ultimasTres = new ArrayList<>();
+            ultimasTres.add(aulas.get(0));
+            ultimasTres.add(aulas.get(1));
+            ultimasTres.add(aulas.get(2));
 
             InfoAulasDisponibles iAD = new InfoAulasDisponibles(f);
-            iAD.setOpcionesAulas(aulas);
+            iAD.setOpcionesAulas(ultimasTres);
             opciones.add(iAD);
         }       
         
