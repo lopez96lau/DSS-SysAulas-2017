@@ -125,6 +125,9 @@
         <Property name="text" type="java.lang.String" value="Usuario"/>
         <Property name="toolTipText" type="java.lang.String" value="Ingrese su nombre de usuario"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtUsuarioFocusGained"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtContrase&#xf1;a">
       <Properties>
@@ -137,6 +140,9 @@
         <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
         <Property name="toolTipText" type="java.lang.String" value="Ingrese su contrase&#xf1;a"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrase&#xf1;aFocusGained"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnIngresar">
       <Properties>

@@ -111,6 +111,11 @@ public class RegistrarBedel extends javax.swing.JFrame {
         txtApellido.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtApellido.setText("Apellido");
         txtApellido.setToolTipText("Ingrese el apellido del bedel (2 - 20 caracteres)");
+        txtApellido.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtApellidoFocusGained(evt);
+            }
+        });
 
         cmbTurno.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione Turno---", "MAÑANA", "TARDE", "NOCHE" }));
@@ -120,16 +125,31 @@ public class RegistrarBedel extends javax.swing.JFrame {
         txtNombreUsuario.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtNombreUsuario.setText("Usuario");
         txtNombreUsuario.setToolTipText("Ingrese el nombre de usuario para el bedel (7 - 15 caracteres alfanumericos sin espacios ni símbolos)");
+        txtNombreUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNombreUsuarioFocusGained(evt);
+            }
+        });
 
         txtContraseña1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtContraseña1.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtContraseña1.setText("Contr1");
         txtContraseña1.setToolTipText("Ingrese la contraseña para el bedel (10 - 20 caracteres alfanumericos y símbolos y sin espacios)");
+        txtContraseña1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtContraseña1FocusGained(evt);
+            }
+        });
 
         txtContraseña2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtContraseña2.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtContraseña2.setText("Contr2");
         txtContraseña2.setToolTipText("Vuelva a ingresar la contraseña");
+        txtContraseña2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtContraseña2FocusGained(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -146,6 +166,11 @@ public class RegistrarBedel extends javax.swing.JFrame {
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnGuardarMouseClicked(evt);
+            }
+        });
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -255,37 +280,59 @@ public class RegistrarBedel extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        String nombre = txtNombre.getText();
-        String apellido = txtApellido.getText();
-        Integer turnoID = cmbTurno.getSelectedIndex();
-        String usuario = txtNombreUsuario.getText();
-        String contraseña = new String(txtContraseña1.getPassword());
-        String contraseñaRepetir = new String(txtContraseña2.getPassword());
-        Integer resultado = AdministradorBedeles.registrarBedel(nombre, apellido, turnoID, usuario, contraseña, contraseñaRepetir);
+        Integer varaux;
+        Boolean hh,hh2;
+        varaux = 0;
+        hh = true;
+        hh2 = true;
+        while (varaux < 10 && hh) {
+            if (txtNombre.getText().contains(varaux.toString()) || txtApellido.getText().contains(varaux.toString())) {
+                hh = false;
+            }
+            varaux++;
+        }
+        
+        if ((txtNombre.getText().length() > 20) || (txtApellido.getText().length() > 20)) {
+            hh2 = false;
+        }
+        
+        if (!hh) {
+            JOptionPane.showMessageDialog(this, "Campos con carácteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+        } else if (!hh2){
+            JOptionPane.showMessageDialog(this, "Nombre o apellido muy largo, tienen que tener 20 caracteres o menos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            Integer turnoID = cmbTurno.getSelectedIndex();
+            String usuario = txtNombreUsuario.getText();
+            String contraseña = new String(txtContraseña1.getPassword());
+            String contraseñaRepetir = new String(txtContraseña2.getPassword());
+            Integer resultado = AdministradorBedeles.registrarBedel(nombre, apellido, turnoID, usuario, contraseña, contraseñaRepetir);
+        
+            switch (resultado) {
+                case 0:
+                    JOptionPane.showMessageDialog(this, "Usuario " + usuario + " creado con exito!");
+                    txtNombre.setText("Nombre");
+                    txtApellido.setText("Apellido");
+                    cmbTurno.setSelectedIndex(0);
+                    txtNombreUsuario.setText("Usuario");
+                    txtContraseña1.setText("Contr1");
+                    txtContraseña2.setText("Contr2");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(this, "No ha seleccionado un turno para el bedel.", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(this, "La contraseña ingresada no coincide con la repetida.", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(this, "El nombre de usuario escrito esta siendo usado por otra persona.", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                    break;
+                case 4:
+                    JOptionPane.showMessageDialog(this, "Longitud del nombre de usuario (y/o contraseña) incorrecta(s)", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                    break;
 
-        switch (resultado) {
-            case 0:
-                JOptionPane.showMessageDialog(this, "Usuario " + usuario + " creado con exito!");
-                txtNombre.setText("Nombre");
-                txtApellido.setText("Apellido");
-                cmbTurno.setSelectedIndex(0);
-                txtNombreUsuario.setText("Usuario");
-                txtContraseña1.setText("Contr1");
-                txtContraseña2.setText("Contr2");
-                break;
-            case 1:
-                JOptionPane.showMessageDialog(this, "No ha seleccionado un turno para el bedel.", "Error de registro", JOptionPane.ERROR_MESSAGE);
-                break;
-            case 2:
-                JOptionPane.showMessageDialog(this, "La contraseña ingresada no coincide con la repetida.", "Error de registro", JOptionPane.ERROR_MESSAGE);
-                break;
-            case 3:
-                JOptionPane.showMessageDialog(this, "El nombre de usuario escrito esta siendo usado por otra persona.", "Error de registro", JOptionPane.ERROR_MESSAGE);
-                break;
-            case 4:
-                JOptionPane.showMessageDialog(this, "Longitud del nombre de usuario (y/o contraseña) incorrecta(s)", "Error de registro", JOptionPane.ERROR_MESSAGE);
-                break;
-
+            }
         }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -302,6 +349,30 @@ public class RegistrarBedel extends javax.swing.JFrame {
         txtContraseña1.setText("Contraseña1");
         txtContraseña2.setText("Contraseña2");
     }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtApellidoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtApellidoFocusGained
+        // TODO add your handling code here:
+        txtApellido.setText("");
+    }//GEN-LAST:event_txtApellidoFocusGained
+
+    private void txtNombreUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreUsuarioFocusGained
+        // TODO add your handling code here:
+        txtNombreUsuario.setText("");
+    }//GEN-LAST:event_txtNombreUsuarioFocusGained
+
+    private void txtContraseña1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContraseña1FocusGained
+        // TODO add your handling code here:
+        txtContraseña1.setText("");
+    }//GEN-LAST:event_txtContraseña1FocusGained
+
+    private void txtContraseña2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContraseña2FocusGained
+        // TODO add your handling code here:
+        txtContraseña2.setText("");
+    }//GEN-LAST:event_txtContraseña2FocusGained
 
     /**
      * @param args the command line arguments

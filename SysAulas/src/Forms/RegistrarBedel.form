@@ -232,6 +232,9 @@
         <Property name="text" type="java.lang.String" value="Apellido"/>
         <Property name="toolTipText" type="java.lang.String" value="Ingrese el apellido del bedel (2 - 20 caracteres)"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtApellidoFocusGained"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbTurno">
       <Properties>
@@ -263,6 +266,9 @@
         <Property name="text" type="java.lang.String" value="Usuario"/>
         <Property name="toolTipText" type="java.lang.String" value="Ingrese el nombre de usuario para el bedel (7 - 15 caracteres alfanumericos sin espacios ni s&#xed;mbolos)"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreUsuarioFocusGained"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtContrase&#xf1;a1">
       <Properties>
@@ -275,6 +281,9 @@
         <Property name="text" type="java.lang.String" value="Contr1"/>
         <Property name="toolTipText" type="java.lang.String" value="Ingrese la contrase&#xf1;a para el bedel (10 - 20 caracteres alfanumericos y s&#xed;mbolos y sin espacios)"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrase&#xf1;a1FocusGained"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtContrase&#xf1;a2">
       <Properties>
@@ -287,6 +296,9 @@
         <Property name="text" type="java.lang.String" value="Contr2"/>
         <Property name="toolTipText" type="java.lang.String" value="Vuelva a ingresar la contrase&#xf1;a"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrase&#xf1;a2FocusGained"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelar">
       <Properties>
@@ -310,6 +322,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnGuardarMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnVolver">

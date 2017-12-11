@@ -195,4 +195,16 @@ public class AdministradorAulas {
         }
         return opciones;
     }
+    
+    public static Multimedios deproxyMultimedios(Aula a) {
+        return AulaDao.unProxyToClass(a, Multimedios.class);
+    }
+    public static Informatica deproxyInformatica(Aula a) {
+        return AulaDao.unProxyToClass(a, Informatica.class);
+    }
+    public static SinRecursos deproxySinRecursos(Aula a) {
+        return AulaDao.unProxyToClass(a, SinRecursos.class);
+    }
+    
+    
 }

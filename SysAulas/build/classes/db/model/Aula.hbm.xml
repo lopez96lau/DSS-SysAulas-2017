@@ -28,33 +28,33 @@
         </property>
         <joined-subclass name="db.model.Multimedios" table="multimedios" catalog="tpdds2017">
             <key column="id_aula"></key>
-        <property name="televisor" type="string">
-            <column name="televisor" length="2" />
-        </property>
-        <property name="canion" type="string">
-            <column name="canion" length="2" />
-        </property>
-        <property name="computadora" type="string">
-            <column name="computadora" length="2" />
-        </property>
-        <property name="dvd" type="string">
-            <column name="dvd" length="2" />
-        </property>
+            <property name="televisor" type="string">
+                <column name="televisor" length="2" />
+            </property>
+            <property name="canion" type="string">
+                <column name="canion" length="2" />
+            </property>
+            <property name="computadora" type="string">
+                <column name="computadora" length="2" />
+            </property>
+            <property name="dvd" type="string">
+                <column name="dvd" length="2" />
+            </property>
         </joined-subclass>
         <joined-subclass name="db.model.Informatica" table="informatica" catalog="tpdds2017">
             <key column="id_aula"></key>
-        <property name="canion" type="string">
-            <column name="canion" length="2" />
-        </property>
-        <property name="cantidadPcs" type="java.lang.Integer">
-            <column name="cantidad_pcs" />
-        </property>
+            <property name="canion" type="string">
+                <column name="canion" length="2" />
+            </property>
+            <property name="cantidadPcs" type="java.lang.Integer">
+                <column name="cantidad_pcs" />
+            </property>
         </joined-subclass>
         <joined-subclass name="db.model.SinRecursos" table="sin_recursos" catalog="tpdds2017">
             <key column="id_aula"></key>
-        <property name="ventiladores" type="string">
-            <column name="ventiladores" length="2" />
-        </property>
+            <property name="ventiladores" type="string">
+                <column name="ventiladores" length="2" />
+            </property>
         </joined-subclass>
     </class>
 </hibernate-mapping>

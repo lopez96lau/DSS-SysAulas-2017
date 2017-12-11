@@ -299,6 +299,10 @@
             <Property name="text" type="java.lang.String" value="---Apellido---"/>
             <Property name="toolTipText" type="java.lang.String" value="Ingrese el apellido del bedel a buscar"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtBuscarApellidoFocusGained"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBuscarApellidoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbBuscarTurno">
           <Properties>
@@ -362,9 +366,6 @@
         <Property name="toolTipText" type="java.lang.String" value="Nombre del bedel actual"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreFocusGained"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtApellido">
       <Properties>

@@ -64,10 +64,20 @@ public class Inicio extends javax.swing.JFrame {
         txtUsuario.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtUsuario.setText("Usuario");
         txtUsuario.setToolTipText("Ingrese su nombre de usuario");
+        txtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUsuarioFocusGained(evt);
+            }
+        });
 
         txtContraseña.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtContraseña.setText("Contraseña");
         txtContraseña.setToolTipText("Ingrese su contraseña");
+        txtContraseña.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtContraseñaFocusGained(evt);
+            }
+        });
 
         btnIngresar.setText("Ingresar");
         btnIngresar.setToolTipText("Ingrese al sistema");
@@ -153,6 +163,16 @@ public class Inicio extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnIngresarMouseClicked
+
+    private void txtUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusGained
+        // TODO add your handling code here:
+        txtUsuario.setText("");
+    }//GEN-LAST:event_txtUsuarioFocusGained
+
+    private void txtContraseñaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContraseñaFocusGained
+        // TODO add your handling code here:
+        txtContraseña.setText("");
+    }//GEN-LAST:event_txtContraseñaFocusGained
 
     /**
      * @param args the command line arguments

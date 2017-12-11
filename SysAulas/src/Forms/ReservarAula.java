@@ -1093,4 +1093,8 @@ public class ReservarAula extends javax.swing.JFrame {
         }
         return true;
     }
+    
+    public void resetearDias() {
+        dias = new ArrayList<>(); //Para periodica
+    }
 }

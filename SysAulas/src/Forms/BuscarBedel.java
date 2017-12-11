@@ -113,6 +113,16 @@ public class BuscarBedel extends javax.swing.JFrame {
 
         txtBuscarApellido.setText("---Apellido---");
         txtBuscarApellido.setToolTipText("Ingrese el apellido del bedel a buscar");
+        txtBuscarApellido.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtBuscarApellidoFocusGained(evt);
+            }
+        });
+        txtBuscarApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarApellidoActionPerformed(evt);
+            }
+        });
 
         cmbBuscarTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione Turno---", "MAÑANA", "TARDE", "NOCHE" }));
         cmbBuscarTurno.setToolTipText("Seleccione el turno del bedel a buscar");
@@ -182,11 +192,6 @@ public class BuscarBedel extends javax.swing.JFrame {
         txtNombre.setText("Nombre");
         txtNombre.setToolTipText("Nombre del bedel actual");
         txtNombre.setEnabled(false);
-        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreFocusGained(evt);
-            }
-        });
 
         txtApellido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtApellido.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
@@ -412,11 +417,6 @@ public class BuscarBedel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusGained
-        // TODO add your handling code here:
-        txtNombre.setText("");
-    }//GEN-LAST:event_txtNombreFocusGained
-
     private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
         // TODO add your handling code here:
         AdministradorInterfaz.getMenuAdmin().setVisible(true);
@@ -448,14 +448,34 @@ public class BuscarBedel extends javax.swing.JFrame {
     }//GEN-LAST:event_chkTurnoActionPerformed
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-        
-        if(chkApellido.isSelected()) {
-            AdministradorBedeles.buscarBedelPorApellido(txtBuscarApellido.getText());
-            indice = 0;
+        if (chkApellido.isSelected()) {
+            Integer varaux;
+            Boolean hh;
+            varaux = 0;
+            hh = true;
+            while (varaux < 10 && hh) {
+                if (txtBuscarApellido.getText().contains(varaux.toString())) {
+                    hh = false;
+                }
+                varaux++;
+            }
+            if (!hh) {
+                JOptionPane.showMessageDialog(this, "Caracteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+
+            } else {
+                AdministradorBedeles.buscarBedelPorApellido(txtBuscarApellido.getText());
+                if (AdministradorBedeles.getTamañoBedeles() == 0) {
+                    JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
+                }
+                indice = 0;
+            }
         } else {
             if(chkTurno.isSelected()) {
                 if (cmbBuscarTurno.getSelectedIndex() != 0) {
                     AdministradorBedeles.buscarBedelPorTurno(cmbBuscarTurno.getSelectedIndex());
+                    if (AdministradorBedeles.getTamañoBedeles() == 0) {
+                        JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
+                    }
                     indice = 0;
                 } else {
                     JOptionPane.showMessageDialog(this, "No ha seleccionado un turno", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
@@ -504,43 +524,85 @@ public class BuscarBedel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUltimoMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-        if (btnCancelar.isEnabled()) {
-            actualizarPanelModificacion();
+        Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas cancelar los cambios? Se perderán los datos no guardados", "Cancelar?", JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            if (btnCancelar.isEnabled()) {
+                actualizarPanelModificacion();
+                btnEliminar.setEnabled(!btnEliminar.isEnabled());
+                txtNombre.setEnabled(!btnEliminar.isEnabled());
+                txtApellido.setEnabled(!btnEliminar.isEnabled());
+                cmbTurno.setEnabled(!btnEliminar.isEnabled());
+                //txtNombreUsuario.setEnabled(!btnEliminar.isEnabled());
+                txtContraseña1.setEnabled(!btnEliminar.isEnabled());
+                txtContraseña2.setEnabled(!btnEliminar.isEnabled());
+                btnGuardar.setEnabled(!btnEliminar.isEnabled());
+                btnCancelar.setEnabled(!btnEliminar.isEnabled());
+                btnSiguiente.setEnabled(btnEliminar.isEnabled());
+                btnAnterior.setEnabled(btnEliminar.isEnabled());
+                btnPrimero.setEnabled(btnEliminar.isEnabled());
+                btnUltimo.setEnabled(btnEliminar.isEnabled());
+                btnModificar.setEnabled(btnEliminar.isEnabled());
+            }
         }
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-        btnEliminar.setEnabled(!btnEliminar.isEnabled());
-        txtNombre.setEnabled(!btnEliminar.isEnabled());
-        txtApellido.setEnabled(!btnEliminar.isEnabled());
-        cmbTurno.setEnabled(!btnEliminar.isEnabled());
-        txtNombreUsuario.setEnabled(!btnEliminar.isEnabled());
-        txtContraseña1.setEnabled(!btnEliminar.isEnabled());
-        txtContraseña2.setEnabled(!btnEliminar.isEnabled());
-        btnGuardar.setEnabled(!btnEliminar.isEnabled());
-        btnCancelar.setEnabled(!btnEliminar.isEnabled());
-        btnSiguiente.setEnabled(btnEliminar.isEnabled());
-        btnAnterior.setEnabled(btnEliminar.isEnabled());
-        btnPrimero.setEnabled(btnEliminar.isEnabled());
-        btnUltimo.setEnabled(btnEliminar.isEnabled());
+        if (btnModificar.isEnabled()) {
+            btnEliminar.setEnabled(!btnEliminar.isEnabled());
+            txtNombre.setEnabled(!btnEliminar.isEnabled());
+            txtApellido.setEnabled(!btnEliminar.isEnabled());
+            cmbTurno.setEnabled(!btnEliminar.isEnabled());
+            //txtNombreUsuario.setEnabled(!btnEliminar.isEnabled());
+            txtContraseña1.setEnabled(!btnEliminar.isEnabled());
+            txtContraseña2.setEnabled(!btnEliminar.isEnabled());
+            btnGuardar.setEnabled(!btnEliminar.isEnabled());
+            btnCancelar.setEnabled(!btnEliminar.isEnabled());
+            btnSiguiente.setEnabled(btnEliminar.isEnabled());
+            btnAnterior.setEnabled(btnEliminar.isEnabled());
+            btnPrimero.setEnabled(btnEliminar.isEnabled());
+            btnUltimo.setEnabled(btnEliminar.isEnabled());
+            btnModificar.setEnabled(btnEliminar.isEnabled());
+        }
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         if (btnGuardar.isEnabled()) {
             Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas guardar los cambios?", "Guardar?",  JOptionPane.YES_NO_OPTION);
             if (respuesta == JOptionPane.YES_OPTION) {
-                if (cmbBuscarTurno.getSelectedIndex() != 0 && Arrays.equals(txtContraseña1.getPassword(), txtContraseña2.getPassword())) {
-                    String nombre = txtNombre.getText();
-                    String apellido = txtApellido.getText();
-                    Integer idTurno = cmbTurno.getSelectedIndex();
-                    String username = txtNombreUsuario.getText();
-                    String contraseña = new String(txtContraseña1.getPassword());
+                if (cmbTurno.getSelectedIndex() != 0 && Arrays.equals(txtContraseña1.getPassword(), txtContraseña2.getPassword())) {
+                    Integer varaux;
+                    Boolean hh,hh2;
+                    varaux = 0;
+                    hh = true;
+                    hh2 = true;
+                    while (varaux < 10 && hh) {
+                        if (txtNombre.getText().contains(varaux.toString())||txtApellido.getText().contains(varaux.toString())) {
+                            hh = false;
+                        }
+                        varaux++;
+                    }
                     
-                    Boolean resultado = AdministradorBedeles.modificarBedel(indice, nombre, apellido,idTurno,username, contraseña);
-                    if (resultado == true) {
-                        JOptionPane.showMessageDialog(this, "Modificaciones al usuario " + username + " hechas con exito!");
+                    if ((txtNombre.getText().length() > 20) || (txtApellido.getText().length() > 20)) {
+                        hh2 = false;
+                    }
+                    
+                    if (!hh) {
+                        JOptionPane.showMessageDialog(this, "Campos con carácteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+                    } else if (!hh2){
+                        JOptionPane.showMessageDialog(this, "Nombre o apellido muy largo, tienen que tener 20 caracteres o menos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(this,"El nombre de usuario o la contraseña no cumple con las politicas establecidas","Error",JOptionPane.ERROR_MESSAGE);
+                        String nombre = txtNombre.getText();
+                        String apellido = txtApellido.getText();
+                        Integer idTurno = cmbTurno.getSelectedIndex();
+                        String username = txtNombreUsuario.getText();
+                        String contraseña = new String(txtContraseña1.getPassword());
+
+                        Boolean resultado = AdministradorBedeles.modificarBedel(indice, nombre, apellido, idTurno, contraseña);
+                        if (resultado == true) {
+                            JOptionPane.showMessageDialog(this, "Modificaciones al usuario " + username + " hechas con exito!");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "El nombre de usuario o la contraseña no cumple con las politicas establecidas", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(this,"Error al cambiar atributos.","Error",JOptionPane.ERROR_MESSAGE);
@@ -551,8 +613,19 @@ public class BuscarBedel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        JOptionPane.showMessageDialog(this,"Caso de uso no implementado.","Advertencia",JOptionPane.WARNING_MESSAGE);
+        if (btnEliminar.isEnabled()) {
+            JOptionPane.showMessageDialog(this,"Caso de uso no implementado.","Advertencia",JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void txtBuscarApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarApellidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarApellidoActionPerformed
+
+    private void txtBuscarApellidoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarApellidoFocusGained
+        // TODO add your handling code here:
+        txtBuscarApellido.setText("");
+    }//GEN-LAST:event_txtBuscarApellidoFocusGained
 
     /**
      * @param args the command line arguments

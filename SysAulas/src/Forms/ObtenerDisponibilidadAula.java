@@ -5,6 +5,8 @@
  */
 package Forms;
 
+import Dao.AulaDao;
+import Gestores.AdministradorAulas;
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorReservas;
 import Gestores.AdministradorSesion;
@@ -14,12 +16,18 @@ import db.model.Esporadica;
 import db.model.Fecha;
 import db.model.InfoAulasDisponibles;
 import db.model.InformacionSolicitante;
+import db.model.Informatica;
+import db.model.Multimedios;
 import db.model.Periodica;
+import db.model.SinRecursos;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.hibernate.Hibernate;
 
 /**
  *
@@ -305,6 +313,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblAulasDisponibles.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tblAulasDisponibles.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblAulasDisponibles.getTableHeader().setResizingAllowed(false);
         tblAulasDisponibles.getTableHeader().setReorderingAllowed(false);
@@ -477,10 +486,29 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                 txtCantAlumnos.setText(reservaPeriodica.getCantidadAlumnos().toString());
             }
             txtDuracion.setText(String.format("%.1f", (double) fecha.getDuracion()/1000)+" h");
+            
+            String caracteristicas = "";
             if (opcionSelect != null) {
                 for(Aula a : opcionSelect.getOpcionesAulas()) {
+                    //System.out.println(a);
+                    if (Hibernate.getClass(a) == Multimedios.class) {
+                        Multimedios m = AdministradorAulas.deproxyMultimedios(a);
+                        caracteristicas += "AA: "+m.getAireAcondicionado()+" - Tipo pizarron: "+m.getTipoPizarron();
+                        caracteristicas += " - Televisor: "+m.getTelevisor()+" - Cañon: "+m.getCanion()+" - PC: "+m.getComputadora()+" - DVD: "+m. getDvd();
+                    } else if (Hibernate.getClass(a) == Informatica.class) {
+                        Informatica i = AdministradorAulas.deproxyInformatica(a);
+                        
+                        caracteristicas += "AA: "+i.getAireAcondicionado()+" - Tipo pizarron: "+i.getTipoPizarron();
+                        caracteristicas += " - Cañon: "+i.getCanion()+" - Cant. PCs: "+i.getCantidadPcs();
+                    } else if (Hibernate.getClass(a) == SinRecursos.class) {
+                        SinRecursos s = AdministradorAulas.deproxySinRecursos(a);
+                        caracteristicas += "AA: "+s.getAireAcondicionado()+" - Tipo pizarron: "+s.getTipoPizarron();
+                        caracteristicas += " - Ventiladores: "+s.getVentiladores();
+                    }
                     aulasDisponibles.add(a);
-                    model.addRow(new Object[]{a.getIdAula(),a.getUbicacion(), a.getCapacidad(), a.getClass()});
+                    tblAulasDisponibles.getColumnModel().getColumn(3).setPreferredWidth(caracteristicas.length()*8);
+                    model.addRow(new Object[]{a.getIdAula(),a.getUbicacion(), a.getCapacidad(), caracteristicas});
+                    caracteristicas = "";
                 }
             }
         } else {
@@ -496,6 +524,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
             //nuevo.setAlwaysOnTop(true);
             AdministradorInterfaz.setObtenerDisp(nuevo);
             AdministradorInterfaz.getReservarAula().setVisible(true);
+            AdministradorInterfaz.getReservarAula().resetearDias();
             this.dispose();
         }
     }//GEN-LAST:event_btnVolverMouseClicked
@@ -538,8 +567,10 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
             ObtenerDisponibilidadAula nuevo = new ObtenerDisponibilidadAula();
             nuevo.setLocationRelativeTo(null);
             //nuevo.setAlwaysOnTop(true);
+            
             AdministradorInterfaz.setObtenerDisp(nuevo);
             AdministradorInterfaz.getReservarAula().setVisible(true);
+            AdministradorInterfaz.getReservarAula().resetearDias();
         this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "No puede guardar la reserva sin seleccionar un aula para cada fecha", "Error", JOptionPane.ERROR_MESSAGE);
@@ -642,20 +673,31 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         Time horaInicio;
         java.sql.Date fecha;
         Integer duracion;
+        ArrayList<Fecha> tmp2 = new ArrayList<>();
         for(Object o: nuevaReserva.getDias()) {
             d = (Dia) o;
             tmp = new ArrayList<>(d.getFechas());
             
             for(Object ob: tmp) {
-                horaInicio = (Time) ((Fecha) ob).getHoraInicio();
-                fecha = (java.sql.Date) ((Fecha) ob).getFecha();
-                duracion = ((Fecha) ob).getDuracion();
-                
-                model.addElement(d.getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+String.format("%.1f", (double) duracion/1000)+" h");
-                fechas.add((Fecha) ob);
-                
+                tmp2.add((Fecha) ob);
             }
-            
+        }
+        
+        
+        Collections.sort(tmp2, new Comparator<Fecha>() {
+            public int compare(Fecha f1, Fecha f2){
+               return f1.getFecha().compareTo(f2.getFecha());
+            }
+        });
+        
+        
+        for(Fecha f: tmp2) {
+            horaInicio = (Time) (f).getHoraInicio();
+            fecha = (java.sql.Date) (f).getFecha();
+            duracion = (f).getDuracion();
+
+            model.addElement(f.getDia().getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+String.format("%.1f", (double) duracion/1000)+" h");
+            fechas.add(f);
         }
     }
 
@@ -669,16 +711,28 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         
         Dia d;
         ArrayList<Object> tmp;
+        
         Time horaInicio;
         java.sql.Date fecha;
         Integer duracion;
         tmp = new ArrayList<>(nuevaReserva.getFechas());
+        ArrayList<Fecha> tmp2 = new ArrayList<>();
         for(Object ob: tmp) {
-            horaInicio = (Time) ((Fecha) ob).getHoraInicio();
-            fecha = (java.sql.Date) ((Fecha) ob).getFecha();
-            duracion = ((Fecha) ob).getDuracion();
-            model.addElement(((Fecha) ob).getDia().getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+String.format("%.1f", (double) duracion/1000)+" h");
-            fechas.add((Fecha) ob);
+            tmp2.add((Fecha) ob);
+        }
+        
+        Collections.sort(tmp2, new Comparator<Fecha>() {
+            public int compare(Fecha f1, Fecha f2){
+               return f1.getFecha().compareTo(f2.getFecha());
+            }
+        });
+        
+        for(Fecha f: tmp2) {
+            horaInicio = (Time) (f).getHoraInicio();
+            fecha = (java.sql.Date) (f).getFecha();
+            duracion = (f).getDuracion();
+            model.addElement((f).getDia().getNombreDia()+" - Fecha: "+fecha+" - Inicio: "+horaInicio+" -Duracion: "+String.format("%.1f", (double) duracion/1000)+" h");
+            fechas.add(f);
         }
     }
 }

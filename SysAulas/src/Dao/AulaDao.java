@@ -16,6 +16,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.proxy.HibernateProxy;
 
 /**
  *
@@ -67,4 +68,26 @@ public class AulaDao {
         return retorno;
     }
     
+    @SuppressWarnings("unchecked")
+	public static <T> T unProxy(T entity) {
+		if (entity instanceof HibernateProxy) {
+	        entity =  (T) ((HibernateProxy) entity).getHibernateLazyInitializer()
+	                .getImplementation();
+	    } 
+		
+		return entity;
+	}
+	
+	/**
+	 * Transforms a hibernate proxy object to the desired clazz, if possible.  <br />
+	 * For when the entity is an instance of clazz. 
+	 * 
+	 * @param entity
+	 * @param clazz
+	 * @return entity cast to clazz
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, Y> Y unProxyToClass(T entity, Class<Y> clazz) {
+		return (Y) AulaDao.unProxy(entity);
+	}
 }
