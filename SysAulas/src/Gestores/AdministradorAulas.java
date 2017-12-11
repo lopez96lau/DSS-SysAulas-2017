@@ -58,51 +58,57 @@ public class AdministradorAulas {
                 //System.out.println(aulas);
                 
                 ArrayList<Aula> quitar = new ArrayList<>();
-                for(Aula a : aulas) {
-                    //System.out.print(a.getIdAula());
-                    if (a.getCapacidad() < nuevaReserva.getCantidadAlumnos()) {
-                        quitar.add(a);
-                        //System.out.println(" borrado(1)");
+                if (!aulas.isEmpty()) {
+                    for(Aula a : aulas) {
+                        //System.out.print(a.getIdAula());
+                        if (a.getCapacidad() < nuevaReserva.getCantidadAlumnos()) {
+                            quitar.add(a);
+                            //System.out.println(" borrado(1)");
+                        }
+                        switch(tipoAula) {
+                            case "multi":
+                                if (!(Hibernate.getClass(a) == Multimedios.class)) {
+                                    quitar.add(a);//System.out.println(" borrado(2)");
+                                }
+                                break;
+                            case "info":
+                                if (!(Hibernate.getClass(a) == Informatica.class)) {
+                                    quitar.add(a);//System.out.println(" borrado(3)");
+                                }
+                                break;
+                            case "sinrec":
+                                if (!(Hibernate.getClass(a) == SinRecursos.class)) {
+                                    quitar.add(a);//System.out.println(" borrado(4)");
+                                }
+                                break;
+                        }
                     }
-                    switch(tipoAula) {
-                        case "multi":
-                            if (!(Hibernate.getClass(a) == Multimedios.class)) {
-                                quitar.add(a);//System.out.println(" borrado(2)");
-                            }
-                            break;
-                        case "info":
-                            if (!(Hibernate.getClass(a) == Informatica.class)) {
-                                quitar.add(a);//System.out.println(" borrado(3)");
-                            }
-                            break;
-                        case "sinrec":
-                            if (!(Hibernate.getClass(a) == SinRecursos.class)) {
-                                quitar.add(a);//System.out.println(" borrado(4)");
-                            }
-                            break;
+                    for(Aula a : quitar) {
+                        aulas.remove(a);
                     }
-                }
-                for(Aula a : quitar) {
-                    aulas.remove(a);
-                }
-                
-                Collections.sort(aulas, new Comparator<Aula>() {
-                    public int compare(Aula a1, Aula a2){
-                       return a1.getCapacidad() - a2.getCapacidad();
+                    if (aulas.size() >= 2) {
+                        Collections.sort(aulas, new Comparator<Aula>() {
+                            public int compare(Aula a1, Aula a2){
+                               return a1.getCapacidad() - a2.getCapacidad();
+                            }
+                        });
                     }
-                });
-                
-                //System.out.println(rechazadas);
 
-                ArrayList<Aula> ultimasTres = new ArrayList<>();
-                ultimasTres.add(aulas.get(0));
-                ultimasTres.add(aulas.get(1));
-                ultimasTres.add(aulas.get(2));
-                
-                
-                InfoAulasDisponibles iAD = new InfoAulasDisponibles(f);
-                iAD.setOpcionesAulas(ultimasTres);
-                opciones.add(iAD);
+                    //System.out.println(rechazadas);
+
+                    ArrayList<Aula> ultimasTres = new ArrayList<>();
+                    if (aulas.size() >= 1) { ultimasTres.add(aulas.get(0)); };
+                    if (aulas.size() >= 2) { ultimasTres.add(aulas.get(1)); };
+                    if (aulas.size() >= 3) { ultimasTres.add(aulas.get(2)); };
+                    InfoAulasDisponibles iAD = new InfoAulasDisponibles(f);
+                    iAD.setOpcionesAulas(ultimasTres);
+                    opciones.add(iAD);
+                } else {
+                    ArrayList<Aula> ultimasTres = new ArrayList<>();
+                    InfoAulasDisponibles iAD = new InfoAulasDisponibles(f);
+                    iAD.setOpcionesAulas(ultimasTres);
+                    opciones.add(iAD);
+                }
             }
             fechas = new ArrayList<>();
         }
@@ -135,54 +141,58 @@ public class AdministradorAulas {
 
             ArrayList<Aula> aulas = AulaDao.findComplemento(rechazadasAux);
             //System.out.println(aulas);
+            if (!aulas.isEmpty()) {
+                ArrayList<Aula> quitar = new ArrayList<>();
+                for(Aula a : aulas) {
+                    //System.out.print(a.getIdAula());
+                    if (a.getCapacidad() < nuevaReserva.getCantidadAlumnos()) {
+                        quitar.add(a);
+                        //System.out.println(" borrado(1)");
+                    }
+                    switch(tipoAula) {
+                        case "multi":
+                            if (!(Hibernate.getClass(a) == Multimedios.class)) {
+                                quitar.add(a);//System.out.println(" borrado(2)");
+                            }
+                            break;
+                        case "info":
+                            if (!(Hibernate.getClass(a) == Informatica.class)) {
+                                quitar.add(a);//System.out.println(" borrado(3)");
+                            }
+                            break;
+                        case "sinrec":
+                            if (!(Hibernate.getClass(a) == SinRecursos.class)) {
+                                quitar.add(a);//System.out.println(" borrado(4)");
+                            }
+                            break;
+                    }
+                }
+                for(Aula a : quitar) {
+                    aulas.remove(a);
+                }
 
-            ArrayList<Aula> quitar = new ArrayList<>();
-            for(Aula a : aulas) {
-                //System.out.print(a.getIdAula());
-                if (a.getCapacidad() < nuevaReserva.getCantidadAlumnos()) {
-                    quitar.add(a);
-                    //System.out.println(" borrado(1)");
+                if (aulas.size() >= 2) {
+                    Collections.sort(aulas, new Comparator<Aula>() {
+                        public int compare(Aula a1, Aula a2){
+                           return a1.getCapacidad() - a2.getCapacidad();
+                        }
+                    });
                 }
-                switch(tipoAula) {
-                    case "multi":
-                        if (!(Hibernate.getClass(a) == Multimedios.class)) {
-                            quitar.add(a);//System.out.println(" borrado(2)");
-                        }
-                        break;
-                    case "info":
-                        if (!(Hibernate.getClass(a) == Informatica.class)) {
-                            quitar.add(a);//System.out.println(" borrado(3)");
-                        }
-                        break;
-                    case "sinrec":
-                        if (!(Hibernate.getClass(a) == SinRecursos.class)) {
-                            quitar.add(a);//System.out.println(" borrado(4)");
-                        }
-                        break;
-                }
+                //System.out.println(rechazadas);
+                ArrayList<Aula> ultimasTres = new ArrayList<>();
+                if (aulas.size() >= 1) { ultimasTres.add(aulas.get(0)); };
+                if (aulas.size() >= 2) { ultimasTres.add(aulas.get(1)); };
+                if (aulas.size() >= 3) { ultimasTres.add(aulas.get(2)); };
+                InfoAulasDisponibles iAD = new InfoAulasDisponibles(f);
+                iAD.setOpcionesAulas(ultimasTres);
+                opciones.add(iAD);
+            } else {
+                ArrayList<Aula> ultimasTres = new ArrayList<>();
+                InfoAulasDisponibles iAD = new InfoAulasDisponibles(f);
+                iAD.setOpcionesAulas(ultimasTres);
+                opciones.add(iAD);
             }
-            for(Aula a : quitar) {
-                aulas.remove(a);
-            }
-            
-            Collections.sort(aulas, new Comparator<Aula>() {
-                public int compare(Aula a1, Aula a2){
-                   return a1.getCapacidad() - a2.getCapacidad();
-                }
-            });
-
-            //System.out.println(rechazadas);
-
-            ArrayList<Aula> ultimasTres = new ArrayList<>();
-            ultimasTres.add(aulas.get(0));
-            ultimasTres.add(aulas.get(1));
-            ultimasTres.add(aulas.get(2));
-
-            InfoAulasDisponibles iAD = new InfoAulasDisponibles(f);
-            iAD.setOpcionesAulas(ultimasTres);
-            opciones.add(iAD);
-        }       
-        
+        }
         return opciones;
     }
 }
