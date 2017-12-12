@@ -463,16 +463,8 @@ public class BuscarBedel extends javax.swing.JFrame {
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         if (chkApellido.isSelected()) {
-            Integer varaux;
             Boolean hh;
-            varaux = 0;
-            hh = true;
-            while (varaux < 10 && hh) {
-                if (txtBuscarApellido.getText().contains(varaux.toString())) {
-                    hh = false;
-                }
-                varaux++;
-            }
+            hh = txtBuscarApellido.getText().matches("^[ A-Za-z]+$");
             if (!hh) {
                 JOptionPane.showMessageDialog(this, "Caracteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
 
@@ -584,18 +576,12 @@ public class BuscarBedel extends javax.swing.JFrame {
             Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas guardar los cambios?", "Guardar?",  JOptionPane.YES_NO_OPTION);
             if (respuesta == JOptionPane.YES_OPTION) {
                 if (cmbTurno.getSelectedIndex() != 0 && Arrays.equals(txtContraseña1.getPassword(), txtContraseña2.getPassword())) {
-                    Integer varaux;
                     Boolean hh,hh2;
-                    varaux = 0;
-                    hh = true;
                     hh2 = true;
-                    while (varaux < 10 && hh) {
-                        if (txtNombre.getText().contains(varaux.toString())||txtApellido.getText().contains(varaux.toString())) {
-                            hh = false;
-                        }
-                        varaux++;
+                    hh = txtApellido.getText().matches("^[ A-Za-z]+$");
+                    if (hh) {
+                        hh = txtNombre.getText().matches("^[ A-Za-z]+$");
                     }
-                    
                     if ((txtNombre.getText().length() > 20) || (txtApellido.getText().length() > 20)) {
                         hh2 = false;
                     }
@@ -614,6 +600,21 @@ public class BuscarBedel extends javax.swing.JFrame {
                         Boolean resultado = AdministradorBedeles.modificarBedel(indice, nombre, apellido, idTurno, contraseña);
                         if (resultado == true) {
                             JOptionPane.showMessageDialog(this, "Modificaciones al usuario " + username + " hechas con exito!");
+                            actualizarPanelModificacion();
+                            btnEliminar.setEnabled(!btnEliminar.isEnabled());
+                            txtNombre.setEnabled(!btnEliminar.isEnabled());
+                            txtApellido.setEnabled(!btnEliminar.isEnabled());
+                            cmbTurno.setEnabled(!btnEliminar.isEnabled());
+                            //txtNombreUsuario.setEnabled(!btnEliminar.isEnabled());
+                            txtContraseña1.setEnabled(!btnEliminar.isEnabled());
+                            txtContraseña2.setEnabled(!btnEliminar.isEnabled());
+                            btnGuardar.setEnabled(!btnEliminar.isEnabled());
+                            btnCancelar.setEnabled(!btnEliminar.isEnabled());
+                            btnSiguiente.setEnabled(btnEliminar.isEnabled());
+                            btnAnterior.setEnabled(btnEliminar.isEnabled());
+                            btnPrimero.setEnabled(btnEliminar.isEnabled());
+                            btnUltimo.setEnabled(btnEliminar.isEnabled());
+                            btnModificar.setEnabled(btnEliminar.isEnabled());
                         } else {
                             JOptionPane.showMessageDialog(this, "El nombre de usuario o la contraseña no cumple con las politicas establecidas", "Error", JOptionPane.ERROR_MESSAGE);
                         }
