@@ -12,7 +12,6 @@ public class Aula  implements java.io.Serializable {
 
 
      private Integer idAula;
-     private Reserva reserva;
      private Integer ubicacion;
      private Integer capacidad;
      private String estado;
@@ -25,11 +24,9 @@ public class Aula  implements java.io.Serializable {
     }
 
 	
-    public Aula(Reserva reserva) {
-        this.reserva = reserva;
-    }
-    public Aula(Reserva reserva, Integer ubicacion, Integer capacidad, String estado, String tipoPizarron, String aireAcondicionado, Set aulaAsociaFechas) {
-       this.reserva = reserva;
+
+    public Aula(Integer ubicacion, Integer capacidad, String estado, String tipoPizarron, String aireAcondicionado, Set aulaAsociaFechas) {
+
        this.ubicacion = ubicacion;
        this.capacidad = capacidad;
        this.estado = estado;
@@ -44,13 +41,6 @@ public class Aula  implements java.io.Serializable {
     
     public void setIdAula(Integer idAula) {
         this.idAula = idAula;
-    }
-    public Reserva getReserva() {
-        return this.reserva;
-    }
-    
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
     }
     public Integer getUbicacion() {
         return this.ubicacion;
