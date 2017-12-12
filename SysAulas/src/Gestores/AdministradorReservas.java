@@ -132,4 +132,11 @@ public class AdministradorReservas {
         }
         return nuevoDia;
     }
+    
+    public static ArrayList<Docente> getAllDocentes() {
+        return DocenteDao.getAllDocentes();
+    }
+    public static ArrayList<Catedra> getAllCatedrasDeDocente(Docente d) {
+        return CatedraDao.find(d);
+    }
 }

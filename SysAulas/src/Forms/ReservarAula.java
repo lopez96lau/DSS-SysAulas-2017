@@ -9,7 +9,9 @@ import Gestores.AdministradorAulas;
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorReservas;
 import Gestores.AdministradorSesion;
+import db.model.Catedra;
 import db.model.Dia;
+import db.model.Docente;
 import db.model.Esporadica;
 import db.model.Fecha;
 import db.model.InfoAulasDisponibles;
@@ -42,13 +44,20 @@ public class ReservarAula extends javax.swing.JFrame {
     ArrayList<Fecha> fechas = new ArrayList<>(); //Para esporadica
     ArrayList<Dia> dias = new ArrayList<>(); //Para periodica
     
-    
+    ArrayList<Docente> docentes;
+    ArrayList<Catedra> catedras;
     
     /**
      * Creates new form RegistrarBedel
      */
     public ReservarAula() {
         initComponents();
+        
+        
+        docentes = AdministradorReservas.getAllDocentes();
+        for (Docente d : docentes) {
+            cmbDocente.addItem(d.getNombreDocente()+" "+d.getApellidoDocente());
+        }
     }
     
     @Override
@@ -67,6 +76,7 @@ public class ReservarAula extends javax.swing.JFrame {
     private void initComponents() {
 
         cmbDuracion = new javax.swing.JComboBox<>();
+        jMenuItem1 = new javax.swing.JMenuItem();
         lblReservar = new javax.swing.JLabel();
         lblSesion = new javax.swing.JLabel();
         lblNombreBedel = new javax.swing.JLabel();
@@ -117,22 +127,22 @@ public class ReservarAula extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         lblNombreSolicitante = new javax.swing.JLabel();
         btnSolicitar = new javax.swing.JButton();
-        lblApellidoSolicitante = new javax.swing.JLabel();
         lblCatedra = new javax.swing.JLabel();
         lblTipoAula = new javax.swing.JLabel();
         lblCantAlumnos = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
-        txtNombreSolicitante = new javax.swing.JTextField();
-        txtApellidoSolicitante = new javax.swing.JTextField();
-        txtCatedra = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         cmbTipoAula = new javax.swing.JComboBox<>();
+        cmbDocente = new javax.swing.JComboBox<>();
+        cmbCatedra = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         cmbDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duración", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }));
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SysAulas - Reservar Aula [BEDEL]");
@@ -492,9 +502,6 @@ public class ReservarAula extends javax.swing.JFrame {
             }
         });
 
-        lblApellidoSolicitante.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblApellidoSolicitante.setText("Apellido del Solicitante");
-
         lblCatedra.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblCatedra.setText("Nombre de la Cátedra");
 
@@ -507,29 +514,26 @@ public class ReservarAula extends javax.swing.JFrame {
         lblEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblEmail.setText("Email de Contacto");
 
-        txtNombreSolicitante.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtNombreSolicitante.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
-        txtNombreSolicitante.setText("Nombre");
-        txtNombreSolicitante.setToolTipText("Ingrese el nombre del solicitante");
-
-        txtApellidoSolicitante.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtApellidoSolicitante.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
-        txtApellidoSolicitante.setText("Apellido");
-        txtApellidoSolicitante.setToolTipText("Ingrese el apellido del solicitante");
-
-        txtCatedra.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtCatedra.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
-        txtCatedra.setText("Cátedra");
-        txtCatedra.setToolTipText("Ingrese la cátedra que solicita el aula");
-
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtEmail.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
         txtEmail.setText("usuario@dominio.com");
         txtEmail.setToolTipText("Ingrese un correo electrónico de contacto");
+        txtEmail.setEnabled(false);
 
         cmbTipoAula.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbTipoAula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aula", "Multimedios", "Informática", "Sin Recursos" }));
         cmbTipoAula.setToolTipText("Seleccione el tipo de aula");
+
+        cmbDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Docente" }));
+        cmbDocente.setToolTipText("");
+        cmbDocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbDocenteActionPerformed(evt);
+            }
+        });
+
+        cmbCatedra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cátedra" }));
+        cmbCatedra.setToolTipText("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -543,6 +547,7 @@ public class ReservarAula extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblCantAlumnos)
                         .addGap(12, 12, 12)
                         .addComponent(txtCantAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -552,42 +557,37 @@ public class ReservarAula extends javax.swing.JFrame {
                         .addComponent(cmbTipoAula, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCatedra)
-                            .addComponent(lblEmail))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEmail)
-                            .addComponent(txtCatedra)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNombreSolicitante)
-                            .addComponent(lblApellidoSolicitante))
-                        .addGap(4, 4, 4)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombreSolicitante)
-                            .addComponent(txtApellidoSolicitante))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblNombreSolicitante)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCatedra)
+                                    .addComponent(lblEmail))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbCatedra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(2, 2, 2))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombreSolicitante)
-                    .addComponent(txtNombreSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblApellidoSolicitante)
-                    .addComponent(txtApellidoSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCatedra)
-                    .addComponent(txtCatedra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cmbDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmail)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCatedra)
+                    .addComponent(cmbCatedra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCantAlumnos)
                     .addComponent(txtCantAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -773,7 +773,7 @@ public class ReservarAula extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFechaMouseClicked
 
     private void btnSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarMouseClicked
-        if (cmbTipoAula.getSelectedIndex() == 0 ) {
+        /*if (cmbTipoAula.getSelectedIndex() == 0 ) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado un tipo de aula", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
         } else if (!esInteger(txtCantAlumnos.getText())) {
             JOptionPane.showMessageDialog(this, "La cantidad de alumnos ingresada no es valida", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
@@ -881,7 +881,7 @@ public class ReservarAula extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Debe añadir al menos una fecha para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }
+        }*/
     }//GEN-LAST:event_btnSolicitarMouseClicked
 
     private void btnAñadirFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirFechaMouseClicked
@@ -954,15 +954,36 @@ public class ReservarAula extends javax.swing.JFrame {
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
         Integer respuesta = JOptionPane.showConfirmDialog(null, "Seguro que desea borrar los datos del solicitante ingresados?", "Cancelar?",  JOptionPane.YES_NO_OPTION);
         if (respuesta == JOptionPane.YES_OPTION) {
-            txtNombreSolicitante.setText("Nombre");
-            txtApellidoSolicitante.setText("Apellido");
-            txtCatedra.setText("Cátedra");
+            
             txtEmail.setText("usuario@dominio.com");
             txtCantAlumnos.setText("");
             cmbTipoAula.setSelectedIndex(0);
+            cmbDocente.setSelectedIndex(0);
+            cmbCatedra.setSelectedIndex(0);
             JOptionPane.showMessageDialog(this, "Datos borrados con exito!");
         }
     }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void cmbDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDocenteActionPerformed
+        if (cmbDocente.getSelectedIndex() != 0) {
+            txtEmail.setText(docentes.get(cmbDocente.getSelectedIndex()-1).getEmailDocente());
+            catedras = AdministradorReservas.getAllCatedrasDeDocente(docentes.get(cmbDocente.getSelectedIndex()-1));
+            cmbCatedra.removeAllItems();
+            cmbCatedra.addItem("Cátedra");
+            for (Catedra c : catedras) {
+                cmbCatedra.addItem(c.getNombreCatedra());
+            }
+        } else {
+            cmbCatedra.removeAllItems();
+            cmbCatedra.addItem("Cátedra");
+            txtEmail.setText("usuario@dominio.com");
+            catedras = null;
+            txtCantAlumnos.setText("");
+            cmbTipoAula.setSelectedIndex(0);
+            cmbCatedra.setSelectedIndex(0);
+        }
+        
+    }//GEN-LAST:event_cmbDocenteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1015,6 +1036,8 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkMartes;
     private javax.swing.JCheckBox chkMiercoles;
     private javax.swing.JCheckBox chkViernes;
+    private javax.swing.JComboBox<String> cmbCatedra;
+    private javax.swing.JComboBox<String> cmbDocente;
     private javax.swing.JComboBox<String> cmbDuracion;
     private javax.swing.JComboBox<String> cmbDuracion1;
     private javax.swing.JComboBox<String> cmbDuracion2;
@@ -1027,10 +1050,10 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblApellidoSolicitante;
     private javax.swing.JLabel lblCantAlumnos;
     private javax.swing.JLabel lblCatedra;
     private javax.swing.JLabel lblComplete;
@@ -1056,9 +1079,7 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JPanel pnlFecha;
     private javax.swing.JPanel pnlPeriodo;
     private javax.swing.JTable tblFechas;
-    private javax.swing.JTextField txtApellidoSolicitante;
     private javax.swing.JTextField txtCantAlumnos;
-    private javax.swing.JTextField txtCatedra;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFechaNueva;
     private javax.swing.JTextField txtHoraInicio1;
@@ -1067,7 +1088,6 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JTextField txtHoraInicio4;
     private javax.swing.JTextField txtHoraInicio5;
     private javax.swing.JTextField txtHoraInicio6;
-    private javax.swing.JTextField txtNombreSolicitante;
     // End of variables declaration//GEN-END:variables
 
     public static boolean esInteger(String str) {

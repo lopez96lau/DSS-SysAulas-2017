@@ -49,4 +49,24 @@ public class DocenteDao {
             return null;
         }
     }
+
+    public static ArrayList<Docente> getAllDocentes() {
+        Transaction tx = null;
+        List docentes = new ArrayList<>();
+        try {
+            tx = sesion.beginTransaction();
+            docentes = sesion.createQuery("FROM Docente").list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        ArrayList<Docente> doc = new ArrayList<>();
+        for (Object o : docentes) {
+            doc.add((Docente) o);
+        }
+        return doc;
+    }
 }

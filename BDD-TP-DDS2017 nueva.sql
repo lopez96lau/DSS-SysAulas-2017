@@ -39,19 +39,22 @@ CREATE TABLE IF NOT EXISTS `aula` (
   `estado` varchar(13) DEFAULT NULL,
   `tipo_pizarron` varchar(8) DEFAULT NULL,
   `aire_acondicionado` varchar(2) DEFAULT NULL,
-  `id_reserva` int(11) DEFAULT '0',
+  `id_reserva` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_aula`),
   KEY `FK_RESERVA_CONTIENE_AULA` (`id_reserva`),
   CONSTRAINT `FK_RESERVA_CONTIENE_AULA` FOREIGN KEY (`id_reserva`) REFERENCES `reserva` (`id_reserva`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.aula: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.aula: ~6 rows (aproximadamente)
 DELETE FROM `aula`;
 /*!40000 ALTER TABLE `aula` DISABLE KEYS */;
 INSERT INTO `aula` (`id_aula`, `ubicacion`, `capacidad`, `estado`, `tipo_pizarron`, `aire_acondicionado`, `id_reserva`) VALUES
-	(1, 23, 20, 'd', 'AR23', 'A1', NULL),
-	(2, 23, 40, 'd', 'AR23', 'A2', NULL),
-	(3, 50, 40, 'd', 'AR23', 'A2', NULL);
+	(1, 23, 20, 'd', 'AR23', 'si', NULL),
+	(2, 23, 40, 'd', 'AR23', 'no', NULL),
+	(3, 50, 25, 'd', 'AR23', 'no', NULL),
+	(4, 30, 30, 'd', 'SR5', 'no', NULL),
+	(5, 30, 35, 'd', 'FS3', 'si', NULL),
+	(6, 10, 25, 'd', 'AR23', 'si', NULL);
 /*!40000 ALTER TABLE `aula` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.bedel
@@ -67,12 +70,13 @@ CREATE TABLE IF NOT EXISTS `bedel` (
   CONSTRAINT `FK_PERTENECE_A_TURNO` FOREIGN KEY (`id_turno`) REFERENCES `turno` (`id_turno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.bedel: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.bedel: ~3 rows (aproximadamente)
 DELETE FROM `bedel`;
 /*!40000 ALTER TABLE `bedel` DISABLE KEYS */;
 INSERT INTO `bedel` (`id_usuario`, `nombre_bedel`, `apellido_bedel`, `id_turno`) VALUES
 	(4, 'Mariano', 'Roces', 2),
-	(5, 'Matias', 'Jacob', 1);
+	(5, 'Matias', 'Jacob', 1),
+	(12, 'Matuki', 'ahreeee', 3);
 /*!40000 ALTER TABLE `bedel` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.catedra
@@ -80,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `catedra` (
   `id_catedra` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_catedra` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id_catedra`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla tpdds2017.catedra: ~3 rows (aproximadamente)
 DELETE FROM `catedra`;
@@ -88,7 +92,9 @@ DELETE FROM `catedra`;
 INSERT INTO `catedra` (`id_catedra`, `nombre_catedra`) VALUES
 	(1, 'DIED'),
 	(2, 'DDS'),
-	(3, 'Cátedra');
+	(3, 'Mat Sup'),
+	(4, 'Redes'),
+	(5, 'Probabilidad');
 /*!40000 ALTER TABLE `catedra` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.dia
@@ -99,14 +105,17 @@ CREATE TABLE IF NOT EXISTS `dia` (
   PRIMARY KEY (`id_dia`),
   KEY `FK_DIA_PERTENECE` (`id_periodica`),
   CONSTRAINT `FK_DIA_PERTENECE` FOREIGN KEY (`id_periodica`) REFERENCES `periodica` (`id_reserva`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.dia: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.dia: ~5 rows (aproximadamente)
 DELETE FROM `dia`;
 /*!40000 ALTER TABLE `dia` DISABLE KEYS */;
 INSERT INTO `dia` (`id_dia`, `nombre_dia`, `id_periodica`) VALUES
 	(2, 'Viernes', NULL),
-	(10, 'Lunes', 22);
+	(10, 'Lunes', 22),
+	(11, 'Martes', 23),
+	(12, 'Miercoles', NULL),
+	(13, 'Jueves', NULL);
 /*!40000 ALTER TABLE `dia` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.docente
@@ -116,14 +125,15 @@ CREATE TABLE IF NOT EXISTS `docente` (
   `apellido_docente` varchar(20) DEFAULT NULL,
   `email_docente` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id_docente`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.docente: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.docente: ~1 rows (aproximadamente)
 DELETE FROM `docente`;
 /*!40000 ALTER TABLE `docente` DISABLE KEYS */;
 INSERT INTO `docente` (`id_docente`, `nombre_docente`, `apellido_docente`, `email_docente`) VALUES
-	(1, 'Jorge', 'Nitales', 'lol@gmail.com'),
-	(2, 'Nombre', 'Apellido', NULL);
+	(1, 'Jorge', 'Marti', 'jorge@gmail.com'),
+	(2, 'Lucho', 'El  Jefe', 'lucho@gmail.com'),
+	(3, 'Mati', 'Asd', 'mati@live.com');
 /*!40000 ALTER TABLE `docente` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.docente_pertenece_catedra
@@ -141,7 +151,12 @@ DELETE FROM `docente_pertenece_catedra`;
 /*!40000 ALTER TABLE `docente_pertenece_catedra` DISABLE KEYS */;
 INSERT INTO `docente_pertenece_catedra` (`id_catedra`, `id_docente`) VALUES
 	(1, 1),
-	(2, 1);
+	(2, 1),
+	(3, 1),
+	(4, 2),
+	(5, 2),
+	(3, 3),
+	(4, 3);
 /*!40000 ALTER TABLE `docente_pertenece_catedra` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.esporadica
@@ -152,11 +167,13 @@ CREATE TABLE IF NOT EXISTS `esporadica` (
   CONSTRAINT `FK_ESPORADICA_RESERVA` FOREIGN KEY (`id_reserva`) REFERENCES `reserva` (`id_reserva`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.esporadica: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.esporadica: ~3 rows (aproximadamente)
 DELETE FROM `esporadica`;
 /*!40000 ALTER TABLE `esporadica` DISABLE KEYS */;
 INSERT INTO `esporadica` (`id_reserva`) VALUES
-	(21);
+	(21),
+	(24),
+	(25);
 /*!40000 ALTER TABLE `esporadica` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.fecha
@@ -175,9 +192,9 @@ CREATE TABLE IF NOT EXISTS `fecha` (
   CONSTRAINT `FK_ASOCIA_AULA` FOREIGN KEY (`id_aula`) REFERENCES `aula` (`id_aula`),
   CONSTRAINT `FK_INCLUYE_DIA` FOREIGN KEY (`id_dia`) REFERENCES `dia` (`id_dia`),
   CONSTRAINT `FK_RESERVA_DIA` FOREIGN KEY (`id_reserva`) REFERENCES `esporadica` (`id_reserva`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.fecha: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.fecha: ~10 rows (aproximadamente)
 DELETE FROM `fecha`;
 /*!40000 ALTER TABLE `fecha` DISABLE KEYS */;
 INSERT INTO `fecha` (`id_fecha`, `duracion`, `hora_inicio`, `fecha`, `id_dia`, `id_reserva`, `id_aula`) VALUES
@@ -185,7 +202,12 @@ INSERT INTO `fecha` (`id_fecha`, `duracion`, `hora_inicio`, `fecha`, `id_dia`, `
 	(9, 1000, '10:30:00', '2017-11-27', 10, NULL, 3),
 	(10, 1000, '10:30:00', '2017-12-04', 10, NULL, 2),
 	(11, 1000, '10:30:00', '2017-12-11', 10, NULL, 1),
-	(12, 1000, '10:30:00', '2017-12-18', 10, NULL, 1);
+	(12, 1000, '10:30:00', '2017-12-18', 10, NULL, 1),
+	(13, 2500, '10:10:00', '2017-12-12', 11, NULL, 1),
+	(14, 2500, '10:10:00', '2017-12-05', 11, NULL, 4),
+	(15, 2500, '10:10:00', '2017-12-19', 11, NULL, 5),
+	(16, 3000, '14:00:00', '2017-12-12', 12, 24, 6),
+	(17, 1000, '18:00:00', '2017-12-13', 13, 25, 6);
 /*!40000 ALTER TABLE `fecha` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.historial_contrasenias
@@ -202,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `historial_contrasenias` (
   CONSTRAINT `FK_RESPETA_HISTORIAL_CONTRASENIAS` FOREIGN KEY (`id_politica`) REFERENCES `politica_contrasenias` (`id_politica`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.historial_contrasenias: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.historial_contrasenias: ~0 rows (aproximadamente)
 DELETE FROM `historial_contrasenias`;
 /*!40000 ALTER TABLE `historial_contrasenias` DISABLE KEYS */;
 INSERT INTO `historial_contrasenias` (`id_cambio`, `fecha_cambio`, `contrasenia_nueva`, `id_usuario`, `id_politica`) VALUES
@@ -236,13 +258,15 @@ CREATE TABLE IF NOT EXISTS `multimedios` (
   CONSTRAINT `FK_MULTIMEDIOS_AULA` FOREIGN KEY (`id_aula`) REFERENCES `aula` (`id_aula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.multimedios: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.multimedios: ~5 rows (aproximadamente)
 DELETE FROM `multimedios`;
 /*!40000 ALTER TABLE `multimedios` DISABLE KEYS */;
 INSERT INTO `multimedios` (`televisor`, `canion`, `computadora`, `dvd`, `id_aula`) VALUES
 	('si', 'si', 'si', 'si', 1),
 	('si', 'no', 'si', 'no', 2),
-	('no', 'no', 'no', 'no', 3);
+	('no', 'no', 'no', 'no', 3),
+	('si', 'si', 'si', 'si', 4),
+	('si', 'si', 'si', 'si', 5);
 /*!40000 ALTER TABLE `multimedios` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.periodica
@@ -256,11 +280,12 @@ CREATE TABLE IF NOT EXISTS `periodica` (
   CONSTRAINT `FK_PERIODICA_RESERVA` FOREIGN KEY (`id_reserva`) REFERENCES `reserva` (`id_reserva`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.periodica: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.periodica: ~2 rows (aproximadamente)
 DELETE FROM `periodica`;
 /*!40000 ALTER TABLE `periodica` DISABLE KEYS */;
 INSERT INTO `periodica` (`id_reserva`, `id_periodo`) VALUES
-	(22, 2);
+	(22, 2),
+	(23, 2);
 /*!40000 ALTER TABLE `periodica` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.periodo
@@ -272,14 +297,13 @@ CREATE TABLE IF NOT EXISTS `periodo` (
   PRIMARY KEY (`id_periodo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.periodo: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.periodo: ~2 rows (aproximadamente)
 DELETE FROM `periodo`;
 /*!40000 ALTER TABLE `periodo` DISABLE KEYS */;
 INSERT INTO `periodo` (`id_periodo`, `tipo_periodo`, `fecha_inicio`, `fecha_fin`) VALUES
 	(1, '1C', '2017-02-01', '2017-06-07'),
 	(2, '2C', '2017-12-01', '2017-12-20'),
-	(3, 'ANUAL', '2017-02-01', '2017-12-20'),
-	(4, 'PRUEBA', '2017-12-04', '2017-12-20');
+	(3, 'ANUAL', '2017-02-01', '2017-12-20');
 /*!40000 ALTER TABLE `periodo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.politica_contrasenias
@@ -289,7 +313,7 @@ CREATE TABLE IF NOT EXISTS `politica_contrasenias` (
   PRIMARY KEY (`id_politica`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.politica_contrasenias: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.politica_contrasenias: ~0 rows (aproximadamente)
 DELETE FROM `politica_contrasenias`;
 /*!40000 ALTER TABLE `politica_contrasenias` DISABLE KEYS */;
 INSERT INTO `politica_contrasenias` (`id_politica`, `tipo_politica`) VALUES
@@ -310,14 +334,17 @@ CREATE TABLE IF NOT EXISTS `reserva` (
   CONSTRAINT `FK_ASOCIA_CATEDRA` FOREIGN KEY (`id_catedra`) REFERENCES `catedra` (`id_catedra`),
   CONSTRAINT `FK_BEDEL_RESERVA` FOREIGN KEY (`id_bedel`) REFERENCES `bedel` (`id_usuario`),
   CONSTRAINT `FK_SOLICITA_RESERVA` FOREIGN KEY (`id_docente`) REFERENCES `docente` (`id_docente`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.reserva: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.reserva: ~5 rows (aproximadamente)
 DELETE FROM `reserva`;
 /*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
 INSERT INTO `reserva` (`id_reserva`, `cantidad_alumnos`, `id_bedel`, `id_catedra`, `id_docente`) VALUES
 	(21, 15, 5, 3, 2),
-	(22, 10, 5, 3, 2);
+	(22, 10, 5, 3, 2),
+	(23, 20, 5, 3, 2),
+	(24, 5, 5, 3, 2),
+	(25, 20, 5, 3, 2);
 /*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.sin_recursos
@@ -329,9 +356,11 @@ CREATE TABLE IF NOT EXISTS `sin_recursos` (
   CONSTRAINT `FK_SIN_RECURSOS_AULA` FOREIGN KEY (`id_aula`) REFERENCES `aula` (`id_aula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.sin_recursos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.sin_recursos: ~1 rows (aproximadamente)
 DELETE FROM `sin_recursos`;
 /*!40000 ALTER TABLE `sin_recursos` DISABLE KEYS */;
+INSERT INTO `sin_recursos` (`ventiladores`, `id_aula`) VALUES
+	('si', 6);
 /*!40000 ALTER TABLE `sin_recursos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.turno
@@ -356,15 +385,16 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `nombre_usuario` varchar(20) NOT NULL,
   `contrasenia` varchar(20) NOT NULL,
   PRIMARY KEY (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.usuario: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.usuario: ~5 rows (aproximadamente)
 DELETE FROM `usuario`;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`id_usuario`, `nombre_usuario`, `contrasenia`) VALUES
 	(1, 'matute2208', 'elloco2208'),
 	(4, 'mariano033', '0123456789'),
-	(5, 'metelasacala', '0123456789');
+	(5, 'pruebaprueba', '0123456789'),
+	(12, 'ahreeeee7777', '0123456789');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
