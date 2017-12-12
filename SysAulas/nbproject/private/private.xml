@@ -3,7 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/Gestores/AdministradorInterfaz.java</file>
             <file>file:/F:/TP-DDS-2017/SysAulas/src/db/model/Aula.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/Gestores/AdministradorReservas.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/Gestores/AdministradorPolitica.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/Dao/PeriodoDao.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/Gestores/AdministradorBedeles.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/Dao/DiaDao.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/db/model/InfoAulasDisponibles.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/db/model/InformacionSolicitante.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/Gestores/AdministradorAulas.java</file>
+            <file>file:/F:/TP-DDS-2017/SysAulas/src/Dao/FechaDao.java</file>
             <file>file:/F:/TP-DDS-2017/SysAulas/src/db/model/Aula.hbm.xml</file>
         </group>
     </open-files>
