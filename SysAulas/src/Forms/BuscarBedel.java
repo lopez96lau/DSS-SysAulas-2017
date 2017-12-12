@@ -614,6 +614,21 @@ public class BuscarBedel extends javax.swing.JFrame {
                         Boolean resultado = AdministradorBedeles.modificarBedel(indice, nombre, apellido, idTurno, contraseña);
                         if (resultado == true) {
                             JOptionPane.showMessageDialog(this, "Modificaciones al usuario " + username + " hechas con exito!");
+                            actualizarPanelModificacion();
+                            btnEliminar.setEnabled(!btnEliminar.isEnabled());
+                            txtNombre.setEnabled(!btnEliminar.isEnabled());
+                            txtApellido.setEnabled(!btnEliminar.isEnabled());
+                            cmbTurno.setEnabled(!btnEliminar.isEnabled());
+                            //txtNombreUsuario.setEnabled(!btnEliminar.isEnabled());
+                            txtContraseña1.setEnabled(!btnEliminar.isEnabled());
+                            txtContraseña2.setEnabled(!btnEliminar.isEnabled());
+                            btnGuardar.setEnabled(!btnEliminar.isEnabled());
+                            btnCancelar.setEnabled(!btnEliminar.isEnabled());
+                            btnSiguiente.setEnabled(btnEliminar.isEnabled());
+                            btnAnterior.setEnabled(btnEliminar.isEnabled());
+                            btnPrimero.setEnabled(btnEliminar.isEnabled());
+                            btnUltimo.setEnabled(btnEliminar.isEnabled());
+                            btnModificar.setEnabled(btnEliminar.isEnabled());
                         } else {
                             JOptionPane.showMessageDialog(this, "El nombre de usuario o la contraseña no cumple con las politicas establecidas", "Error", JOptionPane.ERROR_MESSAGE);
                         }

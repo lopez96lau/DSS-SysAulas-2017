@@ -518,7 +518,15 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                     }
                     aulasDisponibles.add(a);
                     tblAulasDisponibles.getColumnModel().getColumn(3).setPreferredWidth(caracteristicas.length()*8);
-                    model.addRow(new Object[]{a.getIdAula(),a.getUbicacion(), a.getCapacidad(), caracteristicas});
+                    if (fechas.get(fechaInd).getAula() != null) {
+                        if (fechas.get(fechaInd).getAula().getIdAula() == a.getIdAula()) {
+                            model.addRow(new Object[]{a.getIdAula()+"*",a.getUbicacion(), a.getCapacidad(), caracteristicas});
+                        } else {
+                            model.addRow(new Object[]{a.getIdAula(),a.getUbicacion(), a.getCapacidad(), caracteristicas});
+                        }
+                    } else {
+                        model.addRow(new Object[]{a.getIdAula(),a.getUbicacion(), a.getCapacidad(), caracteristicas});
+                    }
                     caracteristicas = "";
                 }
             }
@@ -548,6 +556,19 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
             if (respuesta == JOptionPane.YES_OPTION) {
                 fechas.get(fechaInd).setAula(seleccionada);
                 JOptionPane.showMessageDialog(this, "Aula asociada a reserva con exito!");
+                
+                DefaultTableModel model = (DefaultTableModel) tblAulasDisponibles.getModel();
+
+                int rowCount = model.getRowCount();
+                for (int i = rowCount - 1; i >= 0; i--) {
+                    model.removeRow(i);
+                }
+                
+                DefaultListModel model2 = (DefaultListModel) lstDias.getModel();
+                if (!((String) model2.getElementAt(fechaInd)).startsWith("*")) {
+                    model2.setElementAt("*"+model2.getElementAt(fechaInd), fechaInd);
+                }
+                
             }
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un aula para poder resevar", "Error", JOptionPane.ERROR_MESSAGE);
@@ -597,6 +618,11 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         if (respuesta == JOptionPane.YES_OPTION) {
             fechas.get(fechaInd).setAula(null);
             JOptionPane.showMessageDialog(this, "Aula quitada de la reserva con exito!");
+            
+            DefaultListModel model2 = (DefaultListModel) lstDias.getModel();
+            if (((String) model2.getElementAt(fechaInd)).startsWith("*")) {
+                model2.setElementAt(((String) model2.getElementAt(fechaInd)).substring(1), fechaInd);
+            }
         }
     }//GEN-LAST:event_btnCancelarSolicitudMouseClicked
 
