@@ -28,6 +28,7 @@ public class AdministradorPolitica {
             if (contraseña.contains(String.valueOf(caracteresInvalidos.charAt(i)))) {
                 tieneInvalidos = true;
             }
+            i++;
         }
         
         return(contraseña.length() <= limiteSuperior && contraseña.length() >= limiteInferior && !tieneInvalidos);
@@ -40,12 +41,14 @@ public class AdministradorPolitica {
         
         
         String caracteresInvalidos = politicaActual.getTipoPolitica().split("-")[4];
+        //System.out.println(caracteresInvalidos);
         boolean tieneInvalidos = false;
         int i = 0;
         while (tieneInvalidos == false && i < caracteresInvalidos.length()) {
             if (usuario.contains(String.valueOf(caracteresInvalidos.charAt(i)))) {
                 tieneInvalidos = true;
             }
+            i++;
         }
         
         return(usuario.length() <= limiteSuperior && usuario.length() >= limiteInferior && !tieneInvalidos);

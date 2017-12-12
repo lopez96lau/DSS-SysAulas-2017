@@ -112,4 +112,8 @@ public class AdministradorBedeles {
             return true;
         }
     }
+    
+    public static ArrayList<String> getAllTurnos() {
+        return TurnoDao.findAllTurnos();
+    }
 }

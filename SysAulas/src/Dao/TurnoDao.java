@@ -6,6 +6,8 @@
 package Dao;
 
 import db.model.Turno;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -45,5 +47,31 @@ public class TurnoDao {
         }
         return turno;
     }
-
+    
+    
+    public static ArrayList<String> findAllTurnos() {
+        Transaction tx = null;
+        List turnos = new ArrayList<>();
+        try {
+            tx = sesion.beginTransaction();
+            turnos = sesion.createQuery("FROM Turno").list();
+            
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        
+        if (turnos.isEmpty()) {
+            return null;
+        } else {
+            ArrayList<String> t = new ArrayList<>();
+            for (Object o : turnos) {
+                t.add(((Turno) o).getNombreTurno());
+            }
+            return t;
+        }
+    }
 }

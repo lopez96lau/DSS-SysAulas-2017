@@ -9,6 +9,7 @@ import Gestores.AdministradorBedeles;
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorSesion;
 import db.model.Bedel;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 
@@ -26,6 +27,19 @@ public class BuscarBedel extends javax.swing.JFrame {
      */
     public BuscarBedel() {
         initComponents();
+        
+        
+        cmbTurno.removeAllItems();
+        cmbTurno.addItem("---Seleccione Turno---");
+        
+        cmbBuscarTurno.removeAllItems();
+        cmbBuscarTurno.addItem("---Seleccione Turno---");
+        ArrayList<String> pes = AdministradorBedeles.getAllTurnos();
+        for (String s : pes) {
+            cmbTurno.addItem(s);
+            
+            cmbBuscarTurno.addItem(s);
+        }
     }
     
     @Override

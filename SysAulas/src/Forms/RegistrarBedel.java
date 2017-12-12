@@ -8,6 +8,7 @@ package Forms;
 import Gestores.AdministradorBedeles;
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorSesion;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +22,15 @@ public class RegistrarBedel extends javax.swing.JFrame {
      */
     public RegistrarBedel() {
         initComponents();
+        
+        
+        cmbTurno.removeAllItems();
+        cmbTurno.addItem("---Seleccione Turno---");
+        ArrayList<String> pes = AdministradorBedeles.getAllTurnos();
+        for (String s : pes) {
+            cmbTurno.addItem(s);
+        }
+        
     }
 
     @Override

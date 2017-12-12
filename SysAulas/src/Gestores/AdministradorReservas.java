@@ -137,4 +137,8 @@ public class AdministradorReservas {
     public static ArrayList<Catedra> getAllCatedrasDeDocente(Docente d) {
         return CatedraDao.find(d);
     }
+
+    public static ArrayList<String> getAllPeriodos() {
+        return PeriodoDao.findAllPeriodos();
+    }
 }

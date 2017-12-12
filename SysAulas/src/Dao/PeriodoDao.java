@@ -5,6 +5,8 @@
  */
 package Dao;
 import db.model.Periodo;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -42,5 +44,32 @@ public class PeriodoDao {
             e.printStackTrace();
         }
         return periodo;
+    }
+    
+    
+    public static ArrayList<String> findAllPeriodos() {
+        Transaction tx = null;
+        List periodos = new ArrayList<>();
+        try {
+            tx = sesion.beginTransaction();
+            periodos = sesion.createQuery("FROM Periodo").list();
+            
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        
+        if (periodos.isEmpty()) {
+            return null;
+        } else {
+            ArrayList<String> pe = new ArrayList<>();
+            for (Object o : periodos) {
+                pe.add(((Periodo) o).getTipoPeriodo());
+            }
+            return pe;
+        }
     }
 }

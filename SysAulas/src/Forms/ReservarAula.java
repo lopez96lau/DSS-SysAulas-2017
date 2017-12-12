@@ -56,12 +56,18 @@ public class ReservarAula extends javax.swing.JFrame {
     public ReservarAula() {
         initComponents();
         
-        
         docentes = AdministradorReservas.getAllDocentes();
         indexDocente = 0;
         indexCatedra = 0;
         for (Docente d : docentes) {
             cmbDocente.addItem(d.getNombreDocente()+" "+d.getApellidoDocente());
+        }
+        
+        cmbPeriodo.removeAllItems();
+        cmbPeriodo.addItem("---Seleccione período---");
+        ArrayList<String> pes = AdministradorReservas.getAllPeriodos();
+        for (String s : pes) {
+            cmbPeriodo.addItem(s);
         }
     }
     
