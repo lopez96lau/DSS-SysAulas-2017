@@ -49,7 +49,7 @@ public class ModificarAulaInformatica extends javax.swing.JFrame {
         lblSesion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SysAulas - Modificar Aula Informática [BEDEL]");
+        setTitle("GateKeeper - Modificar Aula Informática [BEDEL]");
         setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
 
@@ -61,7 +61,7 @@ public class ModificarAulaInformatica extends javax.swing.JFrame {
         lblModificar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblModificar.setText("Modificar Aula");
 
-        pnlMultimedios.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Aula Informática", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        pnlMultimedios.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Aula Informática", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
 
         lblNumeroAula.setText("N° de Aula");
 

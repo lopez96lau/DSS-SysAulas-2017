@@ -47,7 +47,7 @@ public class BuscarAula extends javax.swing.JFrame {
         btnVolverMenu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SysAulas - Buscar Aula [BEDEL]");
+        setTitle("GateKeeper - Buscar Aula [BEDEL]");
         setResizable(false);
         setSize(new java.awt.Dimension(680, 300));
         setType(java.awt.Window.Type.UTILITY);
@@ -99,7 +99,7 @@ public class BuscarAula extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblAulas);
         tblAulas.getAccessibleContext().setAccessibleName("");
 
-        pnlFiltrar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtrar Aulas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        pnlFiltrar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtrar Aulas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
 
         lblNumeroAula.setText("N° de Aula");
 

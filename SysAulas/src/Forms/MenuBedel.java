@@ -47,7 +47,7 @@ public class MenuBedel extends javax.swing.JFrame {
         btnGenerarListado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SysAulas - Menu [BEDEL]");
+        setTitle("GateKeeper - Menu [BEDEL]");
         setResizable(false);
         setSize(new java.awt.Dimension(430, 170));
         setType(java.awt.Window.Type.UTILITY);
@@ -166,11 +166,11 @@ public class MenuBedel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarAulaMouseClicked
 
     private void btnBuscarAulaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarAulaMouseClicked
-        JOptionPane.showMessageDialog(this,"Caso de uso no implementado.","Advertencia",JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this,"Funcionalidad en desarrollo.","Advertencia",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_btnBuscarAulaMouseClicked
 
     private void btnGenerarListadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarListadoMouseClicked
-        JOptionPane.showMessageDialog(this,"Caso de uso no implementado.","Advertencia",JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this,"Funcionalidad en desarrollo.","Advertencia",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_btnGenerarListadoMouseClicked
 
     /**

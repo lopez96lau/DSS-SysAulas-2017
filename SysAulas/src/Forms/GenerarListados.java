@@ -75,7 +75,7 @@ public class GenerarListados extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SysAulas - Generar Listados [BEDEL]");
+        setTitle("GateKeeper - Generar Listados [BEDEL]");
         setResizable(false);
         setSize(new java.awt.Dimension(680, 300));
         setType(java.awt.Window.Type.UTILITY);
@@ -88,7 +88,7 @@ public class GenerarListados extends javax.swing.JFrame {
         lblNombreBedel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombreBedel.setText("Nombre_Bedel");
 
-        pnlReservasDia.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado de Reservas por Día", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        pnlReservasDia.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado de Reservas por Día", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
 
         lblNumeroAula.setText("N° de Aula");
 
@@ -213,7 +213,7 @@ public class GenerarListados extends javax.swing.JFrame {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        pnlReservasCurso.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado de Reservas por Curso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        pnlReservasCurso.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado de Reservas por Curso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
 
         lblCatedra.setText("Cátedra");
 

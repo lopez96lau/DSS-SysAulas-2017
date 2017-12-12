@@ -161,7 +161,7 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SysAulas - Disponibilidad de Aulas [BEDEL]");
+        setTitle("GateKeeper - Disponibilidad de Aulas [BEDEL]");
         setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
 

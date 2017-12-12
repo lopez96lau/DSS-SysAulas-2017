@@ -50,7 +50,7 @@ public class ModificarAulaMultimedios extends javax.swing.JFrame {
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SysAulas - Modificar Aula Multimedios [BEDEL]");
+        setTitle("GateKeeper - Modificar Aula Multimedios [BEDEL]");
         setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
 
@@ -58,7 +58,7 @@ public class ModificarAulaMultimedios extends javax.swing.JFrame {
         lblModificar.setText("Modificar Aula");
         lblModificar.setToolTipText("");
 
-        pnlMultimedios.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Aula Multimedios", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        pnlMultimedios.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Aula Multimedios", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
         pnlMultimedios.setToolTipText("");
 
         lblNumeroAula.setText("N° de Aula");

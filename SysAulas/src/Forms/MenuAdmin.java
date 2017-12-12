@@ -46,7 +46,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         btnCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SysAulas - Menu [ADMINISTRADOR]");
+        setTitle("GateKeeper - Menu [ADMINISTRADOR]");
         setPreferredSize(new java.awt.Dimension(430, 170));
         setResizable(false);
         setSize(new java.awt.Dimension(430, 170));

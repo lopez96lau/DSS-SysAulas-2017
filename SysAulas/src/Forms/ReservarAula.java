@@ -147,16 +147,13 @@ public class ReservarAula extends javax.swing.JFrame {
         cmbDocente = new javax.swing.JComboBox<>();
         cmbCatedra = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         cmbDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duración", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }));
 
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SysAulas - Reservar Aula [BEDEL]");
+        setTitle("GateKeeper - Reservar Aula [BEDEL]");
         setResizable(false);
         setSize(new java.awt.Dimension(375, 660));
         setType(java.awt.Window.Type.UTILITY);
@@ -615,14 +612,6 @@ public class ReservarAula extends javax.swing.JFrame {
                     .addComponent(btnCancelar))
                 .addContainerGap())
         );
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1092,9 +1081,6 @@ public class ReservarAula extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbDuracion6;
     private javax.swing.JComboBox<String> cmbPeriodo;
     private javax.swing.JComboBox<String> cmbTipoAula;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

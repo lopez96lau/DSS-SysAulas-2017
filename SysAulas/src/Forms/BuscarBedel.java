@@ -90,7 +90,7 @@ public class BuscarBedel extends javax.swing.JFrame {
         btnUltimo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SysAulas - Buscar Bedel [ADMINISTRADOR]");
+        setTitle("GateKeeper - Buscar Bedel [ADMINISTRADOR]");
         setResizable(false);
         setSize(new java.awt.Dimension(400, 600));
         setType(java.awt.Window.Type.UTILITY);
@@ -628,7 +628,7 @@ public class BuscarBedel extends javax.swing.JFrame {
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         if (btnEliminar.isEnabled()) {
-            JOptionPane.showMessageDialog(this,"Caso de uso no implementado.","Advertencia",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Funcionalidad en desarrollo.","Advertencia",JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 

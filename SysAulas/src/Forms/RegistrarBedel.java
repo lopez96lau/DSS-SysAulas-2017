@@ -69,7 +69,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SysAulas - Registrar Bedel [ADMINISTRADOR]");
+        setTitle("GateKeeper - Registrar Bedel [ADMINISTRADOR]");
         setResizable(false);
         setSize(new java.awt.Dimension(370, 370));
         setType(java.awt.Window.Type.UTILITY);
