@@ -12,7 +12,6 @@ import db.model.Dia;
 import db.model.Esporadica;
 import db.model.Fecha;
 import db.model.InfoAulasDisponibles;
-import db.model.InformacionSolicitante;
 import db.model.Informatica;
 import db.model.Multimedios;
 import db.model.Periodica;

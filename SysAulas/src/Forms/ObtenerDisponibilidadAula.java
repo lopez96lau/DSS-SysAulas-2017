@@ -476,14 +476,25 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
             txtFecha.setText(((java.sql.Date)fecha.getFecha()).toString());
             txtHoraInicio.setText(((Time)fecha.getHoraInicio()).toString());
             txtDia.setText(fecha.getDia().getNombreDia());
-            txtCatedra.setText(infoSolicitante.getCatedra());
-            txtTipoAula.setText(infoSolicitante.getTipoAula());
+            switch(infoSolicitante.getTipoAula()) {
+                case "multi":
+                    txtTipoAula.setText("Multimedios");
+                    break;
+                case "info":
+                    txtTipoAula.setText("Informática");
+                    break;
+                case "sinrec":
+                    txtTipoAula.setText("Sin Recursos");
+                    break;
+            }
 
             if (reservaEsporadica != null) {
                 txtCantAlumnos.setText(reservaEsporadica.getCantidadAlumnos().toString());
+                txtCatedra.setText(reservaEsporadica.getCatedra().getNombreCatedra());
             }
             if (reservaPeriodica != null) {
                 txtCantAlumnos.setText(reservaPeriodica.getCantidadAlumnos().toString());
+                txtCatedra.setText(reservaPeriodica.getCatedra().getNombreCatedra());
             }
             txtDuracion.setText(String.format("%.1f", (double) fecha.getDuracion()/1000)+" h");
             

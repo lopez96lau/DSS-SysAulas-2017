@@ -9,6 +9,7 @@ import Gestores.AdministradorAulas;
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorReservas;
 import Gestores.AdministradorSesion;
+import db.model.Bedel;
 import db.model.Catedra;
 import db.model.Dia;
 import db.model.Docente;
@@ -46,6 +47,8 @@ public class ReservarAula extends javax.swing.JFrame {
     
     ArrayList<Docente> docentes;
     ArrayList<Catedra> catedras;
+    Integer indexDocente;
+    Integer indexCatedra;
     
     /**
      * Creates new form RegistrarBedel
@@ -55,6 +58,8 @@ public class ReservarAula extends javax.swing.JFrame {
         
         
         docentes = AdministradorReservas.getAllDocentes();
+        indexDocente = 0;
+        indexCatedra = 0;
         for (Docente d : docentes) {
             cmbDocente.addItem(d.getNombreDocente()+" "+d.getApellidoDocente());
         }
@@ -242,7 +247,7 @@ public class ReservarAula extends javax.swing.JFrame {
 
         cmbDuracion5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duración", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }));
 
-        cmbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione período---", "PRIMER CUATRIMESTRE", "SEGUNDO CUATRIMESTRE", "ANUAL" }));
+        cmbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione período---", "PRIMER CUATRIMESTRE 2017", "SEGUNDO CUATRIMESTRE 2017", "ANUAL 2017", "PRIMER CUATRIMESTRE 2018", "SEGUNDO CUATRIMESTRE 2018", "ANUAL 2018" }));
         cmbPeriodo.setToolTipText("Seleccione el período por el que desea reservar el aula");
 
         javax.swing.GroupLayout pnlPeriodoLayout = new javax.swing.GroupLayout(pnlPeriodo);
@@ -534,6 +539,11 @@ public class ReservarAula extends javax.swing.JFrame {
 
         cmbCatedra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cátedra" }));
         cmbCatedra.setToolTipText("");
+        cmbCatedra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCatedraActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -773,10 +783,14 @@ public class ReservarAula extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFechaMouseClicked
 
     private void btnSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarMouseClicked
-        /*if (cmbTipoAula.getSelectedIndex() == 0 ) {
+        if (cmbTipoAula.getSelectedIndex() == 0 ) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado un tipo de aula", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
         } else if (!esInteger(txtCantAlumnos.getText())) {
             JOptionPane.showMessageDialog(this, "La cantidad de alumnos ingresada no es valida", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+        } else if (indexDocente+1 == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un docente solicitante", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+        } else if (indexCatedra+1 == -1 || indexCatedra+1 == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una catedra del solicitante", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
         } else {
             if (modo == "periodico") {
                 //Validacion de datos
@@ -801,12 +815,19 @@ public class ReservarAula extends javax.swing.JFrame {
                 if (cmbPeriodo.getSelectedIndex() == 0) {
                     datosValidos = false;
                 }
-
-
-
+                Periodo periodo = AdministradorReservas.buscarPeriodo(cmbPeriodo.getSelectedIndex());
+                
+                if (periodo.getFechaFin().compareTo(new Date()) < 0) {
+                    JOptionPane.showMessageDialog(this,"El periodo seleccionado ya ha terminado, no puede realizar reservas para el mismo","Advertencia",JOptionPane.WARNING_MESSAGE);
+                    datosValidos = false;
+                }
+                
                 //Creacion de datos
                 if (datosValidos) {
-                    Periodo periodo = AdministradorReservas.buscarPeriodo(cmbPeriodo.getSelectedIndex());
+                    if (periodo.getFechaInicio().compareTo(new Date()) < 0 && periodo.getFechaFin().compareTo(new Date()) > 0) {
+                        JOptionPane.showMessageDialog(this,"El periodo seleccionado ya ha empezado, se tomarán las fecha a partir de hoy","Advertencia",JOptionPane.WARNING_MESSAGE);
+                    }
+                    
                     if (Arrays.asList(diasSelect).contains(true)) {
                         //Generar dias y fechas
                         for(int i=0; i<diasSelect.length; i++) {
@@ -830,12 +851,15 @@ public class ReservarAula extends javax.swing.JFrame {
                                 break;
                         }
 
-                        InformacionSolicitante infoSo = new InformacionSolicitante(txtNombreSolicitante.getText(), txtApellidoSolicitante.getText(), txtCatedra.getText(), txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
+                        InformacionSolicitante infoSo = new InformacionSolicitante(txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
 
 
                         Periodica nuevaReserva = new Periodica();
                         nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
                         nuevaReserva.setPeriodo(periodo);
+                        nuevaReserva.setCatedra(catedras.get(indexCatedra));
+                        nuevaReserva.setDocente(docentes.get(indexDocente));
+                        nuevaReserva.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
                         nuevaReserva.setDias(new HashSet(dias));
                         //System.out.print(dias);
 
@@ -857,6 +881,9 @@ public class ReservarAula extends javax.swing.JFrame {
                         f.setEsporadica(nuevaReserva);
                     }
                     nuevaReserva.setFechas(new HashSet(fechas));
+                    nuevaReserva.setCatedra(catedras.get(indexCatedra));
+                    nuevaReserva.setDocente(docentes.get(indexDocente));
+                    nuevaReserva.setBedel((Bedel) AdministradorSesion.getUsuarioActual());
                     nuevaReserva.setCantidadAlumnos(Integer.parseInt(txtCantAlumnos.getText()));
 
                     String tipo = null;
@@ -869,7 +896,7 @@ public class ReservarAula extends javax.swing.JFrame {
                             break;
                     }
 
-                    InformacionSolicitante infoSo = new InformacionSolicitante(txtNombreSolicitante.getText(), txtApellidoSolicitante.getText(), txtCatedra.getText(), txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
+                    InformacionSolicitante infoSo = new InformacionSolicitante(txtEmail.getText(), tipo, cmbPeriodo.getSelectedIndex());
 
                     ArrayList<InfoAulasDisponibles> opciones = AdministradorAulas.obtenerAulas(nuevaReserva, infoSo.getTipoAula());
 
@@ -881,7 +908,7 @@ public class ReservarAula extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Debe añadir al menos una fecha para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }*/
+        }
     }//GEN-LAST:event_btnSolicitarMouseClicked
 
     private void btnAñadirFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirFechaMouseClicked
@@ -959,6 +986,8 @@ public class ReservarAula extends javax.swing.JFrame {
             txtCantAlumnos.setText("");
             cmbTipoAula.setSelectedIndex(0);
             cmbDocente.setSelectedIndex(0);
+            cmbCatedra.removeAllItems();
+            cmbCatedra.addItem("Cátedra");
             cmbCatedra.setSelectedIndex(0);
             JOptionPane.showMessageDialog(this, "Datos borrados con exito!");
         }
@@ -966,24 +995,34 @@ public class ReservarAula extends javax.swing.JFrame {
 
     private void cmbDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDocenteActionPerformed
         if (cmbDocente.getSelectedIndex() != 0) {
-            txtEmail.setText(docentes.get(cmbDocente.getSelectedIndex()-1).getEmailDocente());
-            catedras = AdministradorReservas.getAllCatedrasDeDocente(docentes.get(cmbDocente.getSelectedIndex()-1));
-            cmbCatedra.removeAllItems();
-            cmbCatedra.addItem("Cátedra");
-            for (Catedra c : catedras) {
-                cmbCatedra.addItem(c.getNombreCatedra());
+            if (indexDocente != cmbDocente.getSelectedIndex()-1) {
+                txtEmail.setText(docentes.get(cmbDocente.getSelectedIndex()-1).getEmailDocente());
+                catedras = AdministradorReservas.getAllCatedrasDeDocente(docentes.get(cmbDocente.getSelectedIndex()-1));
+                cmbCatedra.removeAllItems();
+                cmbCatedra.addItem("Cátedra");
+                for (Catedra c : catedras) {
+                    cmbCatedra.addItem(c.getNombreCatedra());
+                }
+                indexDocente = cmbDocente.getSelectedIndex()-1;
             }
         } else {
-            cmbCatedra.removeAllItems();
-            cmbCatedra.addItem("Cátedra");
-            txtEmail.setText("usuario@dominio.com");
-            catedras = null;
-            txtCantAlumnos.setText("");
-            cmbTipoAula.setSelectedIndex(0);
-            cmbCatedra.setSelectedIndex(0);
+            if (cmbDocente.getSelectedIndex() != indexDocente) {
+                cmbCatedra.removeAllItems();
+                cmbCatedra.addItem("Cátedra");
+                txtEmail.setText("usuario@dominio.com");
+                catedras = null;
+                txtCantAlumnos.setText("");
+                cmbTipoAula.setSelectedIndex(0);
+                cmbCatedra.setSelectedIndex(0);
+                indexDocente = cmbDocente.getSelectedIndex();
+            }
         }
         
     }//GEN-LAST:event_cmbDocenteActionPerformed
+
+    private void cmbCatedraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCatedraActionPerformed
+        indexCatedra = cmbCatedra.getSelectedIndex()-1;
+    }//GEN-LAST:event_cmbCatedraActionPerformed
 
     /**
      * @param args the command line arguments

@@ -10,30 +10,15 @@ package db.model;
  * @author lucia
  */
 public class InformacionSolicitante {
-    String nombre,apellido,catedra,contacto,tipoAula;
+    String contacto,tipoAula;
     Integer periodoID;
 
-    public InformacionSolicitante(String nombre, String apellido, String catedra, String contacto, String tipoAula, Integer periodoID) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.catedra = catedra;
+    public InformacionSolicitante(String contacto, String tipoAula, Integer periodoID) {
         this.contacto = contacto;
         this.tipoAula = tipoAula;
         this.periodoID = periodoID;
     }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public String getCatedra() {
-        return catedra;
-    }
-
+    
     public String getContacto() {
         return contacto;
     }
