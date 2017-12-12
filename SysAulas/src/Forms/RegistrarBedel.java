@@ -290,18 +290,12 @@ public class RegistrarBedel extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        Integer varaux;
         Boolean hh,hh2;
-        varaux = 0;
-        hh = true;
         hh2 = true;
-        while (varaux < 10 && hh) {
-            if (txtNombre.getText().contains(varaux.toString()) || txtApellido.getText().contains(varaux.toString())) {
-                hh = false;
-            }
-            varaux++;
+        hh = txtApellido.getText().matches("^[ A-Za-z]+$");
+        if (hh) {
+            hh = txtNombre.getText().matches("^[ A-Za-z]+$");
         }
-        
         if ((txtNombre.getText().length() > 20) || (txtApellido.getText().length() > 20)) {
             hh2 = false;
         }
