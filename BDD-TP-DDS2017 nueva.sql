@@ -298,15 +298,18 @@ CREATE TABLE IF NOT EXISTS `periodo` (
   `fecha_inicio` date DEFAULT NULL,
   `fecha_fin` date DEFAULT NULL,
   PRIMARY KEY (`id_periodo`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla tpdds2017.periodo: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla tpdds2017.periodo: ~6 rows (aproximadamente)
 DELETE FROM `periodo`;
 /*!40000 ALTER TABLE `periodo` DISABLE KEYS */;
 INSERT INTO `periodo` (`id_periodo`, `tipo_periodo`, `fecha_inicio`, `fecha_fin`) VALUES
-	(1, '1C', '2017-02-01', '2017-06-07'),
-	(2, '2C', '2017-12-01', '2017-12-20'),
-	(3, 'ANUAL', '2017-02-01', '2017-12-20');
+	(1, '1C-2017', '2017-02-01', '2017-06-07'),
+	(2, '2C-2017', '2017-06-08', '2017-12-20'),
+	(3, 'ANUAL-2017', '2017-02-01', '2017-12-20'),
+	(4, '1C-2018', '2018-02-01', '2017-06-07'),
+	(5, '2C-2018', '2018-06-08', '2017-12-20'),
+	(6, 'ANUAL-2018', '2018-02-01', '2018-12-20');
 /*!40000 ALTER TABLE `periodo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.politica_contrasenias
@@ -320,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `politica_contrasenias` (
 DELETE FROM `politica_contrasenias`;
 /*!40000 ALTER TABLE `politica_contrasenias` DISABLE KEYS */;
 INSERT INTO `politica_contrasenias` (`id_politica`, `tipo_politica`) VALUES
-	(1, '7-15-10-20');
+	(1, '7-15-10-20-*/;\'"´`');
 /*!40000 ALTER TABLE `politica_contrasenias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.reserva

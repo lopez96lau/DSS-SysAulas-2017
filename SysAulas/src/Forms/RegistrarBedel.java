@@ -329,7 +329,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "El nombre de usuario escrito esta siendo usado por otra persona.", "Error de registro", JOptionPane.ERROR_MESSAGE);
                     break;
                 case 4:
-                    JOptionPane.showMessageDialog(this, "Longitud del nombre de usuario (y/o contraseña) incorrecta(s)", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "EL nombre de usuario o la contraseña no se ajusta a la politica actual.", "Error de registro", JOptionPane.ERROR_MESSAGE);
                     break;
 
             }

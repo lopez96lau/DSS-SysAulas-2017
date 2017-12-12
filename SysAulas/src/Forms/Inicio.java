@@ -155,10 +155,10 @@ public class Inicio extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña no corresponden con ningun usuario.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
                 break;
             case 3:
-                JOptionPane.showMessageDialog(this, "Longitud de contraseña invalida.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Contraseña no valida segun la politica actual.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
                 break;
             case 4:
-                JOptionPane.showMessageDialog(this, "Longitud de nombre de usuario invalida.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Nombre de usuario no valido segun la politica actual.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
                 break;
         }
         

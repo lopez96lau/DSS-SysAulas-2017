@@ -20,14 +20,35 @@ public class AdministradorPolitica {
         PoliticaContrasenias politicaActual = PoliticaDao.find(politicaActualID);
         Integer limiteSuperior = Integer.parseInt(politicaActual.getTipoPolitica().split("-")[1]);
         Integer limiteInferior = Integer.parseInt(politicaActual.getTipoPolitica().split("-")[0]);
-        return(contraseña.length() <= limiteSuperior && contraseña.length() >= limiteInferior);
+        
+        String caracteresInvalidos = politicaActual.getTipoPolitica().split("-")[4];
+        boolean tieneInvalidos = false;
+        int i = 0;
+        while (tieneInvalidos == false && i < caracteresInvalidos.length()) {
+            if (contraseña.contains(String.valueOf(caracteresInvalidos.charAt(i)))) {
+                tieneInvalidos = true;
+            }
+        }
+        
+        return(contraseña.length() <= limiteSuperior && contraseña.length() >= limiteInferior && !tieneInvalidos);
     }
     
     public static Boolean validarUsuario(String usuario) {
         PoliticaContrasenias politicaActual = PoliticaDao.find(politicaActualID);
         Integer limiteSuperior = Integer.parseInt(politicaActual.getTipoPolitica().split("-")[3]);
         Integer limiteInferior = Integer.parseInt(politicaActual.getTipoPolitica().split("-")[2]);
-        return(usuario.length() <= limiteSuperior && usuario.length() >= limiteInferior);
+        
+        
+        String caracteresInvalidos = politicaActual.getTipoPolitica().split("-")[4];
+        boolean tieneInvalidos = false;
+        int i = 0;
+        while (tieneInvalidos == false && i < caracteresInvalidos.length()) {
+            if (usuario.contains(String.valueOf(caracteresInvalidos.charAt(i)))) {
+                tieneInvalidos = true;
+            }
+        }
+        
+        return(usuario.length() <= limiteSuperior && usuario.length() >= limiteInferior && !tieneInvalidos);
     }
     
     
