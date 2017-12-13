@@ -177,7 +177,7 @@ public class ReservarAula extends javax.swing.JFrame {
             }
         });
 
-        pnlPeriodo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Fijos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        pnlPeriodo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Fijos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
 
         chkLunes.setText("Lunes");
         chkLunes.setAutoscrolls(true);
@@ -357,7 +357,7 @@ public class ReservarAula extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Específicos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        pnlFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Específicos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
         pnlFecha.setEnabled(false);
 
         jScrollPane1.setEnabled(false);
@@ -424,37 +424,40 @@ public class ReservarAula extends javax.swing.JFrame {
             .addGroup(pnlFechaLayout.createSequentialGroup()
                 .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFechaLayout.createSequentialGroup()
-                        .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFechaLayout.createSequentialGroup()
-                                .addComponent(lblFechaNueva)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtFechaNueva))
+                        .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlFechaLayout.createSequentialGroup()
                                 .addComponent(lblHoraInicio6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtHoraInicio6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblDuracion6)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbDuracion6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnEliminarFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                            .addComponent(btnAñadirFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(lblDuracion6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbDuracion6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlFechaLayout.createSequentialGroup()
+                                .addComponent(lblFechaNueva)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFechaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlFechaLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(btnEliminarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFechaLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnAñadirFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(1, 1, 1))
         );
         pnlFechaLayout.setVerticalGroup(
             pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFechaLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(8, 8, 8)
                 .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFechaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFechaNueva)
                     .addComponent(btnAñadirFecha))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblHoraInicio6)
                     .addComponent(txtHoraInicio6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -849,6 +852,7 @@ public class ReservarAula extends javax.swing.JFrame {
 
                         AdministradorInterfaz.getObtenerDisp().setVisible(true);
                         AdministradorInterfaz.getObtenerDisp().enviarInformacionPeriodica(nuevaReserva, opciones, infoSo);
+                        this.setVisible(false);
                     } else {
                         JOptionPane.showMessageDialog(this, "Debe tener al menos un dia seleccionado para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                     }
@@ -884,7 +888,7 @@ public class ReservarAula extends javax.swing.JFrame {
 
                     AdministradorInterfaz.getObtenerDisp().setVisible(true);
                     AdministradorInterfaz.getObtenerDisp().enviarInformacionEsporadica(nuevaReserva, opciones, infoSo);
-
+                    this.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "Debe añadir al menos una fecha para la reserva", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                 }
@@ -893,69 +897,108 @@ public class ReservarAula extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSolicitarMouseClicked
 
     private void btnAñadirFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirFechaMouseClicked
-        Fecha nuevaFecha = new Fecha();
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        format.setLenient(false);
-        Date date = null;
-        Dia nuevoDia = new Dia();
-        try {
-            
-            if (!txtHoraInicio6.getText().matches("([01]?[0-9]|2[0-3]):[0-5][0-9]")) {
-                throw new IllegalArgumentException();
-            }
-            date = format.parse(txtFechaNueva.getText() +" "+ txtHoraInicio6.getText());
-            
-            Calendar cal = Calendar.getInstance();
-            cal.setLenient(false);
-            cal.setTime(date);
-            cal.getTime();
-            
-            nuevaFecha.setFecha(new java.sql.Date(date.getTime()));
-            long ms = date.getTime();
-            Time time = new Time(ms);
-            nuevaFecha.setHoraInicio(time);
-            //y = 500+500*(x-1) --> x=3 --> y = 500+500*2 = 1500
-            nuevaFecha.setDuracion(500+500*(cmbDuracion6.getSelectedIndex()-1));
-            
-            Calendar c = Calendar.getInstance();
-            c.setTime(date);
-            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-            
-            String[] dias = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
-            
-            nuevoDia.addFecha(nuevaFecha);
-            nuevaFecha.setDia(nuevoDia);
-            
-            nuevoDia.setNombreDia(dias[dayOfWeek]);
-            
-            //Para evitar fechas repetidas
-            for(Fecha f: fechas) {
-                if (nuevaFecha.getFecha().equals(f.getFecha()) && nuevaFecha.getHoraInicio().equals(f.getHoraInicio())) {
-                    throw new IllegalStateException();
-                }
-            }//
+        if (btnAñadirFecha.isEnabled()) {
+            Fecha nuevaFecha = new Fecha();
+            DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            format.setLenient(false);
+            Date date = null;
+            Dia nuevoDia = new Dia();
+            try {
 
-            fechas.add(nuevaFecha);
-            DefaultTableModel model = (DefaultTableModel) tblFechas.getModel();
-            
-            model.addRow(new Object[]{nuevoDia.getNombreDia(),txtFechaNueva.getText(), txtHoraInicio6.getText(), String.format("%.1f", (double) cmbDuracion6.getSelectedIndex()/2)+" h"});
-            
-            
-        } catch (ParseException | IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, "Formato de fecha u hora de inicio invalido", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-            //Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalStateException ex) {
-            JOptionPane.showMessageDialog(this, "Esta fecha ya ha sido sido agregada", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-            
+                if (!txtHoraInicio6.getText().matches("([01]?[0-9]|2[0-3]):[0-5][0-9]")) {
+                    throw new IllegalArgumentException();
+                }
+                date = format.parse(txtFechaNueva.getText() +" "+ txtHoraInicio6.getText());
+
+                Calendar cal = Calendar.getInstance();
+                cal.setLenient(false);
+                cal.setTime(date);
+                cal.getTime();
+
+                nuevaFecha.setFecha(new java.sql.Date(date.getTime()));
+                long ms = date.getTime();
+                
+                
+                if (date.compareTo(new Date()) < 0) {
+                    throw new IllegalStateException("La fecha cargada fue eliminada automaticamente porque ya ha pasado");
+                }
+                
+                Time time = new Time(ms);
+                nuevaFecha.setHoraInicio(time);
+                //y = 500+500*(x-1) --> x=3 --> y = 500+500*2 = 1500
+                nuevaFecha.setDuracion(500+500*(cmbDuracion6.getSelectedIndex()-1));
+                
+                
+                Calendar c = Calendar.getInstance();
+                c.setTime(date);
+                int dayOfWeek = c.get(Calendar.DAY_OF_WEEK)-1;
+
+                String[] dias = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
+
+                nuevoDia.addFecha(nuevaFecha);
+                nuevaFecha.setDia(nuevoDia);
+
+                nuevoDia.setNombreDia(dias[dayOfWeek]);
+                
+                
+                Calendar dateCal = Calendar.getInstance();
+                dateCal.setTime((java.sql.Date) nuevaFecha.getFecha());
+                Calendar timeCal = Calendar.getInstance();
+                timeCal.setTime( (Time) nuevaFecha.getHoraInicio());
+                dateCal.set(Calendar.HOUR_OF_DAY, timeCal.get(Calendar.HOUR_OF_DAY));
+                dateCal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
+                dateCal.set(Calendar.SECOND, timeCal.get(Calendar.SECOND));
+                Date inicio = dateCal.getTime();
+                Date fin = new Date(inicio.getTime()+3600*nuevaFecha.getDuracion());
+                
+                
+                //Para evitar fechas superpuestas
+                if (!fechas.isEmpty()) {
+                    for(Fecha f: fechas) {
+                        Calendar dateFCal = Calendar.getInstance();
+                        dateFCal.setTime(f.getFecha());
+                        Calendar timeFCal = Calendar.getInstance();
+                        timeFCal.setTime(f.getHoraInicio());
+                        dateFCal.set(Calendar.HOUR_OF_DAY, timeFCal.get(Calendar.HOUR_OF_DAY));
+                        dateFCal.set(Calendar.MINUTE, timeFCal.get(Calendar.MINUTE));
+                        dateFCal.set(Calendar.SECOND, timeFCal.get(Calendar.SECOND));
+                        Date inicioF = dateFCal.getTime();
+                        Date finF = new Date(inicioF.getTime()+3600*f.getDuracion());
+
+                        if (!((fin.compareTo(inicioF) < 0) || (inicio.compareTo(finF) > 0))) {
+                            throw new IllegalStateException("Esta fecha se superpone con una ya agregada");
+                        }
+
+                        /*if (nuevaFecha.getFecha().equals(f.getFecha()) && nuevaFecha.getHoraInicio().equals(f.getHoraInicio())) {
+                            throw new IllegalStateException();
+                        }*/
+                    }//
+                }
+
+                fechas.add(nuevaFecha);
+                DefaultTableModel model = (DefaultTableModel) tblFechas.getModel();
+
+                model.addRow(new Object[]{nuevoDia.getNombreDia(),txtFechaNueva.getText(), txtHoraInicio6.getText(), String.format("%.1f", (double) cmbDuracion6.getSelectedIndex()/2)+" h"});
+
+
+            } catch (ParseException | IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, "Formato de fecha u hora de inicio invalido", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+                //Logger.getLogger(ReservarAula.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalStateException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+
+            }
         }
     }//GEN-LAST:event_btnAñadirFechaMouseClicked
 
     private void btnEliminarFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarFechaMouseClicked
-        if (tblFechas.getSelectedRow() != -1) {
-            fechas.remove(tblFechas.getSelectedRow());
-        ((DefaultTableModel) tblFechas.getModel()).removeRow(tblFechas.getSelectedRow());
-        } else {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar la fecha que desea eliminar", "Error eliminando datos", JOptionPane.ERROR_MESSAGE);
+        if (btnEliminarFecha.isEnabled()) {
+            if (tblFechas.getSelectedRow() != -1) {
+                fechas.remove(tblFechas.getSelectedRow());
+            ((DefaultTableModel) tblFechas.getModel()).removeRow(tblFechas.getSelectedRow());
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar la fecha que desea eliminar", "Error eliminando datos", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnEliminarFechaMouseClicked
 
@@ -1130,7 +1173,50 @@ public class ReservarAula extends javax.swing.JFrame {
         return true;
     }
     
-    public void resetearDias() {
+    /*public void resetearDias() {
         dias = new ArrayList<>(); //Para periodica
+    }*/
+    
+    public void resetarTodo() {
+        
+        fechas = new ArrayList<>(); //Para esporadica
+        dias = new ArrayList<>(); //Para periodica
+        
+        catedras = null;
+        
+        cmbCatedra.removeAllItems();
+        cmbCatedra.addItem("Cátedra");
+        txtEmail.setText("usuario@dominio.com");
+        catedras = null;
+        txtCantAlumnos.setText("");
+        cmbTipoAula.setSelectedIndex(0);
+        cmbCatedra.setSelectedIndex(0);
+        cmbDocente.setSelectedIndex(0);
+        indexDocente = 0;
+        indexCatedra = 0;
+        
+        cmbPeriodo.setSelectedIndex(0);
+        
+        txtHoraInicio1.setText("  :  ");
+        txtHoraInicio2.setText("  :  ");
+        txtHoraInicio3.setText("  :  ");
+        txtHoraInicio4.setText("  :  ");
+        txtHoraInicio5.setText("  :  ");
+        txtHoraInicio6.setText("  :  ");
+        
+        cmbDuracion1.setSelectedIndex(0);
+        cmbDuracion2.setSelectedIndex(0);
+        cmbDuracion3.setSelectedIndex(0);
+        cmbDuracion4.setSelectedIndex(0);
+        cmbDuracion5.setSelectedIndex(0);
+        cmbDuracion6.setSelectedIndex(0);
+        
+        txtFechaNueva.setText("  /  /    ");
+        
+        DefaultTableModel dm = (DefaultTableModel) tblFechas.getModel();
+        int rowCount = dm.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
     }
 }
