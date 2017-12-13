@@ -98,6 +98,11 @@ public class MenuBedel extends javax.swing.JFrame {
                 btnGenerarListadoMouseClicked(evt);
             }
         });
+        btnGenerarListado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarListadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,6 +177,10 @@ public class MenuBedel extends javax.swing.JFrame {
     private void btnGenerarListadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarListadoMouseClicked
         JOptionPane.showMessageDialog(this,"Funcionalidad en desarrollo.","Advertencia",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_btnGenerarListadoMouseClicked
+
+    private void btnGenerarListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarListadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGenerarListadoActionPerformed
 
     /**
      * @param args the command line arguments
