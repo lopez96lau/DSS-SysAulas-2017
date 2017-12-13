@@ -13,10 +13,12 @@
 
 
 -- Volcando estructura de base de datos para tpdds2017
+DROP DATABASE IF EXISTS `tpdds2017`;
 CREATE DATABASE IF NOT EXISTS `tpdds2017` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `tpdds2017`;
 
 -- Volcando estructura para tabla tpdds2017.administrador
+DROP TABLE IF EXISTS `administrador`;
 CREATE TABLE IF NOT EXISTS `administrador` (
   `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id_usuario`),
@@ -32,6 +34,7 @@ INSERT INTO `administrador` (`id_usuario`) VALUES
 /*!40000 ALTER TABLE `administrador` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.aula
+DROP TABLE IF EXISTS `aula`;
 CREATE TABLE IF NOT EXISTS `aula` (
   `id_aula` int(11) NOT NULL AUTO_INCREMENT,
   `ubicacion` int(11) DEFAULT NULL,
@@ -56,6 +59,7 @@ INSERT INTO `aula` (`id_aula`, `ubicacion`, `capacidad`, `estado`, `tipo_pizarro
 /*!40000 ALTER TABLE `aula` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.bedel
+DROP TABLE IF EXISTS `bedel`;
 CREATE TABLE IF NOT EXISTS `bedel` (
   `id_usuario` int(11) NOT NULL,
   `nombre_bedel` varchar(20) DEFAULT NULL,
@@ -79,6 +83,7 @@ INSERT INTO `bedel` (`id_usuario`, `nombre_bedel`, `apellido_bedel`, `id_turno`)
 /*!40000 ALTER TABLE `bedel` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.catedra
+DROP TABLE IF EXISTS `catedra`;
 CREATE TABLE IF NOT EXISTS `catedra` (
   `id_catedra` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_catedra` varchar(20) DEFAULT NULL,
@@ -97,6 +102,7 @@ INSERT INTO `catedra` (`id_catedra`, `nombre_catedra`) VALUES
 /*!40000 ALTER TABLE `catedra` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.dia
+DROP TABLE IF EXISTS `dia`;
 CREATE TABLE IF NOT EXISTS `dia` (
   `id_dia` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_dia` varchar(9) DEFAULT NULL,
@@ -122,6 +128,7 @@ INSERT INTO `dia` (`id_dia`, `nombre_dia`, `id_periodica`) VALUES
 /*!40000 ALTER TABLE `dia` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.docente
+DROP TABLE IF EXISTS `docente`;
 CREATE TABLE IF NOT EXISTS `docente` (
   `id_docente` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_docente` varchar(20) DEFAULT NULL,
@@ -140,6 +147,7 @@ INSERT INTO `docente` (`id_docente`, `nombre_docente`, `apellido_docente`, `emai
 /*!40000 ALTER TABLE `docente` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.docente_pertenece_catedra
+DROP TABLE IF EXISTS `docente_pertenece_catedra`;
 CREATE TABLE IF NOT EXISTS `docente_pertenece_catedra` (
   `id_catedra` int(11) NOT NULL,
   `id_docente` int(11) NOT NULL,
@@ -163,6 +171,7 @@ INSERT INTO `docente_pertenece_catedra` (`id_catedra`, `id_docente`) VALUES
 /*!40000 ALTER TABLE `docente_pertenece_catedra` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.esporadica
+DROP TABLE IF EXISTS `esporadica`;
 CREATE TABLE IF NOT EXISTS `esporadica` (
   `id_reserva` int(11) NOT NULL,
   PRIMARY KEY (`id_reserva`),
@@ -182,6 +191,7 @@ INSERT INTO `esporadica` (`id_reserva`) VALUES
 /*!40000 ALTER TABLE `esporadica` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.fecha
+DROP TABLE IF EXISTS `fecha`;
 CREATE TABLE IF NOT EXISTS `fecha` (
   `id_fecha` int(11) NOT NULL AUTO_INCREMENT,
   `duracion` int(11) DEFAULT NULL,
@@ -220,6 +230,7 @@ INSERT INTO `fecha` (`id_fecha`, `duracion`, `hora_inicio`, `fecha`, `id_dia`, `
 /*!40000 ALTER TABLE `fecha` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.historial_contrasenias
+DROP TABLE IF EXISTS `historial_contrasenias`;
 CREATE TABLE IF NOT EXISTS `historial_contrasenias` (
   `id_cambio` int(11) NOT NULL AUTO_INCREMENT,
   `fecha_cambio` date DEFAULT NULL,
@@ -231,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `historial_contrasenias` (
   KEY `id_politica` (`id_politica`),
   CONSTRAINT `FK_REGISTRA_HISTORIAL_CONTRASENIAS` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
   CONSTRAINT `FK_RESPETA_HISTORIAL_CONTRASENIAS` FOREIGN KEY (`id_politica`) REFERENCES `politica_contrasenias` (`id_politica`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla tpdds2017.historial_contrasenias: ~3 rows (aproximadamente)
 DELETE FROM `historial_contrasenias`;
@@ -239,10 +250,15 @@ DELETE FROM `historial_contrasenias`;
 INSERT INTO `historial_contrasenias` (`id_cambio`, `fecha_cambio`, `contrasenia_nueva`, `id_usuario`, `id_politica`) VALUES
 	(1, '2017-12-06', '0123456789', 4, 1),
 	(2, '2017-12-12', '0123456789', 14, 1),
-	(3, '2017-12-12', '1111111111', 14, 1);
+	(3, '2017-12-12', '1111111111', 14, 1),
+	(11, '2017-12-13', '0123456789', 5, 1),
+	(13, '2017-12-13', 'Elloco2208', 5, 1),
+	(14, '2017-12-13', 'Matute2208', 5, 1),
+	(15, '2017-12-13', '1234567890', 5, 1);
 /*!40000 ALTER TABLE `historial_contrasenias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.informatica
+DROP TABLE IF EXISTS `informatica`;
 CREATE TABLE IF NOT EXISTS `informatica` (
   `canion` varchar(2) DEFAULT NULL,
   `cantidad_pcs` int(11) DEFAULT NULL,
@@ -260,6 +276,7 @@ INSERT INTO `informatica` (`canion`, `cantidad_pcs`, `id_aula`) VALUES
 /*!40000 ALTER TABLE `informatica` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.multimedios
+DROP TABLE IF EXISTS `multimedios`;
 CREATE TABLE IF NOT EXISTS `multimedios` (
   `televisor` varchar(2) DEFAULT NULL,
   `canion` varchar(2) DEFAULT NULL,
@@ -283,6 +300,7 @@ INSERT INTO `multimedios` (`televisor`, `canion`, `computadora`, `dvd`, `id_aula
 /*!40000 ALTER TABLE `multimedios` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.periodica
+DROP TABLE IF EXISTS `periodica`;
 CREATE TABLE IF NOT EXISTS `periodica` (
   `id_reserva` int(11) NOT NULL,
   `id_periodo` int(11) NOT NULL,
@@ -302,6 +320,7 @@ INSERT INTO `periodica` (`id_reserva`, `id_periodo`) VALUES
 /*!40000 ALTER TABLE `periodica` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.periodo
+DROP TABLE IF EXISTS `periodo`;
 CREATE TABLE IF NOT EXISTS `periodo` (
   `id_periodo` int(11) NOT NULL AUTO_INCREMENT,
   `tipo_periodo` varchar(13) DEFAULT NULL,
@@ -323,6 +342,7 @@ INSERT INTO `periodo` (`id_periodo`, `tipo_periodo`, `fecha_inicio`, `fecha_fin`
 /*!40000 ALTER TABLE `periodo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.politica_contrasenias
+DROP TABLE IF EXISTS `politica_contrasenias`;
 CREATE TABLE IF NOT EXISTS `politica_contrasenias` (
   `id_politica` int(11) NOT NULL AUTO_INCREMENT,
   `tipo_politica` text,
@@ -333,10 +353,11 @@ CREATE TABLE IF NOT EXISTS `politica_contrasenias` (
 DELETE FROM `politica_contrasenias`;
 /*!40000 ALTER TABLE `politica_contrasenias` DISABLE KEYS */;
 INSERT INTO `politica_contrasenias` (`id_politica`, `tipo_politica`) VALUES
-	(1, '7-15-10-20-*/;\'"´`');
+	(1, '7-15-10-20-/;\'"´`@#$%&*-n-n-n');
 /*!40000 ALTER TABLE `politica_contrasenias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.reserva
+DROP TABLE IF EXISTS `reserva`;
 CREATE TABLE IF NOT EXISTS `reserva` (
   `id_reserva` int(11) NOT NULL AUTO_INCREMENT,
   `cantidad_alumnos` int(11) DEFAULT NULL,
@@ -366,6 +387,7 @@ INSERT INTO `reserva` (`id_reserva`, `cantidad_alumnos`, `id_bedel`, `id_catedra
 /*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.sin_recursos
+DROP TABLE IF EXISTS `sin_recursos`;
 CREATE TABLE IF NOT EXISTS `sin_recursos` (
   `ventiladores` varchar(2) DEFAULT NULL,
   `id_aula` int(11) NOT NULL,
@@ -382,6 +404,7 @@ INSERT INTO `sin_recursos` (`ventiladores`, `id_aula`) VALUES
 /*!40000 ALTER TABLE `sin_recursos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.turno
+DROP TABLE IF EXISTS `turno`;
 CREATE TABLE IF NOT EXISTS `turno` (
   `id_turno` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_turno` varchar(6) NOT NULL,
@@ -398,6 +421,7 @@ INSERT INTO `turno` (`id_turno`, `nombre_turno`) VALUES
 /*!40000 ALTER TABLE `turno` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.usuario
+DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_usuario` varchar(20) NOT NULL,
@@ -409,9 +433,9 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 DELETE FROM `usuario`;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`id_usuario`, `nombre_usuario`, `contrasenia`) VALUES
-	(1, 'matute2208', 'elloco2208'),
+	(1, 'matute2208', 'Elloco2208'),
 	(4, 'mariano033', '0123456789'),
-	(5, 'pruebaprueba', '0123456789'),
+	(5, 'pruebaprueba', '1234567890'),
 	(12, 'ahreeeee7777', '0123456789'),
 	(14, 'julipetric08', '1111111111');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
