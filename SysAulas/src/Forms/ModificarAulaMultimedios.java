@@ -168,11 +168,8 @@ public class ModificarAulaMultimedios extends javax.swing.JFrame {
                             .addComponent(chkTelevisor)
                             .addComponent(chkComputadora)
                             .addComponent(chkAireAcondicionado))
-                        .addGap(0, 2, Short.MAX_VALUE))
-                    .addGroup(pnlMultimediosLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(cmbPizarron, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(cmbPizarron, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         pnlMultimediosLayout.setVerticalGroup(
             pnlMultimediosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +186,7 @@ public class ModificarAulaMultimedios extends javax.swing.JFrame {
                         .addComponent(chkDVD)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chkAireAcondicionado)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmbPizarron, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(pnlMultimediosLayout.createSequentialGroup()
