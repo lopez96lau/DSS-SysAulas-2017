@@ -75,7 +75,7 @@ public class AdministradorReservas {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate inicio = null;
-        if (periodo.getFechaInicio().compareTo(new Date()) < 0 && periodo.getFechaFin().compareTo(new Date()) > 0) {
+        if ((new Date(periodo.getFechaInicio().getTime())).compareTo(new Date()) < 0 && (new Date(periodo.getFechaFin().getTime())).compareTo(new Date()) > 0) {
             java.sql.Date hoy = new java.sql.Date((new Date()).getTime());
             inicio = hoy.toLocalDate();
         } else {

@@ -798,14 +798,14 @@ public class ReservarAula extends javax.swing.JFrame {
                 }
                 Periodo periodo = AdministradorReservas.buscarPeriodo(cmbPeriodo.getSelectedIndex());
                 
-                if (periodo.getFechaFin().compareTo(new Date()) < 0) {
+                if ((new Date(periodo.getFechaFin().getTime())).compareTo(new Date()) < 0) {
                     JOptionPane.showMessageDialog(this,"El periodo seleccionado ya ha terminado, no puede realizar reservas para el mismo","Advertencia",JOptionPane.WARNING_MESSAGE);
                     datosValidos = false;
                 }
                 
                 //Creacion de datos
                 if (datosValidos) {
-                    if (periodo.getFechaInicio().compareTo(new Date()) < 0 && periodo.getFechaFin().compareTo(new Date()) > 0) {
+                    if ((new Date(periodo.getFechaInicio().getTime())).compareTo(new Date()) < 0 && (new Date(periodo.getFechaFin().getTime())).compareTo(new Date()) > 0) {
                         JOptionPane.showMessageDialog(this,"El periodo seleccionado ya ha empezado, se tomarán las fecha a partir de hoy","Advertencia",JOptionPane.WARNING_MESSAGE);
                     }
                     
