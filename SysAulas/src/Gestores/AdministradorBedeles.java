@@ -30,16 +30,6 @@ public class AdministradorBedeles {
                         Turno turno = TurnoDao.find(turnoID);
                         Bedel nuevoBedel = new Bedel(turno, usuario, contraseña, nombre, apellido);
                         UsuarioDao.crearBedel(nuevoBedel);
-                        /*
-                        HistorialContrasenias nuevoHistorial = new HistorialContrasenias(AdministradorPolitica.getPolitica(), nuevoBedel);
-                        nuevoHistorial.setContraseniaNueva(contraseña);
-                        nuevoHistorial.setFechaCambio(new Date());
-            
-                        HistorialContraseniasDao.crearHistorial(nuevoHistorial);
-            
-                        nuevoBedel.addHistorial(nuevoHistorial);
-                        UsuarioDao.guardarBedel(nuevoBedel);*/
-
                         return 0;
                     } else {
                         return 4;
@@ -90,13 +80,13 @@ public class AdministradorBedeles {
                     nuevoHistorial.setContraseniaNueva(contraseña);
                     nuevoHistorial.setFechaCambio(new Date());
 
-                    HistorialContraseniasDao.crearHistorial(nuevoHistorial);
-
                     modificado.addHistorial(nuevoHistorial);
                     modificado.setContrasenia(contraseña);
+                    
+                    HistorialContraseniasDao.crearHistorial(nuevoHistorial);
                 }
 
-                UsuarioDao.guardarBedel(modificado);
+                UsuarioDao.actualizarBedel(modificado);
                 return true;
             } else {
                 return false;
@@ -108,7 +98,7 @@ public class AdministradorBedeles {
             modificado.setApellidoBedel(apellido);
             modificado.setTurno(nuevoTurno);
 
-            UsuarioDao.guardarBedel(modificado);
+            UsuarioDao.actualizarBedel(modificado);
             return true;
         }
     }

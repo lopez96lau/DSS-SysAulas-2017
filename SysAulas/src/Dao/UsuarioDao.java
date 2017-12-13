@@ -121,7 +121,7 @@ public class UsuarioDao {
     }
     
     
-    public static void guardarBedel(Bedel bedel) {
+    public static void actualizarBedel(Bedel bedel) {
         Transaction tx = null;
         try {
             tx = sesion.beginTransaction();
