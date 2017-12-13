@@ -177,7 +177,7 @@ public class ReservarAula extends javax.swing.JFrame {
             }
         });
 
-        pnlPeriodo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Fijos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        pnlPeriodo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Fijos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
 
         chkLunes.setText("Lunes");
         chkLunes.setAutoscrolls(true);
@@ -357,7 +357,7 @@ public class ReservarAula extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Específicos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.SystemColor.textHighlight)); // NOI18N
+        pnlFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días Específicos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), null)); // NOI18N
         pnlFecha.setEnabled(false);
 
         jScrollPane1.setEnabled(false);
@@ -535,6 +535,11 @@ public class ReservarAula extends javax.swing.JFrame {
 
         cmbDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Docente" }));
         cmbDocente.setToolTipText("");
+        cmbDocente.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbDocenteItemStateChanged(evt);
+            }
+        });
         cmbDocente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbDocenteActionPerformed(evt);
@@ -975,8 +980,39 @@ public class ReservarAula extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void cmbDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDocenteActionPerformed
+//        if (cmbDocente.getSelectedIndex() != 0) {
+//            if (indexDocente != cmbDocente.getSelectedIndex()-1) {
+//                txtEmail.setText(docentes.get(cmbDocente.getSelectedIndex()-1).getEmailDocente());
+//                catedras = AdministradorReservas.getAllCatedrasDeDocente(docentes.get(cmbDocente.getSelectedIndex()-1));
+//                cmbCatedra.removeAllItems();
+//                cmbCatedra.addItem("Cátedra");
+//                for (Catedra c : catedras) {
+//                    cmbCatedra.addItem(c.getNombreCatedra());
+//                }
+//                indexDocente = cmbDocente.getSelectedIndex()-1;
+//            }
+//        } else {
+//            if (cmbDocente.getSelectedIndex() != indexDocente) {
+//                cmbCatedra.removeAllItems();
+//                cmbCatedra.addItem("Cátedra");
+//                txtEmail.setText("usuario@dominio.com");
+//                catedras = null;
+//                txtCantAlumnos.setText("");
+//                cmbTipoAula.setSelectedIndex(0);
+//                cmbCatedra.setSelectedIndex(0);
+//                indexDocente = cmbDocente.getSelectedIndex();
+//            }
+//        }
+        
+    }//GEN-LAST:event_cmbDocenteActionPerformed
+
+    private void cmbCatedraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCatedraActionPerformed
+        indexCatedra = cmbCatedra.getSelectedIndex()-1;
+    }//GEN-LAST:event_cmbCatedraActionPerformed
+
+    private void cmbDocenteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDocenteItemStateChanged
         if (cmbDocente.getSelectedIndex() != 0) {
-            if (indexDocente != cmbDocente.getSelectedIndex()-1) {
+            if (indexDocente != cmbDocente.getSelectedIndex()) {
                 txtEmail.setText(docentes.get(cmbDocente.getSelectedIndex()-1).getEmailDocente());
                 catedras = AdministradorReservas.getAllCatedrasDeDocente(docentes.get(cmbDocente.getSelectedIndex()-1));
                 cmbCatedra.removeAllItems();
@@ -987,7 +1023,7 @@ public class ReservarAula extends javax.swing.JFrame {
                 indexDocente = cmbDocente.getSelectedIndex()-1;
             }
         } else {
-            if (cmbDocente.getSelectedIndex() != indexDocente) {
+            if (cmbDocente.getSelectedIndex() == indexDocente) {
                 cmbCatedra.removeAllItems();
                 cmbCatedra.addItem("Cátedra");
                 txtEmail.setText("usuario@dominio.com");
@@ -998,12 +1034,7 @@ public class ReservarAula extends javax.swing.JFrame {
                 indexDocente = cmbDocente.getSelectedIndex();
             }
         }
-        
-    }//GEN-LAST:event_cmbDocenteActionPerformed
-
-    private void cmbCatedraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCatedraActionPerformed
-        indexCatedra = cmbCatedra.getSelectedIndex()-1;
-    }//GEN-LAST:event_cmbCatedraActionPerformed
+    }//GEN-LAST:event_cmbDocenteItemStateChanged
 
     /**
      * @param args the command line arguments
