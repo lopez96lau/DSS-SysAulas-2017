@@ -547,8 +547,10 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
             nuevo.setLocationRelativeTo(null);
             //nuevo.setAlwaysOnTop(true);
             AdministradorInterfaz.setObtenerDisp(nuevo);
+            AdministradorInterfaz.getReservarAula().resetarTodo();
             AdministradorInterfaz.getReservarAula().setVisible(true);
-            AdministradorInterfaz.getReservarAula().resetearDias();
+            //AdministradorInterfaz.getReservarAula().resetearDias();
+            
             this.dispose();
         }
     }//GEN-LAST:event_btnVolverMouseClicked
@@ -606,9 +608,11 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
             //nuevo.setAlwaysOnTop(true);
             
             AdministradorInterfaz.setObtenerDisp(nuevo);
+            AdministradorInterfaz.getReservarAula().resetarTodo();
             AdministradorInterfaz.getReservarAula().setVisible(true);
-            AdministradorInterfaz.getReservarAula().resetearDias();
-        this.dispose();
+            
+            //AdministradorInterfaz.getReservarAula().resetearDias();
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "No puede guardar la reserva sin seleccionar un aula para cada fecha", "Error", JOptionPane.ERROR_MESSAGE);
         }
