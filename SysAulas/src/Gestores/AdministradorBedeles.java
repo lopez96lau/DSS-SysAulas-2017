@@ -68,23 +68,22 @@ public class AdministradorBedeles {
 
     public static Boolean modificarBedel(Integer indice, String nombre, String apellido, Integer idTurno, String contraseña) {
         if (!contraseña.isEmpty()) {
-            if (AdministradorPolitica.validarContraseña(contraseña)) {  
+            Bedel modificado = bedeles.get(indice);
+            if (AdministradorPolitica.validarContraseña(contraseña) && AdministradorPolitica.validarContraConHistorial(contraseña, modificado)) {  
                 Turno nuevoTurno = TurnoDao.find(idTurno);
-
-                Bedel modificado = bedeles.get(indice);
+                
                 modificado.setNombreBedel(nombre);
                 modificado.setApellidoBedel(apellido);
                 modificado.setTurno(nuevoTurno);
-                if (modificado.getContrasenia() != contraseña) {
-                    HistorialContrasenias nuevoHistorial = new HistorialContrasenias(AdministradorPolitica.getPolitica(), modificado);
-                    nuevoHistorial.setContraseniaNueva(contraseña);
-                    nuevoHistorial.setFechaCambio(new Date());
+                
+                HistorialContrasenias nuevoHistorial = new HistorialContrasenias(AdministradorPolitica.getPolitica(), modificado);
+                nuevoHistorial.setContraseniaNueva(contraseña);
+                nuevoHistorial.setFechaCambio(new Date());
 
-                    modificado.addHistorial(nuevoHistorial);
-                    modificado.setContrasenia(contraseña);
-                    
-                    HistorialContraseniasDao.crearHistorial(nuevoHistorial);
-                }
+                modificado.addHistorial(nuevoHistorial);
+                modificado.setContrasenia(contraseña);
+
+                HistorialContraseniasDao.crearHistorial(nuevoHistorial);
 
                 UsuarioDao.actualizarBedel(modificado);
                 return true;
@@ -105,5 +104,15 @@ public class AdministradorBedeles {
     
     public static ArrayList<String> getAllTurnos() {
         return TurnoDao.findAllTurnos();
+    }
+
+    public static void buscarBedelPorTurnoYApellido(String text, int selectedIndex) {
+        bedeles = new ArrayList<>();
+        ArrayList<Bedel> bedels = UsuarioDao.findConApellido(text);
+        for (Bedel b : bedels) {
+            if (b.getTurno().getIdTurno() == selectedIndex) {
+                bedeles.add(b);
+            }
+        }
     }
 }

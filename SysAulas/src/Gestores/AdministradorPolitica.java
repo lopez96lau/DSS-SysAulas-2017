@@ -5,8 +5,12 @@
  */
 package Gestores;
 
+import Dao.HistorialContraseniasDao;
 import Dao.PoliticaDao;
+import db.model.HistorialContrasenias;
 import db.model.PoliticaContrasenias;
+import db.model.Usuario;
+import java.util.ArrayList;
 
 /**
  *
@@ -31,7 +35,47 @@ public class AdministradorPolitica {
             i++;
         }
         
-        return(contraseña.length() <= limiteSuperior && contraseña.length() >= limiteInferior && !tieneInvalidos);
+        boolean valida = true;
+        String tieneUnaMayus = politicaActual.getTipoPolitica().split("-")[5];
+        if (tieneUnaMayus.equals("s")) {
+            if (contraseña.equals(contraseña.toLowerCase())) {
+                valida = false;
+            }
+        }
+        System.out.println("tieneUnaMayus "+valida);
+        String tieneUnDigito = politicaActual.getTipoPolitica().split("-")[6];
+        if (tieneUnDigito.equals("s")) {
+            if (!contraseña.matches(".*\\d+.*")) {
+                valida = false;
+            }
+        }
+        System.out.println("tieneUnDigito "+valida);
+        
+        return(contraseña.length() <= limiteSuperior && contraseña.length() >= limiteInferior && !tieneInvalidos && valida);
+    }
+    
+    public static Boolean validarContraConHistorial(String contraseña, Usuario usuario) {
+        PoliticaContrasenias politicaActual = PoliticaDao.find(politicaActualID);
+        Boolean valida = true;
+        String puedeSerIgualAAnterior = politicaActual.getTipoPolitica().split("-")[7];
+        
+        if (puedeSerIgualAAnterior.equals("n")) {
+            System.out.println("Historiales "+usuario.getHistorialContraseniases());
+            ArrayList<HistorialContrasenias> historiales = HistorialContraseniasDao.find(usuario.getIdUsuario());
+        
+            for(HistorialContrasenias hc : historiales) {
+                
+                if (contraseña.equals(hc.getContraseniaNueva())) {
+                    valida = false;
+                }
+            }
+            if (usuario.getContrasenia().equals(contraseña)) {
+                valida = false;
+            }
+        }
+        System.out.println(valida);
+        
+        return (valida);
     }
     
     public static Boolean validarUsuario(String usuario) {

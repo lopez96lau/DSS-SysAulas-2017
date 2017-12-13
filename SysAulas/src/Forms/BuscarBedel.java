@@ -140,7 +140,6 @@ public class BuscarBedel extends javax.swing.JFrame {
 
         cmbBuscarTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione Turno---", "MAÑANA", "TARDE", "NOCHE" }));
         cmbBuscarTurno.setToolTipText("Seleccione el turno del bedel a buscar");
-        cmbBuscarTurno.setEnabled(false);
 
         chkApellido.setSelected(true);
         chkApellido.setText("Buscar por Apellido");
@@ -438,7 +437,7 @@ public class BuscarBedel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionMouseClicked
 
     private void chkApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkApellidoActionPerformed
-        if(chkApellido.isSelected()) {
+        /*if(chkApellido.isSelected()) {
             txtBuscarApellido.setEnabled(true);
         } else {
             txtBuscarApellido.setEnabled(false);
@@ -446,11 +445,11 @@ public class BuscarBedel extends javax.swing.JFrame {
         if(chkTurno.isSelected()) {
             chkTurno.setSelected(false);
             cmbBuscarTurno.setEnabled(false);
-        }
+        }*/
     }//GEN-LAST:event_chkApellidoActionPerformed
 
     private void chkTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkTurnoActionPerformed
-        if(chkTurno.isSelected()) {
+        /*if(chkTurno.isSelected()) {
             cmbBuscarTurno.setEnabled(true);
         } else {
             cmbBuscarTurno.setEnabled(false);
@@ -458,11 +457,11 @@ public class BuscarBedel extends javax.swing.JFrame {
         if(chkApellido.isSelected()) {
             chkApellido.setSelected(false);
             txtBuscarApellido.setEnabled(false);
-        }
+        }*/
     }//GEN-LAST:event_chkTurnoActionPerformed
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-        if (chkApellido.isSelected()) {
+        if (chkApellido.isSelected() && !chkTurno.isSelected()) {
             Boolean hh;
             hh = txtBuscarApellido.getText().matches("^[ A-Za-z]+$");
             if (!hh) {
@@ -475,10 +474,24 @@ public class BuscarBedel extends javax.swing.JFrame {
                 }
                 indice = 0;
             }
-        } else {
-            if(chkTurno.isSelected()) {
+        } else if(chkTurno.isSelected() && !chkApellido.isSelected()) {
+            if (cmbBuscarTurno.getSelectedIndex() != 0) {
+                AdministradorBedeles.buscarBedelPorTurno(cmbBuscarTurno.getSelectedIndex());
+                if (AdministradorBedeles.getTamañoBedeles() == 0) {
+                    JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
+                }
+                indice = 0;
+            } else {
+                JOptionPane.showMessageDialog(this, "No ha seleccionado un turno", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if(chkTurno.isSelected() && chkApellido.isSelected()) {
+            Boolean hh;
+            hh = txtBuscarApellido.getText().matches("^[ A-Za-z]+$");
+            if (!hh) {
+                JOptionPane.showMessageDialog(this, "Caracteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+            } else {
                 if (cmbBuscarTurno.getSelectedIndex() != 0) {
-                    AdministradorBedeles.buscarBedelPorTurno(cmbBuscarTurno.getSelectedIndex());
+                    AdministradorBedeles.buscarBedelPorTurnoYApellido(txtBuscarApellido.getText(), cmbBuscarTurno.getSelectedIndex());
                     if (AdministradorBedeles.getTamañoBedeles() == 0) {
                         JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
                     }
@@ -486,9 +499,9 @@ public class BuscarBedel extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(this, "No ha seleccionado un turno", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-                //Nada seleccionado
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado un criterio de busqueda", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
         }
         
         actualizarPanelModificacion();
@@ -620,7 +633,7 @@ public class BuscarBedel extends javax.swing.JFrame {
                         }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this,"Error al cambiar atributos.","Error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this,"Las contraseñas no son iguales o no se ha seleccionado un turno.","Error",JOptionPane.ERROR_MESSAGE);
                 }
             }
             

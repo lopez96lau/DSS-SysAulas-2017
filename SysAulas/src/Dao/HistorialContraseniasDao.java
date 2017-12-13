@@ -7,6 +7,8 @@ package Dao;
 
 import db.model.Bedel;
 import db.model.HistorialContrasenias;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -43,5 +45,27 @@ public class HistorialContraseniasDao {
         /*finally {
                 session.close(); 
                 }*/
+    }
+    
+    
+    public static ArrayList<HistorialContrasenias> find(Integer usuarioID) {
+        Transaction tx = null;
+        List historiales = new ArrayList<>();
+        try {
+            tx = sesion.beginTransaction();
+            historiales = sesion.createQuery("FROM HistorialContrasenias hc WHERE hc.usuario.idUsuario="+usuarioID+"").list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        ArrayList<HistorialContrasenias> retorno = new ArrayList<>();
+        for (Object o : historiales) {
+            retorno.add((HistorialContrasenias) o);
+            
+        }
+        return retorno;
     }
 }
