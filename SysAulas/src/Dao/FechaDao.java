@@ -10,7 +10,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -50,8 +49,8 @@ public class FechaDao {
     
     
     public static ArrayList<Fecha> findBetween(java.sql.Date fecha, Time hora, Integer duracion) {
-        System.out.println("fecha: "+fecha);
-        System.out.println("hora: "+hora);
+        //System.out.println("fecha: "+fecha);
+        //System.out.println("hora: "+hora);
         Calendar dateCal = Calendar.getInstance();
         dateCal.setTime(fecha);
         Calendar timeCal = Calendar.getInstance();
@@ -60,10 +59,10 @@ public class FechaDao {
         dateCal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
         dateCal.set(Calendar.SECOND, timeCal.get(Calendar.SECOND));
         Date inicio = dateCal.getTime();
-        System.out.println("YoI: "+inicio);
+        //System.out.println("YoI: "+inicio);
         
         Date fin = new Date(inicio.getTime()+3600*duracion);
-        System.out.println("YoF: "+fin);
+        //System.out.println("YoF: "+fin);
         
         
         
@@ -95,8 +94,8 @@ public class FechaDao {
             
             Date finF = new Date(inicioF.getTime()+3600*f.getDuracion());
             
-            System.out.println("I: "+inicioF);
-            System.out.println("F: "+finF);
+            //System.out.println("I: "+inicioF);
+            //System.out.println("F: "+finF);
             if (!((fin.compareTo(inicioF) < 0) || (inicio.compareTo(finF) > 0))) {
                 rechazadas.add(f);
             }

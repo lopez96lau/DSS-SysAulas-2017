@@ -89,40 +89,12 @@ public class AdministradorAulas {
                 //System.out.println(aulas);
                 
                 if (!aulas.isEmpty()) {
-                    ArrayList<Aula> quitar = new ArrayList<>();
-                    for(Aula a : aulas) {
-                        //System.out.print(a.getIdAula());
-                        if (a.getCapacidad() < nuevaReserva.getCantidadAlumnos()) {
-                            quitar.add(a);
-                            //System.out.println(" borrado(1)");
-                        }
-                        switch(tipoAula) {
-                            case "multi":
-                                if (!(Hibernate.getClass(a) == Multimedios.class)) {
-                                    quitar.add(a);//System.out.println(" borrado(2)");
-                                }
-                                break;
-                            case "info":
-                                if (!(Hibernate.getClass(a) == Informatica.class)) {
-                                    quitar.add(a);//System.out.println(" borrado(3)");
-                                }
-                                break;
-                            case "sinrec":
-                                if (!(Hibernate.getClass(a) == SinRecursos.class)) {
-                                    quitar.add(a);//System.out.println(" borrado(4)");
-                                }
-                                break;
-                        }
-                    }
-                    for(Aula a : quitar) {
-                        aulas.remove(a);
-                    }
+                    
+                    
+                    aulas = eliminarInvalidas(aulas, nuevaReserva.getCantidadAlumnos(), tipoAula);
+                    
                     if (aulas.size() >= 2) {
-                        Collections.sort(aulas, new Comparator<Aula>() {
-                            public int compare(Aula a1, Aula a2){
-                               return a1.getCapacidad() - a2.getCapacidad();
-                            }
-                        });
+                        aulas = ordenarPorCapacidad(aulas);
                     }
 
                     //System.out.println(rechazadas);
@@ -131,6 +103,7 @@ public class AdministradorAulas {
                     if (aulas.size() >= 1) { ultimasTres.add(aulas.get(0)); };
                     if (aulas.size() >= 2) { ultimasTres.add(aulas.get(1)); };
                     if (aulas.size() >= 3) { ultimasTres.add(aulas.get(2)); };
+                    
                     InfoAulasDisponibles iAD = new InfoAulasDisponibles(f);
                     iAD.setOpcionesAulas(ultimasTres);
                     opciones.add(iAD);
@@ -142,5 +115,47 @@ public class AdministradorAulas {
                 }
             }
         return opciones;
+    }
+    
+    
+    private static ArrayList<Aula> eliminarInvalidas(ArrayList<Aula> aulas, int cantidad, String tipoAula) {
+        ArrayList<Aula> quitar = new ArrayList<>();
+        for(Aula a : aulas) {
+            //System.out.print(a.getIdAula());
+            if (a.getCapacidad() < cantidad) {
+                quitar.add(a);
+                //System.out.println(" borrado(1)");
+            }
+            switch(tipoAula) {
+                case "multi":
+                    if (!(Hibernate.getClass(a) == Multimedios.class)) {
+                        quitar.add(a);//System.out.println(" borrado(2)");
+                    }
+                    break;
+                case "info":
+                    if (!(Hibernate.getClass(a) == Informatica.class)) {
+                        quitar.add(a);//System.out.println(" borrado(3)");
+                    }
+                    break;
+                case "sinrec":
+                    if (!(Hibernate.getClass(a) == SinRecursos.class)) {
+                        quitar.add(a);//System.out.println(" borrado(4)");
+                    }
+                    break;
+            }
+        }
+        for(Aula a : quitar) {
+            aulas.remove(a);
+        }
+        return aulas;
+    }
+
+    private static ArrayList<Aula> ordenarPorCapacidad(ArrayList<Aula> aulas) {
+        Collections.sort(aulas, new Comparator<Aula>() {
+            public int compare(Aula a1, Aula a2){
+               return a1.getCapacidad() - a2.getCapacidad();
+            }
+        });
+        return aulas;
     }
 }
