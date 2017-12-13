@@ -970,7 +970,7 @@ public class ReservarAula extends javax.swing.JFrame {
                         Date inicioF = dateFCal.getTime();
                         Date finF = new Date(inicioF.getTime()+3600*f.getDuracion());
 
-                        if (!((fin.compareTo(inicioF) < 0) || (inicio.compareTo(finF) > 0))) {
+                        if (!((fin.compareTo(inicioF) <= 0) || (inicio.compareTo(finF) >= 0))) {
                             throw new IllegalStateException("Esta fecha se superpone con una ya agregada");
                         }
 

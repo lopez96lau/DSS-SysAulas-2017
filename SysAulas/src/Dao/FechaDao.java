@@ -96,7 +96,7 @@ public class FechaDao {
             
             //System.out.println("I: "+inicioF);
             //System.out.println("F: "+finF);
-            if (!((fin.compareTo(inicioF) < 0) || (inicio.compareTo(finF) > 0))) {
+            if (!((fin.compareTo(inicioF) <= 0) || (inicio.compareTo(finF) >= 0))) {
                 rechazadas.add(f);
             }
             
