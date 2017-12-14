@@ -7,6 +7,7 @@ package Forms;
 
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorSesion;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -79,6 +80,11 @@ public class Inicio extends javax.swing.JFrame {
                 txtContraseñaFocusGained(evt);
             }
         });
+        txtContraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtContraseñaKeyReleased(evt);
+            }
+        });
 
         btnIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/log_in.png"))); // NOI18N
         btnIngresar.setText("Ingresar");
@@ -146,6 +152,11 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseClicked
+        
+        ingresar();
+    }//GEN-LAST:event_btnIngresarMouseClicked
+
+    private void ingresar(){
         String tmpUsuario;
         String tmpContraseña;
         tmpUsuario = txtUsuario.getText();
@@ -171,9 +182,7 @@ public class Inicio extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Nombre de usuario no valido segun la politica actual.", "Error en inicio de sesión", JOptionPane.ERROR_MESSAGE);
                 break;
         }
-        
-    }//GEN-LAST:event_btnIngresarMouseClicked
-
+    }
     private void txtUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusGained
         // TODO add your handling code here:
         txtUsuario.setText("");
@@ -183,6 +192,12 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtContraseña.setText("");
     }//GEN-LAST:event_txtContraseñaFocusGained
+
+    private void txtContraseñaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyReleased
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            ingresar();
+        }
+    }//GEN-LAST:event_txtContraseñaKeyReleased
 
     /**
      * @param args the command line arguments
