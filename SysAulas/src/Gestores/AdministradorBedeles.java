@@ -12,6 +12,8 @@ import db.model.Bedel;
 import db.model.HistorialContrasenias;
 import db.model.Turno;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -64,6 +66,15 @@ public class AdministradorBedeles {
 
     public static void buscarBedelPorTurno(Integer idTurno) {
         bedeles = UsuarioDao.findConTurno(idTurno);
+        bedeles = ordenarPorApellido(bedeles);
+    }
+    private static ArrayList<Bedel> ordenarPorApellido(ArrayList<Bedel> bedeles) {
+        Collections.sort(bedeles, new Comparator<Bedel>() {
+            public int compare(Bedel a1, Bedel a2){
+               return a1.getApellidoBedel().toLowerCase().compareTo(a2.getApellidoBedel().toLowerCase());
+            }
+        });
+        return bedeles;
     }
 
     public static Boolean modificarBedel(Integer indice, String nombre, String apellido, Integer idTurno, String contraseña) {

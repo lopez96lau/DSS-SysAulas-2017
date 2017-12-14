@@ -292,9 +292,9 @@ public class RegistrarBedel extends javax.swing.JFrame {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         Boolean hh,hh2;
         hh2 = true;
-        hh = txtApellido.getText().matches("^[ A-Za-z]+$");
+        hh = txtApellido.getText().matches("^[ A-Za-záéíóú]+$");
         if (hh) {
-            hh = txtNombre.getText().matches("^[ A-Za-z]+$");
+            hh = txtNombre.getText().matches("^[ A-Za-záéíóú]+$");
         }
         if ((txtNombre.getText().length() > 20) || (txtApellido.getText().length() > 20)) {
             hh2 = false;

@@ -463,7 +463,7 @@ public class BuscarBedel extends javax.swing.JFrame {
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         if (chkApellido.isSelected() && !chkTurno.isSelected()) {
             Boolean hh;
-            hh = txtBuscarApellido.getText().matches("^[ A-Za-z]+$");
+            hh = txtBuscarApellido.getText().matches("^[ A-Za-záéíóú]+$");
             if (!hh) {
                 JOptionPane.showMessageDialog(this, "Caracteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
 
@@ -591,9 +591,9 @@ public class BuscarBedel extends javax.swing.JFrame {
                 if (cmbTurno.getSelectedIndex() != 0 && Arrays.equals(txtContraseña1.getPassword(), txtContraseña2.getPassword())) {
                     Boolean hh,hh2;
                     hh2 = true;
-                    hh = txtApellido.getText().matches("^[ A-Za-z]+$");
+                    hh = txtApellido.getText().matches("^[ A-Za-záéíóú]+$");
                     if (hh) {
-                        hh = txtNombre.getText().matches("^[ A-Za-z]+$");
+                        hh = txtNombre.getText().matches("^[ A-Za-záéíóú]+$");
                     }
                     if ((txtNombre.getText().length() > 20) || (txtApellido.getText().length() > 20)) {
                         hh2 = false;
