@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -59,9 +61,11 @@ public class ReservarAula extends javax.swing.JFrame {
         docentes = AdministradorReservas.getAllDocentes();
         indexDocente = 0;
         indexCatedra = 0;
+        docentes= ordenarPorApellido(docentes);
         for (Docente d : docentes) {
-            cmbDocente.addItem(d.getNombreDocente()+" "+d.getApellidoDocente());
+            cmbDocente.addItem(d.getApellidoDocente()+" "+d.getNombreDocente());
         }
+        
         
         cmbPeriodo.removeAllItems();
         cmbPeriodo.addItem("---Seleccione período---");
@@ -1227,5 +1231,13 @@ public class ReservarAula extends javax.swing.JFrame {
         for (int i = rowCount - 1; i >= 0; i--) {
             dm.removeRow(i);
         }
+    }
+    private static ArrayList<Docente> ordenarPorApellido(ArrayList<Docente> docentes) {
+        Collections.sort(docentes, new Comparator<Docente>() {
+            public int compare(Docente a1, Docente a2){
+               return a1.getApellidoDocente().toLowerCase().compareTo(a2.getApellidoDocente().toLowerCase());
+            }
+        });
+        return docentes;
     }
 }

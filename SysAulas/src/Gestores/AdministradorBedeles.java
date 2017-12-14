@@ -50,6 +50,7 @@ public class AdministradorBedeles {
     
     public static void buscarBedelPorApellido(String apellido) {
         bedeles = UsuarioDao.findConApellido(apellido);
+        bedeles = ordenarPorNombre(bedeles);
     }
 
     public static ArrayList<Bedel> getBedeles() {
@@ -72,6 +73,14 @@ public class AdministradorBedeles {
         Collections.sort(bedeles, new Comparator<Bedel>() {
             public int compare(Bedel a1, Bedel a2){
                return a1.getApellidoBedel().toLowerCase().compareTo(a2.getApellidoBedel().toLowerCase());
+            }
+        });
+        return bedeles;
+    }
+    private static ArrayList<Bedel> ordenarPorNombre(ArrayList<Bedel> bedeles) {
+        Collections.sort(bedeles, new Comparator<Bedel>() {
+            public int compare(Bedel a1, Bedel a2){
+               return a1.getNombreBedel().toLowerCase().compareTo(a2.getNombreBedel().toLowerCase());
             }
         });
         return bedeles;
@@ -125,5 +134,6 @@ public class AdministradorBedeles {
                 bedeles.add(b);
             }
         }
+        bedeles = ordenarPorNombre(bedeles);
     }
 }

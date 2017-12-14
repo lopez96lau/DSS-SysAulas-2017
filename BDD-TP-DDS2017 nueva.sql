@@ -78,7 +78,6 @@ DELETE FROM `bedel`;
 INSERT INTO `bedel` (`id_usuario`, `nombre_bedel`, `apellido_bedel`, `id_turno`) VALUES
 	(4, 'Mariano', 'Roces', 2),
 	(5, 'Matias', 'Jacob', 1),
-	(12, 'Matuki', 'ahreeee', 3),
 	(14, 'Julian', 'Petric', 2),
 	(15, 'Anibal', 'Tonutti', 3),
 	(16, 'Elías', 'Veracruz', 2);
@@ -139,15 +138,17 @@ CREATE TABLE IF NOT EXISTS `docente` (
   `apellido_docente` varchar(20) DEFAULT NULL,
   `email_docente` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id_docente`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla tpdds2017.docente: ~3 rows (aproximadamente)
 DELETE FROM `docente`;
 /*!40000 ALTER TABLE `docente` DISABLE KEYS */;
 INSERT INTO `docente` (`id_docente`, `nombre_docente`, `apellido_docente`, `email_docente`) VALUES
-	(1, 'Jorge', 'Marti', 'jorge@gmail.com'),
-	(2, 'Lucho', 'El  Jefe', 'lucho@gmail.com'),
-	(3, 'Mati', 'Asd', 'mati@live.com');
+	(1, 'Jorge', 'Humboldt', 'jorge@gmail.com'),
+	(2, 'Luciano', 'Martinez', 'lucho@gmail.com'),
+	(3, 'Mati', 'Jacob', 'mati@live.com'),
+	(4, 'Laureano', 'Lopez', 'lauri@hotmail.com'),
+	(5, 'Jean Pierre', 'Saint Martin', 'jpsm@yahoo.es');
 /*!40000 ALTER TABLE `docente` ENABLE KEYS */;
 
 -- Volcando estructura para tabla tpdds2017.docente_pertenece_catedra
@@ -444,7 +445,6 @@ INSERT INTO `usuario` (`id_usuario`, `nombre_usuario`, `contrasenia`) VALUES
 	(1, 'matute2208', 'Elloco2208'),
 	(4, 'mariano033', '0123456789'),
 	(5, 'pruebaprueba', '1234567890'),
-	(12, 'ahreeeee7777', '0123456789'),
 	(14, 'julipetric08', '1111111111'),
 	(15, 'anihton1990', 'Teketeke2208'),
 	(16, 'eliasveracruz08', 'Prueba1234');
