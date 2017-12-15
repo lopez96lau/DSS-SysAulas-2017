@@ -7,7 +7,7 @@ package db.model;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class InformacionSolicitante {
     String contacto,tipoAula;

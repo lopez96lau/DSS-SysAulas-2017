@@ -7,7 +7,7 @@ package Forms;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class ModificarAulaMultimedios extends javax.swing.JFrame {
 

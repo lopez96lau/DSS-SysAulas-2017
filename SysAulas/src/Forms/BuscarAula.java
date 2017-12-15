@@ -7,7 +7,7 @@ package Forms;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class BuscarAula extends javax.swing.JFrame {
 

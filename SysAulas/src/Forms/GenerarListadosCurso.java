@@ -7,7 +7,7 @@ package Forms;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class GenerarListadosCurso extends javax.swing.JFrame {
 

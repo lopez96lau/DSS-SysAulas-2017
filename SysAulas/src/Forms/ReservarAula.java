@@ -59,8 +59,8 @@ public class ReservarAula extends javax.swing.JFrame {
         initComponents();
         
         docentes = AdministradorReservas.getAllDocentes();
-        indexDocente = 0;
-        indexCatedra = 0;
+        indexDocente = -1;
+        indexCatedra = -1;
         docentes= ordenarPorApellido(docentes);
         for (Docente d : docentes) {
             cmbDocente.addItem(d.getApellidoDocente()+" "+d.getNombreDocente());
@@ -1224,8 +1224,8 @@ public class ReservarAula extends javax.swing.JFrame {
         cmbTipoAula.setSelectedIndex(0);
         cmbCatedra.setSelectedIndex(0);
         cmbDocente.setSelectedIndex(0);
-        indexDocente = 0;
-        indexCatedra = 0;
+        indexDocente = -1;
+        indexCatedra = -1;
         
         cmbPeriodo.setSelectedIndex(0);
         

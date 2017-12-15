@@ -15,7 +15,7 @@ import Forms.ReservarAula;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class AdministradorInterfaz {
     private static Inicio menuInicio;

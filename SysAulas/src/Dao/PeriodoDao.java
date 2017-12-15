@@ -13,7 +13,7 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class PeriodoDao {
     private static Session sesion;

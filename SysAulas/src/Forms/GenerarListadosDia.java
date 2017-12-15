@@ -7,7 +7,7 @@ package Forms;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class GenerarListadosDia extends javax.swing.JFrame {
 

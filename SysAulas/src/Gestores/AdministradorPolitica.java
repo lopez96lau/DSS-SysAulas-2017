@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author lucia
+ * @author luciano
  */
 public class AdministradorPolitica {
     private static final Integer politicaActualID = 1;
