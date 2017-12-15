@@ -473,7 +473,7 @@ public class BuscarBedel extends javax.swing.JFrame {
                     }
                     indice = 0;
                 } else {
-                    JOptionPane.showMessageDialog(this, "Un apellido es de 20 carácteres o menos");
+                    JOptionPane.showMessageDialog(this, "Un apellido es de 20 carácteres o menos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Caracteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
@@ -506,7 +506,7 @@ public class BuscarBedel extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "No ha seleccionado un turno", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Un apellido es de 20 carácteres o menos");
+                    JOptionPane.showMessageDialog(this, "Un apellido es de 20 carácteres o menos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Caracteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
