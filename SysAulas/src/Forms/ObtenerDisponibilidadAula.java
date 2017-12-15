@@ -637,6 +637,13 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                 DefaultListModel model2 = (DefaultListModel) lstDias.getModel();
                 if (((String) model2.getElementAt(fechaInd)).startsWith("*")) {
                     model2.setElementAt(((String) model2.getElementAt(fechaInd)).substring(1), fechaInd);
+                    
+                    DefaultTableModel model = (DefaultTableModel) tblAulasDisponibles.getModel();
+
+                    int rowCount = model.getRowCount();
+                    for (int i = rowCount - 1; i >= 0; i--) {
+                        model.removeRow(i);
+                    }
                 }
             }
         } else {
