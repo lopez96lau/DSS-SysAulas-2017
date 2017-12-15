@@ -8,6 +8,7 @@ package Forms;
 import Gestores.AdministradorBedeles;
 import Gestores.AdministradorInterfaz;
 import Gestores.AdministradorSesion;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -290,6 +291,9 @@ public class RegistrarBedel extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        guardar();
+    }//GEN-LAST:event_btnGuardarMouseClicked
+    private void guardar(){
         if (cmbTurno.getSelectedIndex() != 0) {
             Boolean hh,hh2;
             hh2 = true;
@@ -342,8 +346,7 @@ public class RegistrarBedel extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No ha seleccionado un turno.", "Error de registro", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnGuardarMouseClicked
-
+    }
     private void btnVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseClicked
         Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas volver al menu anterior? Se perderán los datos no guardados", "Volver?",  JOptionPane.YES_NO_OPTION);
         if (respuesta == JOptionPane.YES_OPTION) {
