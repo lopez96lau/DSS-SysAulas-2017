@@ -628,15 +628,19 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCantAlumnosActionPerformed
 
     private void btnCancelarSolicitudMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarSolicitudMouseClicked
-        Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas borrar la reserva hecha para el dia "+fechas.get(fechaInd).getFecha()+"?", "Cancelar?",  JOptionPane.YES_NO_OPTION);
-        if (respuesta == JOptionPane.YES_OPTION) {
-            fechas.get(fechaInd).setAula(null);
-            JOptionPane.showMessageDialog(this, "Aula quitada de la reserva con exito!");
-            
-            DefaultListModel model2 = (DefaultListModel) lstDias.getModel();
-            if (((String) model2.getElementAt(fechaInd)).startsWith("*")) {
-                model2.setElementAt(((String) model2.getElementAt(fechaInd)).substring(1), fechaInd);
+        if (lstDias.getSelectedIndex() != -1) {
+            Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas borrar la reserva hecha para el dia "+fechas.get(fechaInd).getFecha()+"?", "Cancelar?",  JOptionPane.YES_NO_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                fechas.get(fechaInd).setAula(null);
+                JOptionPane.showMessageDialog(this, "Aula quitada de la reserva con exito!");
+
+                DefaultListModel model2 = (DefaultListModel) lstDias.getModel();
+                if (((String) model2.getElementAt(fechaInd)).startsWith("*")) {
+                    model2.setElementAt(((String) model2.getElementAt(fechaInd)).substring(1), fechaInd);
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "No puede cancelar la reserva porque no hay una fecha seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCancelarSolicitudMouseClicked
 
