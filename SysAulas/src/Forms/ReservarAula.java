@@ -96,7 +96,7 @@ public class ReservarAula extends javax.swing.JFrame {
         lblSesion = new javax.swing.JLabel();
         lblNombreBedel = new javax.swing.JLabel();
         lblComplete = new javax.swing.JLabel();
-        btnCerrarSesion = new javax.swing.JButton();
+        btnVolverAlMenu = new javax.swing.JButton();
         pnlPeriodo = new javax.swing.JPanel();
         chkLunes = new javax.swing.JCheckBox();
         chkMartes = new javax.swing.JCheckBox();
@@ -171,13 +171,13 @@ public class ReservarAula extends javax.swing.JFrame {
 
         lblComplete.setText("<html>Complete todos los campos para solicitar la reserva de un aula.</html>");
 
-        btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back_menu.png"))); // NOI18N
-        btnCerrarSesion.setText("Volver al Menu");
-        btnCerrarSesion.setToolTipText("Vuelva al menu de bedel");
-        btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        btnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnVolverAlMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back_menu.png"))); // NOI18N
+        btnVolverAlMenu.setText("Volver al Menu");
+        btnVolverAlMenu.setToolTipText("Vuelva al menu de bedel");
+        btnVolverAlMenu.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnVolverAlMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCerrarSesionMouseClicked(evt);
+                btnVolverAlMenuMouseClicked(evt);
             }
         });
 
@@ -634,7 +634,7 @@ public class ReservarAula extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblReservar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCerrarSesion))
+                        .addComponent(btnVolverAlMenu))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -657,7 +657,7 @@ public class ReservarAula extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblReservar)
-                    .addComponent(btnCerrarSesion))
+                    .addComponent(btnVolverAlMenu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -681,10 +681,14 @@ public class ReservarAula extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
-        AdministradorInterfaz.getMenuBedel().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnCerrarSesionMouseClicked
+    private void btnVolverAlMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverAlMenuMouseClicked
+        Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas volver al menu anterior? Se perderán todos los datos cargados", "Volver?",  JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            AdministradorInterfaz.getMenuBedel().setVisible(true);
+            this.resetarTodo();
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnVolverAlMenuMouseClicked
 
     private void btnPeriodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPeriodoMouseClicked
         chkLunes.setEnabled(true);
@@ -1041,6 +1045,8 @@ public class ReservarAula extends javax.swing.JFrame {
             cmbCatedra.addItem("Cátedra");
             cmbCatedra.setSelectedIndex(0);
             catedras = null;
+            indexDocente = -1;
+            indexCatedra = -1;
             JOptionPane.showMessageDialog(this, "Datos borrados con exito!");
         }
     }//GEN-LAST:event_btnCancelarMouseClicked
@@ -1121,11 +1127,11 @@ public class ReservarAula extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAñadirFecha;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnEliminarFecha;
     private javax.swing.JButton btnFecha;
     private javax.swing.JButton btnPeriodo;
     private javax.swing.JButton btnSolicitar;
+    private javax.swing.JButton btnVolverAlMenu;
     private javax.swing.JCheckBox chkJueves;
     private javax.swing.JCheckBox chkLunes;
     private javax.swing.JCheckBox chkMartes;

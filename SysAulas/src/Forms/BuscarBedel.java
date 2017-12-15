@@ -79,7 +79,7 @@ public class BuscarBedel extends javax.swing.JFrame {
         txtNombreUsuario = new javax.swing.JTextField();
         txtContraseña1 = new javax.swing.JPasswordField();
         txtContraseña2 = new javax.swing.JPasswordField();
-        btnCerrarSesion = new javax.swing.JButton();
+        btnVolverAlMenu = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
@@ -141,7 +141,6 @@ public class BuscarBedel extends javax.swing.JFrame {
         cmbBuscarTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione Turno---", "MAÑANA", "TARDE", "NOCHE" }));
         cmbBuscarTurno.setToolTipText("Seleccione el turno del bedel a buscar");
 
-        chkApellido.setSelected(true);
         chkApellido.setText("Buscar por Apellido");
         chkApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,19 +232,20 @@ public class BuscarBedel extends javax.swing.JFrame {
         txtContraseña2.setToolTipText("Contraseña del bedel actual");
         txtContraseña2.setEnabled(false);
 
-        btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back_menu.png"))); // NOI18N
-        btnCerrarSesion.setText("Volver al Menu");
-        btnCerrarSesion.setToolTipText("Vuelva al menu administrador");
-        btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        btnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnVolverAlMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back_menu.png"))); // NOI18N
+        btnVolverAlMenu.setText("Volver al Menu");
+        btnVolverAlMenu.setToolTipText("Vuelva al menu administrador");
+        btnVolverAlMenu.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnVolverAlMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCerrarSesionMouseClicked(evt);
+                btnVolverAlMenuMouseClicked(evt);
             }
         });
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user_edit.png"))); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.setToolTipText("Modifique los datos del bedel actual");
+        btnModificar.setEnabled(false);
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnModificarMouseClicked(evt);
@@ -255,6 +255,7 @@ public class BuscarBedel extends javax.swing.JFrame {
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user_delete.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setToolTipText("Elimine al bedel actual del sistema");
+        btnEliminar.setEnabled(false);
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMouseClicked(evt);
@@ -284,6 +285,7 @@ public class BuscarBedel extends javax.swing.JFrame {
         btnPrimero.setFont(new java.awt.Font("Webdings", 0, 14)); // NOI18N
         btnPrimero.setText("");
         btnPrimero.setToolTipText("Ir al principio de la lista");
+        btnPrimero.setEnabled(false);
         btnPrimero.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPrimeroMouseClicked(evt);
@@ -293,6 +295,7 @@ public class BuscarBedel extends javax.swing.JFrame {
         btnAnterior.setFont(new java.awt.Font("Webdings", 0, 14)); // NOI18N
         btnAnterior.setText("");
         btnAnterior.setToolTipText("Ir al elemento anterior");
+        btnAnterior.setEnabled(false);
         btnAnterior.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAnteriorMouseClicked(evt);
@@ -302,6 +305,7 @@ public class BuscarBedel extends javax.swing.JFrame {
         btnSiguiente.setFont(new java.awt.Font("Webdings", 0, 14)); // NOI18N
         btnSiguiente.setText("");
         btnSiguiente.setToolTipText("Ir al elemento siguiente");
+        btnSiguiente.setEnabled(false);
         btnSiguiente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSiguienteMouseClicked(evt);
@@ -311,6 +315,7 @@ public class BuscarBedel extends javax.swing.JFrame {
         btnUltimo.setFont(new java.awt.Font("Webdings", 0, 14)); // NOI18N
         btnUltimo.setText("");
         btnUltimo.setToolTipText("Ir al final de la lista");
+        btnUltimo.setEnabled(false);
         btnUltimo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnUltimoMouseClicked(evt);
@@ -328,7 +333,7 @@ public class BuscarBedel extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCerrarSesion))
+                        .addComponent(btnVolverAlMenu))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblTurno)
@@ -377,7 +382,7 @@ public class BuscarBedel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBuscar)
-                    .addComponent(btnCerrarSesion))
+                    .addComponent(btnVolverAlMenu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -428,11 +433,37 @@ public class BuscarBedel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
-        // TODO add your handling code here:
-        AdministradorInterfaz.getMenuAdmin().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnCerrarSesionMouseClicked
+    private void btnVolverAlMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverAlMenuMouseClicked
+        Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas volver al menu anterior? Se perderán los datos no guardados", "Volver?",  JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            cmbBuscarTurno.setSelectedIndex(0);
+            txtBuscarApellido.setText("---Apellido---");
+            chkApellido.setSelected(false);
+            chkTurno.setSelected(false);
+            txtNombre.setText("Nombre");
+            txtApellido.setText("Apellido");
+            cmbTurno.setSelectedIndex(0);
+            txtNombreUsuario.setText("Usuario");
+            txtContraseña1.setText("Contr1");
+            txtContraseña2.setText("Contr2");
+            btnModificar.setEnabled(false);
+            btnEliminar.setEnabled(false);
+            txtNombre.setEnabled(false);
+            txtApellido.setEnabled(false);
+            cmbTurno.setEnabled(false);
+            txtContraseña1.setEnabled(false);
+            txtContraseña2.setEnabled(false);
+            btnGuardar.setEnabled(false);
+            btnCancelar.setEnabled(false);
+            btnSiguiente.setEnabled(false);
+            btnAnterior.setEnabled(false);
+            btnPrimero.setEnabled(false);
+            btnUltimo.setEnabled(false);
+            indice = 0;
+            AdministradorInterfaz.getMenuAdmin().setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnVolverAlMenuMouseClicked
 
     private void chkApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkApellidoActionPerformed
         /*if(chkApellido.isSelected()) {
@@ -470,6 +501,13 @@ public class BuscarBedel extends javax.swing.JFrame {
                     AdministradorBedeles.buscarBedelPorApellido(txtBuscarApellido.getText());
                     if (AdministradorBedeles.getTamañoBedeles() == 0) {
                         JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
+                    } else {
+                        btnModificar.setEnabled(true);
+                        btnEliminar.setEnabled(true);
+                        btnSiguiente.setEnabled(true);
+                        btnAnterior.setEnabled(true);
+                        btnPrimero.setEnabled(true);
+                        btnUltimo.setEnabled(true);
                     }
                     indice = 0;
                 } else {
@@ -483,6 +521,13 @@ public class BuscarBedel extends javax.swing.JFrame {
                 AdministradorBedeles.buscarBedelPorTurno(cmbBuscarTurno.getSelectedIndex());
                 if (AdministradorBedeles.getTamañoBedeles() == 0) {
                     JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
+                } else {
+                    btnModificar.setEnabled(true);
+                    btnEliminar.setEnabled(true);
+                    btnSiguiente.setEnabled(true);
+                    btnAnterior.setEnabled(true);
+                    btnPrimero.setEnabled(true);
+                    btnUltimo.setEnabled(true);
                 }
                 indice = 0;
             } else {
@@ -500,6 +545,13 @@ public class BuscarBedel extends javax.swing.JFrame {
                         AdministradorBedeles.buscarBedelPorTurnoYApellido(txtBuscarApellido.getText(), cmbBuscarTurno.getSelectedIndex());
                         if (AdministradorBedeles.getTamañoBedeles() == 0) {
                             JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
+                        } else {
+                            btnModificar.setEnabled(true);
+                            btnEliminar.setEnabled(true);
+                            btnSiguiente.setEnabled(true);
+                            btnAnterior.setEnabled(true);
+                            btnPrimero.setEnabled(true);
+                            btnUltimo.setEnabled(true);
                         }
                         indice = 0;
                     } else {
@@ -708,13 +760,13 @@ public class BuscarBedel extends javax.swing.JFrame {
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnPrimero;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JButton btnUltimo;
+    private javax.swing.JButton btnVolverAlMenu;
     private javax.swing.JCheckBox chkApellido;
     private javax.swing.JCheckBox chkTurno;
     private javax.swing.JComboBox<String> cmbBuscarTurno;

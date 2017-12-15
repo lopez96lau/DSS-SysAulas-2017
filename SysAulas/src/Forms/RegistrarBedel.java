@@ -345,17 +345,29 @@ public class RegistrarBedel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseClicked
-        AdministradorInterfaz.getMenuAdmin().setVisible(true);
-        this.dispose();
+        Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas volver al menu anterior? Se perderán los datos no guardados", "Volver?",  JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            txtNombre.setText("Nombre");
+            txtApellido.setText("Apellido");
+            cmbTurno.setSelectedIndex(0);
+            txtNombreUsuario.setText("Usuario");
+            txtContraseña1.setText("Contr1");
+            txtContraseña2.setText("Contr2");
+            AdministradorInterfaz.getMenuAdmin().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnVolverMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-        txtNombre.setText("Nombre");
-        txtApellido.setText("Apellido");
-        cmbTurno.setSelectedIndex(0);
-        txtNombreUsuario.setText("Usuario");
-        txtContraseña1.setText("Contr1");
-        txtContraseña2.setText("Contr2");
+        Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas cancelar el registro? Se perderán los datos no guardados", "Cancelar?",  JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            txtNombre.setText("Nombre");
+            txtApellido.setText("Apellido");
+            cmbTurno.setSelectedIndex(0);
+            txtNombreUsuario.setText("Usuario");
+            txtContraseña1.setText("Contr1");
+            txtContraseña2.setText("Contr2");
+        }
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed

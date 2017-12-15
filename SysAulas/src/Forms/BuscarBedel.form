@@ -38,7 +38,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lblBuscar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnCerrarSesion" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnVolverAlMenu" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -102,7 +102,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnCerrarSesion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnVolverAlMenu" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -322,7 +322,6 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkApellido">
           <Properties>
-            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Buscar por Apellido"/>
           </Properties>
           <Events>
@@ -436,7 +435,7 @@
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnCerrarSesion">
+    <Component class="javax.swing.JButton" name="btnVolverAlMenu">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Iconos/back_menu.png"/>
@@ -446,7 +445,7 @@
         <Property name="horizontalTextPosition" type="int" value="2"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCerrarSesionMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnVolverAlMenuMouseClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnModificar">
@@ -456,6 +455,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Modificar"/>
         <Property name="toolTipText" type="java.lang.String" value="Modifique los datos del bedel actual"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnModificarMouseClicked"/>
@@ -468,6 +468,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
         <Property name="toolTipText" type="java.lang.String" value="Elimine al bedel actual del sistema"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEliminarMouseClicked"/>
@@ -506,6 +507,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#xf039;"/>
         <Property name="toolTipText" type="java.lang.String" value="Ir al principio de la lista"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnPrimeroMouseClicked"/>
@@ -518,6 +520,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#xf033;"/>
         <Property name="toolTipText" type="java.lang.String" value="Ir al elemento anterior"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAnteriorMouseClicked"/>
@@ -530,6 +533,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#xf034;"/>
         <Property name="toolTipText" type="java.lang.String" value="Ir al elemento siguiente"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSiguienteMouseClicked"/>
@@ -542,6 +546,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#xf03a;"/>
         <Property name="toolTipText" type="java.lang.String" value="Ir al final de la lista"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnUltimoMouseClicked"/>
