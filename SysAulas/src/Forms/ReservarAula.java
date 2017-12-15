@@ -61,7 +61,7 @@ public class ReservarAula extends javax.swing.JFrame {
         docentes = AdministradorReservas.getAllDocentes();
         indexDocente = -1;
         indexCatedra = -1;
-        docentes= ordenarPorApellido(docentes);
+        docentes= ordenarAlfabetico(docentes);
         for (Docente d : docentes) {
             cmbDocente.addItem(d.getApellidoDocente()+" "+d.getNombreDocente());
         }
@@ -1263,10 +1263,10 @@ public class ReservarAula extends javax.swing.JFrame {
             dm.removeRow(i);
         }
     }
-    private static ArrayList<Docente> ordenarPorApellido(ArrayList<Docente> docentes) {
+    private static ArrayList<Docente> ordenarAlfabetico(ArrayList<Docente> docentes) {
         Collections.sort(docentes, new Comparator<Docente>() {
             public int compare(Docente a1, Docente a2){
-               return a1.getApellidoDocente().toLowerCase().compareTo(a2.getApellidoDocente().toLowerCase());
+               return (a1.getApellidoDocente()+a1.getNombreDocente()).toLowerCase().compareTo((a2.getApellidoDocente()+a2.getNombreDocente()).toLowerCase());
             }
         });
         return docentes;
