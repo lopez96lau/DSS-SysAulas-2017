@@ -804,8 +804,8 @@ public class BuscarBedel extends javax.swing.JFrame {
             txtApellido.setText("Apellido");
             cmbTurno.setSelectedIndex(0);
             txtNombreUsuario.setText("Usuario");
-            txtContraseña1.setText("Contraseña1");
-            txtContraseña2.setText("Contraseña2");
+            txtContraseña1.setText("");
+            txtContraseña2.setText("");
         }
     }
 }
