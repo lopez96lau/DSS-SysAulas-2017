@@ -548,12 +548,12 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
                 f.setAula(null);
             }
             
-            
             ObtenerDisponibilidadAula nuevo = new ObtenerDisponibilidadAula();
             nuevo.setLocationRelativeTo(null);
             //nuevo.setAlwaysOnTop(true);
             AdministradorInterfaz.setObtenerDisp(nuevo);
             //AdministradorInterfaz.getReservarAula().resetarTodo();
+            AdministradorInterfaz.getReservarAula().resetearDias();
             AdministradorInterfaz.getReservarAula().setVisible(true);
             
             this.dispose();
