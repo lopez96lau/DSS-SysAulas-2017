@@ -225,13 +225,11 @@ public class BuscarBedel extends javax.swing.JFrame {
 
         txtContraseña1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtContraseña1.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
-        txtContraseña1.setText("Contraseña");
         txtContraseña1.setToolTipText("Contraseña del bedel actual");
         txtContraseña1.setEnabled(false);
 
         txtContraseña2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtContraseña2.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
-        txtContraseña2.setText("Contraseña");
         txtContraseña2.setToolTipText("Contraseña del bedel actual");
         txtContraseña2.setEnabled(false);
 
@@ -462,17 +460,23 @@ public class BuscarBedel extends javax.swing.JFrame {
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         if (chkApellido.isSelected() && !chkTurno.isSelected()) {
-            Boolean hh;
+            Boolean hh,hh2;
             hh = txtBuscarApellido.getText().matches("^[ A-Za-záéíóú]+$");
-            if (!hh) {
-                JOptionPane.showMessageDialog(this, "Caracteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-
-            } else {
-                AdministradorBedeles.buscarBedelPorApellido(txtBuscarApellido.getText());
-                if (AdministradorBedeles.getTamañoBedeles() == 0) {
-                    JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
+            
+            if (hh) {
+                hh2 = (txtBuscarApellido.getText().length() <= 20);
+                
+                if (hh2) {
+                    AdministradorBedeles.buscarBedelPorApellido(txtBuscarApellido.getText());
+                    if (AdministradorBedeles.getTamañoBedeles() == 0) {
+                        JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
+                    }
+                    indice = 0;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Un apellido es de 20 carácteres o menos");
                 }
-                indice = 0;
+            } else {
+                JOptionPane.showMessageDialog(this, "Caracteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
             }
         } else if(chkTurno.isSelected() && !chkApellido.isSelected()) {
             if (cmbBuscarTurno.getSelectedIndex() != 0) {
@@ -485,20 +489,27 @@ public class BuscarBedel extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "No ha seleccionado un turno", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
             }
         } else if(chkTurno.isSelected() && chkApellido.isSelected()) {
-            Boolean hh;
+            Boolean hh,hh2;
             hh = txtBuscarApellido.getText().matches("^[ A-Za-z]+$");
-            if (!hh) {
-                JOptionPane.showMessageDialog(this, "Caracteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-            } else {
-                if (cmbBuscarTurno.getSelectedIndex() != 0) {
-                    AdministradorBedeles.buscarBedelPorTurnoYApellido(txtBuscarApellido.getText(), cmbBuscarTurno.getSelectedIndex());
-                    if (AdministradorBedeles.getTamañoBedeles() == 0) {
-                        JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
+            
+            if (hh) {
+                hh2 = (txtBuscarApellido.getText().length() <= 20);
+                
+                if (hh2) {
+                    if (cmbBuscarTurno.getSelectedIndex() != 0) {
+                        AdministradorBedeles.buscarBedelPorTurnoYApellido(txtBuscarApellido.getText(), cmbBuscarTurno.getSelectedIndex());
+                        if (AdministradorBedeles.getTamañoBedeles() == 0) {
+                            JOptionPane.showMessageDialog(this, "No hay bedeles que cumplan con el criterio especificado");
+                        }
+                        indice = 0;
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No ha seleccionado un turno", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
                     }
-                    indice = 0;
                 } else {
-                    JOptionPane.showMessageDialog(this, "No ha seleccionado un turno", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Un apellido es de 20 carácteres o menos");
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Caracteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "No ha seleccionado un criterio de busqueda", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
@@ -633,7 +644,7 @@ public class BuscarBedel extends javax.swing.JFrame {
                         }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this,"Las contraseñas no son iguales o no se ha seleccionado un turno.","Error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this,"Las contraseña repetida no es igual a la original o no se ha seleccionado un turno.","Error",JOptionPane.ERROR_MESSAGE);
                 }
             }
             

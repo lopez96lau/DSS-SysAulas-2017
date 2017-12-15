@@ -290,53 +290,57 @@ public class RegistrarBedel extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        Boolean hh,hh2;
-        hh2 = true;
-        hh = txtApellido.getText().matches("^[ A-Za-záéíóú]+$");
-        if (hh) {
-            hh = txtNombre.getText().matches("^[ A-Za-záéíóú]+$");
-        }
-        if ((txtNombre.getText().length() > 20) || (txtApellido.getText().length() > 20)) {
-            hh2 = false;
-        }
-        
-        if (!hh) {
-            JOptionPane.showMessageDialog(this, "Campos con carácteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-        } else if (!hh2){
-            JOptionPane.showMessageDialog(this, "Nombre o apellido muy largo, tienen que tener 20 caracteres o menos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-        } else {
-            String nombre = txtNombre.getText();
-            String apellido = txtApellido.getText();
-            Integer turnoID = cmbTurno.getSelectedIndex();
-            String usuario = txtNombreUsuario.getText();
-            String contraseña = new String(txtContraseña1.getPassword());
-            String contraseñaRepetir = new String(txtContraseña2.getPassword());
-            Integer resultado = AdministradorBedeles.registrarBedel(nombre, apellido, turnoID, usuario, contraseña, contraseñaRepetir);
-        
-            switch (resultado) {
-                case 0:
-                    JOptionPane.showMessageDialog(this, "Usuario " + usuario + " creado con exito!");
-                    txtNombre.setText("Nombre");
-                    txtApellido.setText("Apellido");
-                    cmbTurno.setSelectedIndex(0);
-                    txtNombreUsuario.setText("Usuario");
-                    txtContraseña1.setText("Contr1");
-                    txtContraseña2.setText("Contr2");
-                    break;
-                case 1:
-                    JOptionPane.showMessageDialog(this, "No ha seleccionado un turno para el bedel.", "Error de registro", JOptionPane.ERROR_MESSAGE);
-                    break;
-                case 2:
-                    JOptionPane.showMessageDialog(this, "La contraseña ingresada no coincide con la repetida.", "Error de registro", JOptionPane.ERROR_MESSAGE);
-                    break;
-                case 3:
-                    JOptionPane.showMessageDialog(this, "El nombre de usuario escrito esta siendo usado por otra persona.", "Error de registro", JOptionPane.ERROR_MESSAGE);
-                    break;
-                case 4:
-                    JOptionPane.showMessageDialog(this, "EL nombre de usuario o la contraseña no se ajusta a la politica actual.", "Error de registro", JOptionPane.ERROR_MESSAGE);
-                    break;
-
+        if (cmbTurno.getSelectedIndex() != 0) {
+            Boolean hh,hh2;
+            hh2 = true;
+            hh = txtApellido.getText().matches("^[ A-Za-záéíóú]+$");
+            if (hh) {
+                hh = txtNombre.getText().matches("^[ A-Za-záéíóú]+$");
             }
+            if ((txtNombre.getText().length() > 20) || (txtApellido.getText().length() > 20)) {
+                hh2 = false;
+            }
+
+            if (!hh) {
+                JOptionPane.showMessageDialog(this, "Campos con carácteres invalidos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+            } else if (!hh2){
+                JOptionPane.showMessageDialog(this, "Nombre o apellido muy largo, tienen que tener 20 caracteres o menos", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+            } else {
+                String nombre = txtNombre.getText();
+                String apellido = txtApellido.getText();
+                Integer turnoID = cmbTurno.getSelectedIndex();
+                String usuario = txtNombreUsuario.getText();
+                String contraseña = new String(txtContraseña1.getPassword());
+                String contraseñaRepetir = new String(txtContraseña2.getPassword());
+                Integer resultado = AdministradorBedeles.registrarBedel(nombre, apellido, turnoID, usuario, contraseña, contraseñaRepetir);
+
+                switch (resultado) {
+                    case 0:
+                        JOptionPane.showMessageDialog(this, "Usuario " + usuario + " creado con exito!");
+                        txtNombre.setText("Nombre");
+                        txtApellido.setText("Apellido");
+                        cmbTurno.setSelectedIndex(0);
+                        txtNombreUsuario.setText("Usuario");
+                        txtContraseña1.setText("Contr1");
+                        txtContraseña2.setText("Contr2");
+                        break;
+                    case 1:
+                        JOptionPane.showMessageDialog(this, "No ha seleccionado un turno para el bedel.", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                        break;
+                    case 2:
+                        JOptionPane.showMessageDialog(this, "La contraseña ingresada no coincide con la repetida.", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                        break;
+                    case 3:
+                        JOptionPane.showMessageDialog(this, "El nombre de usuario escrito esta siendo usado por otra persona.", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                        break;
+                    case 4:
+                        JOptionPane.showMessageDialog(this, "El nombre de usuario o la contraseña no se ajusta a la politica actual.", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                        break;
+
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado un turno.", "Error de registro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -350,8 +354,8 @@ public class RegistrarBedel extends javax.swing.JFrame {
         txtApellido.setText("Apellido");
         cmbTurno.setSelectedIndex(0);
         txtNombreUsuario.setText("Usuario");
-        txtContraseña1.setText("Contraseña1");
-        txtContraseña2.setText("Contraseña2");
+        txtContraseña1.setText("Contr1");
+        txtContraseña2.setText("Contr2");
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
