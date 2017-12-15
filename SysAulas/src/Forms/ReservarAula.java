@@ -776,16 +776,32 @@ public class ReservarAula extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFechaMouseClicked
 
     private void btnSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarMouseClicked
+        
+        String str = txtCantAlumnos.getText();
+        String str2;
+        Boolean esIntegerCantAlumnos = esInteger(str);
+        Boolean intValido = true;
+        if (esIntegerCantAlumnos) {
+            str2 = str.replaceFirst("^0+(?!$)", "");
+            if (str2.length() > 3) {
+                intValido = false;
+            } else {
+                intValido = (Integer.parseInt(str2) <= 500 && Integer.parseInt(str2) > 0);
+            }
+        }
+        
         if (cmbTipoAula.getSelectedIndex() == 0 ) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado un tipo de aula", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-        } else if (!esInteger(txtCantAlumnos.getText())) {
+        } else if (!esIntegerCantAlumnos) {
             JOptionPane.showMessageDialog(this, "La cantidad de alumnos ingresada no es valida", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-        } else if (indexDocente+1 == 0) {
+        } else if (!intValido) {
+            JOptionPane.showMessageDialog(this, "El numero de alumnos para la busqueda debe estar entre 1 y 500", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
+        } else if (cmbDocente.getSelectedIndex() == 0 || cmbDocente.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un docente solicitante", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
-        } else if (indexCatedra+1 == -1 || indexCatedra+1 == 0) {
+        } else if (cmbCatedra.getSelectedIndex() == 0 || cmbCatedra.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una catedra del solicitante", "Error cargando los datos", JOptionPane.ERROR_MESSAGE);
         } else {
-            if (modo == "periodico") {
+            if (modo.equals("periodico")) {
                 //Validacion de datos
 
                 Boolean[] diasSelect = {chkLunes.isSelected(), chkMartes.isSelected(), chkMiercoles.isSelected(), chkJueves.isSelected(), chkViernes.isSelected()};
@@ -805,16 +821,18 @@ public class ReservarAula extends javax.swing.JFrame {
                         }
                     }
                 }
+                
+                Periodo periodo = null;
                 if (cmbPeriodo.getSelectedIndex() == 0) {
                     datosValidos = false;
+                } else {
+                    periodo = AdministradorReservas.buscarPeriodo(cmbPeriodo.getSelectedIndex());
+
+                    if ((new Date(periodo.getFechaFin().getTime())).compareTo(new Date()) < 0) {
+                        JOptionPane.showMessageDialog(this,"El periodo seleccionado ya ha terminado, no puede realizar reservas para el mismo","Advertencia",JOptionPane.WARNING_MESSAGE);
+                        datosValidos = false;
+                    }
                 }
-                Periodo periodo = AdministradorReservas.buscarPeriodo(cmbPeriodo.getSelectedIndex());
-                
-                if ((new Date(periodo.getFechaFin().getTime())).compareTo(new Date()) < 0) {
-                    JOptionPane.showMessageDialog(this,"El periodo seleccionado ya ha terminado, no puede realizar reservas para el mismo","Advertencia",JOptionPane.WARNING_MESSAGE);
-                    datosValidos = false;
-                }
-                
                 //Creacion de datos
                 if (datosValidos) {
                     if ((new Date(periodo.getFechaInicio().getTime())).compareTo(new Date()) < 0 && (new Date(periodo.getFechaFin().getTime())).compareTo(new Date()) > 0) {
@@ -1022,6 +1040,7 @@ public class ReservarAula extends javax.swing.JFrame {
             cmbCatedra.removeAllItems();
             cmbCatedra.addItem("Cátedra");
             cmbCatedra.setSelectedIndex(0);
+            catedras = null;
             JOptionPane.showMessageDialog(this, "Datos borrados con exito!");
         }
     }//GEN-LAST:event_btnCancelarMouseClicked
@@ -1036,27 +1055,27 @@ public class ReservarAula extends javax.swing.JFrame {
 
     private void cmbDocenteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDocenteItemStateChanged
         if (cmbDocente.getSelectedIndex() != 0) {
-            if (indexDocente != cmbDocente.getSelectedIndex()) {
+            if (indexDocente != cmbDocente.getSelectedIndex()-1) {
                 txtEmail.setText(docentes.get(cmbDocente.getSelectedIndex()-1).getEmailDocente());
                 catedras = AdministradorReservas.getAllCatedrasDeDocente(docentes.get(cmbDocente.getSelectedIndex()-1));
                 cmbCatedra.removeAllItems();
                 cmbCatedra.addItem("Cátedra");
-                for (Catedra c : catedras) {
-                    cmbCatedra.addItem(c.getNombreCatedra());
+                if (catedras != null && !catedras.isEmpty()) {
+                    for (Catedra c : catedras) {
+                        cmbCatedra.addItem(c.getNombreCatedra());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this,"El docente no tiene una catedra asignada","Advertencia",JOptionPane.WARNING_MESSAGE);
                 }
                 indexDocente = cmbDocente.getSelectedIndex()-1;
             }
         } else {
-            if (cmbDocente.getSelectedIndex() == indexDocente) {
-                cmbCatedra.removeAllItems();
-                cmbCatedra.addItem("Cátedra");
-                txtEmail.setText("usuario@dominio.com");
-                catedras = null;
-                txtCantAlumnos.setText("");
-                cmbTipoAula.setSelectedIndex(0);
-                cmbCatedra.setSelectedIndex(0);
-                indexDocente = cmbDocente.getSelectedIndex();
-            }
+            cmbCatedra.removeAllItems();
+            cmbCatedra.addItem("Cátedra");
+            txtEmail.setText("usuario@dominio.com");
+            catedras = null;
+            txtCantAlumnos.setText("");
+            cmbCatedra.setSelectedIndex(0);
         }
         
     }//GEN-LAST:event_cmbDocenteItemStateChanged
@@ -1223,6 +1242,12 @@ public class ReservarAula extends javax.swing.JFrame {
         cmbDuracion4.setSelectedIndex(0);
         cmbDuracion5.setSelectedIndex(0);
         cmbDuracion6.setSelectedIndex(0);
+        
+        chkLunes.setSelected(false);
+        chkMartes.setSelected(false);
+        chkMiercoles.setSelected(false);
+        chkJueves.setSelected(false);
+        chkViernes.setSelected(false);
         
         txtFechaNueva.setText("  /  /    ");
         
