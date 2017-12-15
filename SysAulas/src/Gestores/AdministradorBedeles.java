@@ -68,6 +68,7 @@ public class AdministradorBedeles {
     public static void buscarBedelPorTurno(Integer idTurno) {
         bedeles = UsuarioDao.findConTurno(idTurno);
         bedeles = ordenarPorApellido(bedeles);
+        bedeles = ordenarPorNombre(bedeles);
     }
     private static ArrayList<Bedel> ordenarPorApellido(ArrayList<Bedel> bedeles) {
         Collections.sort(bedeles, new Comparator<Bedel>() {

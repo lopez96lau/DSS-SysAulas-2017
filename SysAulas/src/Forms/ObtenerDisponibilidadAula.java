@@ -543,13 +543,18 @@ public class ObtenerDisponibilidadAula extends javax.swing.JFrame {
     private void btnVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseClicked
         Integer respuesta = JOptionPane.showConfirmDialog(null, "Estas seguro que deseas volver al menu anterior sin realizar la reserva?", "Volver?",  JOptionPane.YES_NO_OPTION);
         if (respuesta == JOptionPane.YES_OPTION) {
+            
+            for(Fecha f : fechas) {
+                f.setAula(null);
+            }
+            
+            
             ObtenerDisponibilidadAula nuevo = new ObtenerDisponibilidadAula();
             nuevo.setLocationRelativeTo(null);
             //nuevo.setAlwaysOnTop(true);
             AdministradorInterfaz.setObtenerDisp(nuevo);
-            AdministradorInterfaz.getReservarAula().resetarTodo();
+            //AdministradorInterfaz.getReservarAula().resetarTodo();
             AdministradorInterfaz.getReservarAula().setVisible(true);
-            //AdministradorInterfaz.getReservarAula().resetearDias();
             
             this.dispose();
         }
